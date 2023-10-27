@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <WorkflowBuilder Version="2.8.1"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                 xmlns:p1="clr-namespace:AindVrForagingDataSchema.Logging;assembly=Extensions"
+                 xmlns:p1="clr-namespace:BciNoMovement.Logging;assembly=Extensions"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
                  xmlns="https://bonsai-rx.org/2018/workflow">
@@ -19,7 +19,7 @@
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="p1:SpinnakerLogger">
-          <p1:LogName>MainCamera</p1:LogName>
+          <p1:LogName>camera</p1:LogName>
           <p1:EncodingFrameRate>60</p1:EncodingFrameRate>
           <p1:VideoExtension>avi</p1:VideoExtension>
           <p1:MetadataExtension>csv</p1:MetadataExtension>

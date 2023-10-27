@@ -5,78 +5,9 @@
 //----------------------
 
 
-namespace AindVrForagingDataSchema.Logging
+namespace BciNoMovement.Logging
 {
     #pragma warning disable // Disable all warnings
-
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class RenderSynchState
-    {
-    
-        private double? _synchQuadValue;
-    
-        private int? _frameIndex;
-    
-        private double? _frameTimestamp;
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("synchQuadValue")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="synchQuadValue")]
-        public double? SynchQuadValue
-        {
-            get
-            {
-                return _synchQuadValue;
-            }
-            set
-            {
-                _synchQuadValue = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("frameIndex")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="frameIndex")]
-        public int? FrameIndex
-        {
-            get
-            {
-                return _frameIndex;
-            }
-            set
-            {
-                _frameIndex = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("frameTimestamp")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="frameTimestamp")]
-        public double? FrameTimestamp
-        {
-            get
-            {
-                return _frameTimestamp;
-            }
-            set
-            {
-                _frameTimestamp = value;
-            }
-        }
-    
-        public System.IObservable<RenderSynchState> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new RenderSynchState
-                {
-                    SynchQuadValue = _synchQuadValue,
-                    FrameIndex = _frameIndex,
-                    FrameTimestamp = _frameTimestamp
-                }));
-        }
-    }
-
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
@@ -85,11 +16,7 @@ namespace AindVrForagingDataSchema.Logging
     
         private double? _timestamp;
     
-        private SoftwareEventTimestampSource _timestampSource = AindVrForagingDataSchema.Logging.SoftwareEventTimestampSource.None;
-    
-        private int? _frameIndex;
-    
-        private double? _frameTimestamp;
+        private SoftwareEventTimestampSource _timestampSource = BciNoMovement.Logging.SoftwareEventTimestampSource.None;
     
         private string _name;
     
@@ -124,36 +51,6 @@ namespace AindVrForagingDataSchema.Logging
             set
             {
                 _timestampSource = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("frameIndex")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="frameIndex")]
-        public int? FrameIndex
-        {
-            get
-            {
-                return _frameIndex;
-            }
-            set
-            {
-                _frameIndex = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("frameTimestamp")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="frameTimestamp")]
-        public double? FrameTimestamp
-        {
-            get
-            {
-                return _frameTimestamp;
-            }
-            set
-            {
-                _frameTimestamp = value;
             }
         }
     
@@ -208,8 +105,6 @@ namespace AindVrForagingDataSchema.Logging
                 {
                     Timestamp = _timestamp,
                     TimestampSource = _timestampSource,
-                    FrameIndex = _frameIndex,
-                    FrameTimestamp = _frameTimestamp,
                     Name = _name,
                     Data = _data,
                     DataType = _dataType
@@ -535,7 +430,7 @@ namespace AindVrForagingDataSchema.Logging
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class AindVrForagingLogging
+    public partial class BciNoMovementLogging
     {
     
         private string _placeholder;
@@ -554,10 +449,10 @@ namespace AindVrForagingDataSchema.Logging
             }
         }
     
-        public System.IObservable<AindVrForagingLogging> Process()
+        public System.IObservable<BciNoMovementLogging> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new AindVrForagingLogging
+                new BciNoMovementLogging
                 {
                     Placeholder = _placeholder
                 }));
@@ -625,11 +520,6 @@ namespace AindVrForagingDataSchema.Logging
             return System.Reactive.Linq.Observable.Select(source, value => Newtonsoft.Json.JsonConvert.SerializeObject(value));
         }
 
-        public System.IObservable<string> Process(System.IObservable<RenderSynchState> source)
-        {
-            return Process<RenderSynchState>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<SoftwareEvent> source)
         {
             return Process<SoftwareEvent>(source);
@@ -655,9 +545,9 @@ namespace AindVrForagingDataSchema.Logging
             return Process<DataSchemaLogger>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<AindVrForagingLogging> source)
+        public System.IObservable<string> Process(System.IObservable<BciNoMovementLogging> source)
         {
-            return Process<AindVrForagingLogging>(source);
+            return Process<BciNoMovementLogging>(source);
         }
     }
 
@@ -667,20 +557,19 @@ namespace AindVrForagingDataSchema.Logging
     /// </summary>
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RenderSynchState>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SoftwareEvent>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpLogger>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerLogger>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<GenericCsvLogger>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<DataSchemaLogger>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingLogging>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BciNoMovementLogging>))]
     [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of JSON strings into data model objects.")]
     public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
     
         public DeserializeFromJson()
         {
-            Type = new Bonsai.Expressions.TypeMapping<AindVrForagingLogging>();
+            Type = new Bonsai.Expressions.TypeMapping<BciNoMovementLogging>();
         }
 
         public Bonsai.Expressions.TypeMapping Type { get; set; }
@@ -721,11 +610,6 @@ namespace AindVrForagingDataSchema.Logging
             });
         }
 
-        public System.IObservable<string> Process(System.IObservable<RenderSynchState> source)
-        {
-            return Process<RenderSynchState>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<SoftwareEvent> source)
         {
             return Process<SoftwareEvent>(source);
@@ -751,9 +635,9 @@ namespace AindVrForagingDataSchema.Logging
             return Process<DataSchemaLogger>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<AindVrForagingLogging> source)
+        public System.IObservable<string> Process(System.IObservable<BciNoMovementLogging> source)
         {
-            return Process<AindVrForagingLogging>(source);
+            return Process<BciNoMovementLogging>(source);
         }
     }
 
@@ -763,20 +647,19 @@ namespace AindVrForagingDataSchema.Logging
     /// </summary>
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<RenderSynchState>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SoftwareEvent>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpLogger>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerLogger>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<GenericCsvLogger>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<DataSchemaLogger>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindVrForagingLogging>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BciNoMovementLogging>))]
     [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of YAML strings into data model objects.")]
     public partial class DeserializeFromYaml : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
     
         public DeserializeFromYaml()
         {
-            Type = new Bonsai.Expressions.TypeMapping<AindVrForagingLogging>();
+            Type = new Bonsai.Expressions.TypeMapping<BciNoMovementLogging>();
         }
 
         public Bonsai.Expressions.TypeMapping Type { get; set; }

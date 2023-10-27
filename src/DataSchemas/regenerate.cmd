@@ -1,0 +1,1 @@
+bonsai.sgen --schema "src\DataSchemas\bci-no-movement-logging.json" --namespace BciNoMovement.Logging --root BciNoMovementLogging --output "src\Extensions\BciNoMovementLogging.cs" --serializer NewtonsoftJson YamlDotNet
