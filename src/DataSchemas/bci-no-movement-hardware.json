@@ -1,0 +1,97 @@
+{
+  "$id": "h...",
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "definitions": {
+    "harpBoard": {
+      "properties": {
+        "deviceType": {
+          "enum": [
+            "custom",
+            "behavior",
+            "clockSynchronizer",
+            "timestampGeneratorGen3",
+            "loadCells"
+          ],
+          "type": "string"
+        },
+        "portName": {
+          "type": "string"
+        },
+        "serialNumber": {
+          "type": "string"
+        },
+        "deviceName": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "deviceType",
+        "portName"
+      ],
+      "type": "object"
+    },
+    "pwmBuzzer": {
+      "properties": {
+        "model": {
+          "default": "buzzer",
+          "type": "string"
+        },
+        "pin": {
+          "default": "DO1",
+          "type": "string"
+        },
+        "pwmDefaultPulseDuration": {
+          "default": 0.2,
+          "type": "number"
+        },
+        "pwmFrequency": {
+          "default": 1000,
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "spinnakerCamera": {
+      "properties": {
+        "binning": {
+          "default": 1,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "colorProcessing": {
+          "default": "Default",
+          "enum": [
+            "Default",
+            "NoColorProcessing"
+          ],
+          "type": "string"
+        },
+        "exposure": {
+          "default": 1000,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "frameRate": {
+          "default": 30,
+          "maximum": 350,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "gain": {
+          "default": 0,
+          "minimum": 0,
+          "type": "number"
+        },
+        "serialNumber": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "serialNumber"
+      ],
+      "type": "object"
+    }
+  },
+  "title": "BciNoMovementHardware",
+  "type": "object"
+}

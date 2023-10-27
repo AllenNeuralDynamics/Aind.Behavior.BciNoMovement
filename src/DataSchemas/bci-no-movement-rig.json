@@ -1,0 +1,31 @@
+{
+  "$id": "h...",
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "definitions": {},
+  "properties": {
+    "harpBehaviorBoard": {
+      "$ref": "bci-no-movement-hardware.json#/definitions/harpBoard"
+    },
+    "harpLoadCellsBoard": {
+      "$ref": "bci-no-movement-hardware.json#/definitions/harpBoard"
+    },
+    "harpTimestampGeneratorGen3": {
+      "$ref": "bci-no-movement-hardware.json#/definitions/harpBoard"
+    },
+    "camera0": {
+      "$ref": "bci-no-movement-hardware.json#/definitions/spinnakerCamera"
+    },
+    "camera1": {
+      "$ref": "bci-no-movement-hardware.json#/definitions/spinnakerCamera"
+    }
+  },
+  "required": [
+    "harpBehaviorBoard",
+    "harpLoadCellsBoard",
+    "harpTimestampGeneratorGen3",
+    "camera0",
+    "camera1"
+  ],
+  "title": "BciNoMovementRig",
+  "type": "object"
+}
