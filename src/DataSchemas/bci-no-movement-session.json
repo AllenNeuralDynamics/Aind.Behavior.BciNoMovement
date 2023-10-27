@@ -1,0 +1,48 @@
+{
+  "$id": "h...",
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "definitions": {
+  },
+  "properties": {
+    "metadata": {
+      "properties": {
+        "commitHash": {
+          "default": null,
+          "type": ["null", "string"]
+        },
+        "experiment": {
+          "type": "string"
+        },
+        "notes": {
+          "default": "",
+          "type": "string"
+        },
+        "rngSeed": {
+          "type": ["null", "number"]
+        },
+        "rootPath": {
+          "type": "string"
+        },
+        "subject": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "rootPath",
+        "subject",
+        "experiment",
+        "version",
+        "commitHash"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "metadata"
+  ],
+  "title": "BciNoMovementSession",
+  "type": "object"
+}

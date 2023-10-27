@@ -17,6 +17,9 @@
     },
     "camera1": {
       "$ref": "bci-no-movement-hardware.json#/definitions/spinnakerCamera"
+    },
+    "speaker": {
+      "$ref": "bci-no-movement-hardware.json#/definitions/pwmBuzzer"
     }
   },
   "required": [
@@ -24,7 +27,8 @@
     "harpLoadCellsBoard",
     "harpTimestampGeneratorGen3",
     "camera0",
-    "camera1"
+    "camera1",
+    "speaker"
   ],
   "title": "BciNoMovementRig",
   "type": "object"
