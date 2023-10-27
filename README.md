@@ -3,6 +3,7 @@
 - [aind-bci-no-movement](#aind-bci-no-movement)
   - [Deployment](#deployment)
   - [Prerequisites](#prerequisites)
+  - [Notes on data-schema regeneration](#notes-on-data-schema-regeneration)
 
 ## Deployment
 
@@ -25,3 +26,15 @@ These should only need to be installed once on a fresh new system, and are not r
 - [NI-DAQmx 19.0](https://www.ni.com/en-gb/support/downloads/drivers/download.ni-daq-mx.html#301173) (drivers for NI-DAQ devices)
 
 ---
+
+## Notes on data-schema regeneration
+
+ 1 - Install [bonsai.sgen dotnet tool](https://github.com/bonsai-rx/sgen)
+
+ 2 - Run `bonsai.sgen` targeting the root schema in `src/DataSchemas`. E.g.:
+
+To regenerate the loggers, use:
+
+```cmd
+bonsai.sgen --schema "src\DataSchemas\bci-no-movement-logging.json" --namespace BciNoMovement.Logging --root BciNoMovementLogging --output "src\Extensions\BciNoMovementLogging.cs" --serializer NewtonsoftJson YamlDotNet
+``
