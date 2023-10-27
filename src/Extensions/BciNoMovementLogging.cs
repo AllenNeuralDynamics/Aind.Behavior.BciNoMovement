@@ -5,7 +5,7 @@
 //----------------------
 
 
-namespace BciNoMovement.Logging
+namespace BciNoMovementDataSchema.Logging
 {
     #pragma warning disable // Disable all warnings
 
@@ -16,7 +16,7 @@ namespace BciNoMovement.Logging
     
         private double? _timestamp;
     
-        private SoftwareEventTimestampSource _timestampSource = BciNoMovement.Logging.SoftwareEventTimestampSource.None;
+        private SoftwareEventTimestampSource _timestampSource = BciNoMovementDataSchema.Logging.SoftwareEventTimestampSource.None;
     
         private string _name;
     
