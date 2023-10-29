@@ -51,6 +51,26 @@
       },
       "type": "object"
     },
+    "serialDevice":{
+      "properties": {
+        "portName": {
+          "type": "string",
+          "default": "COM1"
+        },
+        "deviceName": {
+          "type": "string"
+        },
+        "baudRate": {
+          "type": "integer",
+          "default": 115200,
+          "minimum": 0
+        }
+      },
+      "required": [
+        "portName", "deviceName"
+      ],
+      "type": "object"
+    },
     "spinnakerCamera": {
       "properties": {
         "binning": {

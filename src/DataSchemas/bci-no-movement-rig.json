@@ -20,6 +20,9 @@
     },
     "speaker": {
       "$ref": "bci-no-movement-hardware.json#/definitions/pwmBuzzer"
+    },
+    "zaberManipulator": {
+      "$ref": "bci-no-movement-hardware.json#/definitions/serialDevice"
     }
   },
   "required": [
@@ -28,7 +31,8 @@
     "harpTimestampGeneratorGen3",
     "camera0",
     "camera1",
-    "speaker"
+    "speaker",
+    "zaberManipulator"
   ],
   "title": "BciNoMovementRig",
   "type": "object"

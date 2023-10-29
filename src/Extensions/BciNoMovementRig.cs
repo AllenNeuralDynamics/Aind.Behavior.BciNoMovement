@@ -296,6 +296,72 @@ namespace BciNoMovementDataSchema.Rig
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class SerialDevice
+    {
+    
+        private string _portName = "COM1";
+    
+        private string _deviceName;
+    
+        private int _baudRate = 115200;
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("portName", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="portName")]
+        public string PortName
+        {
+            get
+            {
+                return _portName;
+            }
+            set
+            {
+                _portName = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("deviceName", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="deviceName")]
+        public string DeviceName
+        {
+            get
+            {
+                return _deviceName;
+            }
+            set
+            {
+                _deviceName = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("baudRate")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="baudRate")]
+        public int BaudRate
+        {
+            get
+            {
+                return _baudRate;
+            }
+            set
+            {
+                _baudRate = value;
+            }
+        }
+    
+        public System.IObservable<SerialDevice> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new SerialDevice
+                {
+                    PortName = _portName,
+                    DeviceName = _deviceName,
+                    BaudRate = _baudRate
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class BciNoMovementRig
     {
     
@@ -310,6 +376,8 @@ namespace BciNoMovementDataSchema.Rig
         private SpinnakerCamera _camera1 = new SpinnakerCamera();
     
         private PwmBuzzer _speaker = new PwmBuzzer();
+    
+        private SerialDevice _zaberManipulator = new SerialDevice();
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("harpBehaviorBoard", Required=Newtonsoft.Json.Required.Always)]
@@ -401,6 +469,21 @@ namespace BciNoMovementDataSchema.Rig
             }
         }
     
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("zaberManipulator", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="zaberManipulator")]
+        public SerialDevice ZaberManipulator
+        {
+            get
+            {
+                return _zaberManipulator;
+            }
+            set
+            {
+                _zaberManipulator = value;
+            }
+        }
+    
         public System.IObservable<BciNoMovementRig> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
@@ -411,7 +494,8 @@ namespace BciNoMovementDataSchema.Rig
                     HarpTimestampGeneratorGen3 = _harpTimestampGeneratorGen3,
                     Camera0 = _camera0,
                     Camera1 = _camera1,
-                    Speaker = _speaker
+                    Speaker = _speaker,
+                    ZaberManipulator = _zaberManipulator
                 }));
         }
     }
@@ -484,6 +568,11 @@ namespace BciNoMovementDataSchema.Rig
             return Process<PwmBuzzer>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<SerialDevice> source)
+        {
+            return Process<SerialDevice>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<BciNoMovementRig> source)
         {
             return Process<BciNoMovementRig>(source);
@@ -499,6 +588,7 @@ namespace BciNoMovementDataSchema.Rig
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpBoard>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PwmBuzzer>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SerialDevice>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BciNoMovementRig>))]
     [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of JSON strings into data model objects.")]
     public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder
@@ -562,6 +652,11 @@ namespace BciNoMovementDataSchema.Rig
             return Process<PwmBuzzer>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<SerialDevice> source)
+        {
+            return Process<SerialDevice>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<BciNoMovementRig> source)
         {
             return Process<BciNoMovementRig>(source);
@@ -577,6 +672,7 @@ namespace BciNoMovementDataSchema.Rig
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpBoard>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PwmBuzzer>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SerialDevice>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BciNoMovementRig>))]
     [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of YAML strings into data model objects.")]
     public partial class DeserializeFromYaml : Bonsai.Expressions.SingleArgumentExpressionBuilder
