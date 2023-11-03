@@ -1396,85 +1396,6 @@ Bci voltage to spout velocity]]></Text>
                       <p9:Name>ZaberDevice</p9:Name>
                     </Combinator>
                   </Expression>
-                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Tuple(sys:Int32,sys:Double)">
-                    <rx:Name>ZaberToPosition</rx:Name>
-                  </Expression>
-                  <Expression xsi:type="rx:GroupBy">
-                    <rx:KeySelector>Item1</rx:KeySelector>
-                  </Expression>
-                  <Expression xsi:type="rx:CreateObservable">
-                    <Name>MoveAxis</Name>
-                    <Workflow>
-                      <Nodes>
-                        <Expression xsi:type="WorkflowInput">
-                          <Name>Source1</Name>
-                        </Expression>
-                        <Expression xsi:type="rx:ReplaySubject">
-                          <Name>Data</Name>
-                          <rx:BufferSize xsi:nil="true" />
-                        </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>Data</Name>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="rx:Merge" />
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>Item2</Selector>
-                        </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>Data</Name>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>Key</Selector>
-                        </Expression>
-                        <Expression xsi:type="PropertyMapping">
-                          <PropertyMappings>
-                            <Property Name="Axis" />
-                          </PropertyMappings>
-                        </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>RigSchema</Name>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>ZaberManipulator</Selector>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>DeviceName</Selector>
-                        </Expression>
-                        <Expression xsi:type="PropertyMapping">
-                          <PropertyMappings>
-                            <Property Name="PortName" />
-                          </PropertyMappings>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p9:MoveAxis">
-                            <p9:Axis>0</p9:Axis>
-                            <p9:Velocity xsi:nil="true" />
-                            <p9:Acceleration xsi:nil="true" />
-                          </Combinator>
-                        </Expression>
-                        <Expression xsi:type="WorkflowOutput" />
-                      </Nodes>
-                      <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="2" To="3" Label="Source1" />
-                        <Edge From="3" To="4" Label="Source1" />
-                        <Edge From="4" To="12" Label="Source1" />
-                        <Edge From="5" To="6" Label="Source1" />
-                        <Edge From="6" To="7" Label="Source1" />
-                        <Edge From="7" To="12" Label="Source2" />
-                        <Edge From="8" To="9" Label="Source1" />
-                        <Edge From="9" To="10" Label="Source1" />
-                        <Edge From="10" To="11" Label="Source1" />
-                        <Edge From="11" To="12" Label="Source3" />
-                        <Edge From="12" To="13" Label="Source1" />
-                      </Edges>
-                    </Workflow>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:Merge" />
-                  </Expression>
                   <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p6:Unit">
                     <rx:Name>ZaberHalt</rx:Name>
                   </Expression>
@@ -1493,33 +1414,18 @@ Bci voltage to spout velocity]]></Text>
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p9:StopAxis">
+                    <Combinator xsi:type="p9:Stop">
                       <p9:Axis xsi:nil="true" />
                     </Combinator>
                   </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:Timer">
-                      <rx:DueTime>PT0S</rx:DueTime>
-                      <rx:Period>PT0.02S</rx:Period>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>RigSchema</Name>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>ZaberManipulator</Selector>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>DeviceName</Selector>
-                  </Expression>
-                  <Expression xsi:type="PropertyMapping">
-                    <PropertyMappings>
-                      <Property Name="PortName" />
-                    </PropertyMappings>
+                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Single">
+                    <rx:Name>MoveSpoutAbsolute</rx:Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p9:GetAxisPosition">
-                      <p9:Axis>1</p9:Axis>
+                    <Combinator xsi:type="p9:MoveAbsolute">
+                      <p9:Axis>0</p9:Axis>
+                      <p9:Velocity xsi:nil="true" />
+                      <p9:Acceleration xsi:nil="true" />
                     </Combinator>
                   </Expression>
                 </Nodes>
@@ -1527,19 +1433,12 @@ Bci voltage to spout velocity]]></Text>
                   <Edge From="0" To="1" Label="Source1" />
                   <Edge From="1" To="2" Label="Source1" />
                   <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="4" To="9" Label="Source1" />
                   <Edge From="5" To="6" Label="Source1" />
                   <Edge From="6" To="7" Label="Source1" />
-                  <Edge From="8" To="13" Label="Source1" />
-                  <Edge From="9" To="10" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="8" To="9" Label="Source2" />
                   <Edge From="10" To="11" Label="Source1" />
-                  <Edge From="11" To="12" Label="Source1" />
-                  <Edge From="12" To="13" Label="Source2" />
-                  <Edge From="14" To="19" Label="Source1" />
-                  <Edge From="15" To="16" Label="Source1" />
-                  <Edge From="16" To="17" Label="Source1" />
-                  <Edge From="17" To="18" Label="Source1" />
-                  <Edge From="18" To="19" Label="Source2" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -1659,6 +1558,17 @@ Bci voltage to spout velocity]]></Text>
                   <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Double">
                     <rx:Name>SpoutAddDisplacement</rx:Name>
                   </Expression>
+                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p6:Unit">
+                    <rx:Name>GoToInitialPosition</rx:Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="DoubleProperty">
+                      <Value>0</Value>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="MulticastSubject">
+                    <Name>MoveSpoutAbsolute</Name>
+                  </Expression>
                   <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Double">
                     <rx:Name>SpoutGoToPosition</rx:Name>
                   </Expression>
@@ -1709,38 +1619,16 @@ Bci voltage to spout velocity]]></Text>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:Switch" />
                   </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="IntProperty">
-                      <Value>1</Value>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:Zip" />
-                  </Expression>
                   <Expression xsi:type="MulticastSubject">
-                    <Name>ZaberToPosition</Name>
-                  </Expression>
-                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p6:Unit">
-                    <rx:Name>GoToInitialPosition</rx:Name>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="DoubleProperty">
-                      <Value>0</Value>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="MulticastSubject">
-                    <Name>SpoutGoToPosition</Name>
+                    <Name>MoveSpoutAbsolute</Name>
                   </Expression>
                 </Nodes>
                 <Edges>
                   <Edge From="1" To="2" Label="Source1" />
                   <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="3" To="4" Label="Source1" />
-                  <Edge From="3" To="5" Label="Source2" />
                   <Edge From="4" To="5" Label="Source1" />
                   <Edge From="5" To="6" Label="Source1" />
-                  <Edge From="7" To="8" Label="Source1" />
-                  <Edge From="8" To="9" Label="Source1" />
+                  <Edge From="6" To="7" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -1996,10 +1884,7 @@ Bci voltage to spout velocity]]></Text>
               <Workflow>
                 <Nodes>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>ZaberToPosition</Name>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Item2</Selector>
+                    <Name>MoveSpoutAbsolute</Name>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>FinalPosition</Name>
@@ -2197,34 +2082,33 @@ Bci voltage to spout velocity]]></Text>
                   </Expression>
                 </Nodes>
                 <Edges>
-                  <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="4" Label="Source1" />
-                  <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="3" To="4" Label="Source2" />
+                  <Edge From="0" To="3" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source2" />
+                  <Edge From="3" To="4" Label="Source1" />
                   <Edge From="4" To="5" Label="Source1" />
                   <Edge From="5" To="6" Label="Source1" />
                   <Edge From="6" To="7" Label="Source1" />
                   <Edge From="7" To="8" Label="Source1" />
-                  <Edge From="8" To="9" Label="Source1" />
-                  <Edge From="9" To="12" Label="Source1" />
-                  <Edge From="10" To="11" Label="Source1" />
-                  <Edge From="11" To="12" Label="Source2" />
+                  <Edge From="8" To="11" Label="Source1" />
+                  <Edge From="9" To="10" Label="Source1" />
+                  <Edge From="10" To="11" Label="Source2" />
+                  <Edge From="11" To="12" Label="Source1" />
                   <Edge From="12" To="13" Label="Source1" />
                   <Edge From="13" To="14" Label="Source1" />
-                  <Edge From="14" To="15" Label="Source1" />
+                  <Edge From="15" To="16" Label="Source1" />
                   <Edge From="16" To="17" Label="Source1" />
-                  <Edge From="17" To="18" Label="Source1" />
-                  <Edge From="18" To="21" Label="Source1" />
-                  <Edge From="19" To="20" Label="Source1" />
-                  <Edge From="20" To="21" Label="Source2" />
+                  <Edge From="17" To="20" Label="Source1" />
+                  <Edge From="18" To="19" Label="Source1" />
+                  <Edge From="19" To="20" Label="Source2" />
+                  <Edge From="20" To="21" Label="Source1" />
                   <Edge From="21" To="22" Label="Source1" />
-                  <Edge From="22" To="23" Label="Source1" />
-                  <Edge From="24" To="25" Label="Source1" />
-                  <Edge From="25" To="28" Label="Source1" />
-                  <Edge From="26" To="27" Label="Source1" />
-                  <Edge From="27" To="28" Label="Source2" />
+                  <Edge From="23" To="24" Label="Source1" />
+                  <Edge From="24" To="27" Label="Source1" />
+                  <Edge From="25" To="26" Label="Source1" />
+                  <Edge From="26" To="27" Label="Source2" />
+                  <Edge From="27" To="28" Label="Source1" />
                   <Edge From="28" To="29" Label="Source1" />
-                  <Edge From="29" To="30" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -2295,7 +2179,7 @@ Bci voltage to spout velocity]]></Text>
                 </Edges>
               </Workflow>
             </Expression>
-            <Expression xsi:type="rx:Sink">
+            <Expression xsi:type="rx:SelectMany">
               <Name>DeliverReward</Name>
               <Workflow>
                 <Nodes>
@@ -2306,12 +2190,24 @@ Bci voltage to spout velocity]]></Text>
                   <Expression xsi:type="MulticastSubject">
                     <Name>TriggerValve</Name>
                   </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Take">
+                      <rx:Count>1</rx:Count>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="BooleanProperty">
+                      <Value>true</Value>
+                    </Combinator>
+                  </Expression>
                   <Expression xsi:type="WorkflowOutput" />
                 </Nodes>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
                   <Edge From="1" To="2" Label="Source1" />
                   <Edge From="2" To="3" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
