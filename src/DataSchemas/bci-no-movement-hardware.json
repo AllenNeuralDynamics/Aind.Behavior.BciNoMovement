@@ -93,7 +93,7 @@
         },
         "frameRate": {
           "default": 30,
-          "maximum": 350,
+          "maximum": 500,
           "minimum": 1,
           "type": "integer"
         },
