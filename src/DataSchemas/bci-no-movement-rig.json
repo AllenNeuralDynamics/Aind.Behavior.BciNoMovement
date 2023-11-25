@@ -22,9 +22,58 @@
       "$ref": "bci-no-movement-hardware.json#/definitions/pwmBuzzer"
     },
     "zaberManipulator": {
-      "$ref": "bci-no-movement-hardware.json#/definitions/serialDevice"
-    }
-  },
+      "type": "object",
+      "properties": {
+        "communication" : {"$ref": "bci-no-movement-hardware.json#/definitions/serialDevice"},
+        "operation":{
+          "type": "object",
+          "properties": {
+            "axis" : {
+              "type": "integer",
+              "minimum": 0,
+              "default": 1,
+              "description": "Axis of the manipulator to be controlled."
+            },
+            "invertDirection" : {
+              "type": "boolean",
+              "default": false,
+              "description": "Invert the direction of the manipulator."
+            },
+            "maxSpeed" : {
+              "type": "number",
+              "minimum": 0,
+              "default": 12.0,
+              "description": "Maximum speed of the manipulator in mm/s"
+            },
+            "acceleration" : {
+              "type": "number",
+              "minimum": 0,
+              "default": 1299.63,
+              "description": "Acceleration of the manipulator in mm/s^2"
+            },
+            "closePosition" : {
+              "type": "number",
+              "minimum": 0,
+              "default": 19,
+              "description": "Position (mm) of the manipulator when the spout is the closest to the animal."
+            },
+            "farPosition": {
+              "type": "number",
+              "minimum": 0,
+              "default": 11,
+              "description": "Position (mm) of the manipulator when the spout is furthest from the animal."
+            },
+            "maxBciSpeed":{
+              "type": "number",
+              "minimum": 0,
+              "default": 10,
+              "description": "Maximum speed of the manipulator in mm/s when controlled by the BCI."
+            }
+            }
+          }
+        }
+      }
+    },
   "required": [
     "harpBehaviorBoard",
     "harpLoadCellsBoard",

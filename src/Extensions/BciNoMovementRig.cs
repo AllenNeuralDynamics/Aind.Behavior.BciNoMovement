@@ -377,7 +377,7 @@ namespace BciNoMovementDataSchema.Rig
     
         private PwmBuzzer _speaker = new PwmBuzzer();
     
-        private SerialDevice _zaberManipulator = new SerialDevice();
+        private ZaberManipulator _zaberManipulator = new ZaberManipulator();
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("harpBehaviorBoard", Required=Newtonsoft.Json.Required.Always)]
@@ -472,7 +472,7 @@ namespace BciNoMovementDataSchema.Rig
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("zaberManipulator", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="zaberManipulator")]
-        public SerialDevice ZaberManipulator
+        public ZaberManipulator ZaberManipulator
         {
             get
             {
@@ -539,6 +539,219 @@ namespace BciNoMovementDataSchema.Rig
     }
 
 
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class ZaberManipulator
+    {
+    
+        private SerialDevice _communication;
+    
+        private Operation _operation;
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("communication")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="communication")]
+        public SerialDevice Communication
+        {
+            get
+            {
+                return _communication;
+            }
+            set
+            {
+                _communication = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("operation")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="operation")]
+        public Operation Operation
+        {
+            get
+            {
+                return _operation;
+            }
+            set
+            {
+                _operation = value;
+            }
+        }
+    
+        public System.IObservable<ZaberManipulator> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new ZaberManipulator
+                {
+                    Communication = _communication,
+                    Operation = _operation
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class Operation
+    {
+    
+        private int _axis = 1;
+    
+        private bool _invertDirection = false;
+    
+        private double _maxSpeed = 12D;
+    
+        private double _acceleration = 1299.63D;
+    
+        private double _closePosition = 19D;
+    
+        private double _farPosition = 11D;
+    
+        private double _maxBciSpeed = 10D;
+    
+        /// <summary>
+        /// Axis of the manipulator to be controlled.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("axis")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="axis")]
+        [System.ComponentModel.DescriptionAttribute("Axis of the manipulator to be controlled.")]
+        public int Axis
+        {
+            get
+            {
+                return _axis;
+            }
+            set
+            {
+                _axis = value;
+            }
+        }
+    
+        /// <summary>
+        /// Invert the direction of the manipulator.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("invertDirection")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="invertDirection")]
+        [System.ComponentModel.DescriptionAttribute("Invert the direction of the manipulator.")]
+        public bool InvertDirection
+        {
+            get
+            {
+                return _invertDirection;
+            }
+            set
+            {
+                _invertDirection = value;
+            }
+        }
+    
+        /// <summary>
+        /// Maximum speed of the manipulator in mm/s
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("maxSpeed")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="maxSpeed")]
+        [System.ComponentModel.DescriptionAttribute("Maximum speed of the manipulator in mm/s")]
+        public double MaxSpeed
+        {
+            get
+            {
+                return _maxSpeed;
+            }
+            set
+            {
+                _maxSpeed = value;
+            }
+        }
+    
+        /// <summary>
+        /// Acceleration of the manipulator in mm/s^2
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("acceleration")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="acceleration")]
+        [System.ComponentModel.DescriptionAttribute("Acceleration of the manipulator in mm/s^2")]
+        public double Acceleration
+        {
+            get
+            {
+                return _acceleration;
+            }
+            set
+            {
+                _acceleration = value;
+            }
+        }
+    
+        /// <summary>
+        /// Position (mm) of the manipulator when the spout is the closest to the animal.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("closePosition")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="closePosition")]
+        [System.ComponentModel.DescriptionAttribute("Position (mm) of the manipulator when the spout is the closest to the animal.")]
+        public double ClosePosition
+        {
+            get
+            {
+                return _closePosition;
+            }
+            set
+            {
+                _closePosition = value;
+            }
+        }
+    
+        /// <summary>
+        /// Position (mm) of the manipulator when the spout is furthest from the animal.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("farPosition")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="farPosition")]
+        [System.ComponentModel.DescriptionAttribute("Position (mm) of the manipulator when the spout is furthest from the animal.")]
+        public double FarPosition
+        {
+            get
+            {
+                return _farPosition;
+            }
+            set
+            {
+                _farPosition = value;
+            }
+        }
+    
+        /// <summary>
+        /// Maximum speed of the manipulator in mm/s when controlled by the BCI.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("maxBciSpeed")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="maxBciSpeed")]
+        [System.ComponentModel.DescriptionAttribute("Maximum speed of the manipulator in mm/s when controlled by the BCI.")]
+        public double MaxBciSpeed
+        {
+            get
+            {
+                return _maxBciSpeed;
+            }
+            set
+            {
+                _maxBciSpeed = value;
+            }
+        }
+    
+        public System.IObservable<Operation> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new Operation
+                {
+                    Axis = _axis,
+                    InvertDirection = _invertDirection,
+                    MaxSpeed = _maxSpeed,
+                    Acceleration = _acceleration,
+                    ClosePosition = _closePosition,
+                    FarPosition = _farPosition,
+                    MaxBciSpeed = _maxBciSpeed
+                }));
+        }
+    }
+
+
     /// <summary>
     /// Serializes a sequence of data model objects into JSON strings.
     /// </summary>
@@ -577,6 +790,16 @@ namespace BciNoMovementDataSchema.Rig
         {
             return Process<BciNoMovementRig>(source);
         }
+
+        public System.IObservable<string> Process(System.IObservable<ZaberManipulator> source)
+        {
+            return Process<ZaberManipulator>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<Operation> source)
+        {
+            return Process<Operation>(source);
+        }
     }
 
 
@@ -590,6 +813,8 @@ namespace BciNoMovementDataSchema.Rig
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PwmBuzzer>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SerialDevice>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BciNoMovementRig>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZaberManipulator>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Operation>))]
     [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of JSON strings into data model objects.")]
     public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
@@ -661,6 +886,16 @@ namespace BciNoMovementDataSchema.Rig
         {
             return Process<BciNoMovementRig>(source);
         }
+
+        public System.IObservable<string> Process(System.IObservable<ZaberManipulator> source)
+        {
+            return Process<ZaberManipulator>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<Operation> source)
+        {
+            return Process<Operation>(source);
+        }
     }
 
 
@@ -674,6 +909,8 @@ namespace BciNoMovementDataSchema.Rig
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PwmBuzzer>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SerialDevice>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BciNoMovementRig>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZaberManipulator>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Operation>))]
     [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of YAML strings into data model objects.")]
     public partial class DeserializeFromYaml : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {

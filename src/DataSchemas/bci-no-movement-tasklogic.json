@@ -1,0 +1,73 @@
+{
+  "$id": "h...",
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "definitions": {
+  },
+  "properties": {
+    "valveOpenTime": {
+      "default": 0.1,
+      "minimum": 0,
+      "description": "Time in seconds to open the valve for reward delivery",
+      "type": "number"
+    },
+    "lowActivityTime": {
+      "default": 1,
+      "minimum": 0,
+      "description": "Time in seconds to wait for the bci activity to be low",
+      "type": "number"
+    },
+    "lickResponseTime": {
+      "default": 2,
+      "minimum": 0,
+      "description": "Time in seconds to wait for the animal to collect reward",
+      "type": "number"
+    },
+    "waitForLick": {
+      "default": true,
+      "description": "Wait for the animal to lick before delivering reward",
+      "type": "boolean"
+    },
+    "enableSoundOnRewardZoneEntry": {
+      "default": true,
+      "description": "Enables sound on reward zone entry",
+      "type": "boolean"
+    },
+    "enableAutoWater": {
+      "default": true,
+      "description": "Enables AutoWater mode.",
+      "type": "boolean"
+    },
+    "autoWaterTimeMultiplier": {
+      "default": 0.5,
+      "minimum": 0,
+      "description": "Multiplier for the AutoWater mode.",
+      "type": "number"
+    },
+    "quiescenceTime": {
+      "default": 0,
+      "minimum": 0,
+      "description": "Time in seconds to wait for the animal to stop moving",
+      "type": "number"
+    },
+    "interTrialInterval": {
+      "default": 0.5,
+      "minimum": 0,
+      "description": "Time in seconds between trials",
+      "type": "number"
+    },
+    "neuronResponseTime" : {
+      "default": 20,
+      "minimum": 0,
+      "description": "Time in seconds to wait for the BCI signal to complete the trial",
+      "type": "number"
+    },
+    "rewardConsumeTime" : {
+      "default": 2,
+      "minimum": 0,
+      "description": "Time in seconds to wait for the animal to consume the reward",
+      "type": "number"
+    }
+  },
+  "title": "BciNoMovementTaskLogic",
+  "type": "object"
+}
