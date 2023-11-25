@@ -16,11 +16,12 @@
                  xmlns:p7="clr-namespace:Harp.LoadCells;assembly=Harp.LoadCells"
                  xmlns:dsp="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp"
                  xmlns:p8="clr-namespace:Harp.TimestampGeneratorGen3;assembly=Harp.TimestampGeneratorGen3"
+                 xmlns:p9="clr-namespace:;assembly=Extensions"
                  xmlns:spk="clr-namespace:Bonsai.Spinnaker;assembly=Bonsai.Spinnaker"
-                 xmlns:p9="clr-namespace:AllenNeuralDynamics.Zaber;assembly=AllenNeuralDynamics.Zaber"
-                 xmlns:p10="clr-namespace:Harp.Behavior;assembly=Extensions"
-                 xmlns:p11="clr-namespace:Harp.LoadCells;assembly=Extensions"
-                 xmlns:p12="clr-namespace:Harp.TimestampGenerator3;assembly=Extensions"
+                 xmlns:p10="clr-namespace:AllenNeuralDynamics.Zaber;assembly=AllenNeuralDynamics.Zaber"
+                 xmlns:p11="clr-namespace:Harp.Behavior;assembly=Extensions"
+                 xmlns:p12="clr-namespace:Harp.LoadCells;assembly=Extensions"
+                 xmlns:p13="clr-namespace:Harp.TimestampGenerator3;assembly=Extensions"
                  xmlns:ffmpeg="clr-namespace:Bonsai.FFmpeg;assembly=Bonsai.FFmpeg"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
@@ -1299,13 +1300,17 @@ Bci voltage to spout velocity]]></Text>
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p1:AindSpinnakerCapture">
+                    <Combinator xsi:type="p9:BciSpinnakerCapture">
                       <spk:Index xsi:nil="true" />
-                      <spk:SerialNumber>23022713</spk:SerialNumber>
                       <spk:ColorProcessing>Default</spk:ColorProcessing>
-                      <p1:ExposureTime>2000</p1:ExposureTime>
-                      <p1:Gain>0</p1:Gain>
-                      <p1:Binning>1</p1:Binning>
+                      <p9:ExposureTime>5000</p9:ExposureTime>
+                      <p9:Gain>5</p9:Gain>
+                      <p9:Binning>1</p9:Binning>
+                      <p9:Gamma>0.4</p9:Gamma>
+                      <p9:ImageSize>
+                        <p9:Width>1420</p9:Width>
+                        <p9:Height>1080</p9:Height>
+                      </p9:ImageSize>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
@@ -1336,12 +1341,17 @@ Bci voltage to spout velocity]]></Text>
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p1:AindSpinnakerCapture">
+                    <Combinator xsi:type="p9:BciSpinnakerCapture">
                       <spk:Index xsi:nil="true" />
                       <spk:ColorProcessing>Default</spk:ColorProcessing>
-                      <p1:ExposureTime>19000</p1:ExposureTime>
-                      <p1:Gain>0</p1:Gain>
-                      <p1:Binning>1</p1:Binning>
+                      <p9:ExposureTime>5000</p9:ExposureTime>
+                      <p9:Gain>5</p9:Gain>
+                      <p9:Binning>1</p9:Binning>
+                      <p9:Gamma>0.4</p9:Gamma>
+                      <p9:ImageSize>
+                        <p9:Width>1420</p9:Width>
+                        <p9:Height>1080</p9:Height>
+                      </p9:ImageSize>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
@@ -1407,9 +1417,9 @@ Bci voltage to spout velocity]]></Text>
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p9:CreateZaberDevice">
-                      <p9:Name>ZaberMotor</p9:Name>
-                      <p9:PortName>COM13</p9:PortName>
+                    <Combinator xsi:type="p10:CreateZaberDevice">
+                      <p10:Name>ZaberMotor</p10:Name>
+                      <p10:PortName>COM13</p10:PortName>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="rx:BehaviorSubject">
@@ -1433,9 +1443,9 @@ Bci voltage to spout velocity]]></Text>
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p9:Stop">
-                      <p9:PortName>ZaberMotor</p9:PortName>
-                      <p9:Axis xsi:nil="true" />
+                    <Combinator xsi:type="p10:Stop">
+                      <p10:PortName>ZaberMotor</p10:PortName>
+                      <p10:Axis xsi:nil="true" />
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -1477,11 +1487,11 @@ Bci voltage to spout velocity]]></Text>
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p9:MoveAbsolute">
-                      <p9:PortName>ZaberMotor</p9:PortName>
-                      <p9:Axis>2</p9:Axis>
-                      <p9:Velocity xsi:nil="true" />
-                      <p9:Acceleration xsi:nil="true" />
+                    <Combinator xsi:type="p10:MoveAbsolute">
+                      <p10:PortName>ZaberMotor</p10:PortName>
+                      <p10:Axis>2</p10:Axis>
+                      <p10:Velocity xsi:nil="true" />
+                      <p10:Acceleration xsi:nil="true" />
                     </Combinator>
                   </Expression>
                 </Nodes>
@@ -2465,7 +2475,7 @@ Bci voltage to spout velocity]]></Text>
                     <Name>HarpBehaviorEvents</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p10:FilterVisibility" />
+                    <Combinator xsi:type="p11:FilterVisibility" />
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="beh:GroupByRegister" />
@@ -2493,7 +2503,7 @@ Bci voltage to spout velocity]]></Text>
                     <Name>HarpLoadCellsEvents</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p11:FilterVisibility" />
+                    <Combinator xsi:type="p12:FilterVisibility" />
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p7:GroupByRegister" />
@@ -2521,7 +2531,7 @@ Bci voltage to spout velocity]]></Text>
                     <Name>HarpClkGenEvents</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p12:FilterVisibility" />
+                    <Combinator xsi:type="p13:FilterVisibility" />
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p8:GroupByRegister" />
