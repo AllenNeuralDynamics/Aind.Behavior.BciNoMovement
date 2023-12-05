@@ -10,6 +10,10 @@
           "default": null,
           "type": ["null", "string"]
         },
+        "allowDirty": {
+          "default": false,
+          "type": "boolean"
+        },
         "experiment": {
           "type": "string"
         },

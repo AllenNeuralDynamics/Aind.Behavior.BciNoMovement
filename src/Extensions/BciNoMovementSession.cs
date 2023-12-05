@@ -49,6 +49,8 @@ namespace BciNoMovementDataSchema.Session
     
         private string _commitHash;
     
+        private bool _allowDirty = false;
+    
         private string _experiment;
     
         private string _notes = "";
@@ -72,6 +74,20 @@ namespace BciNoMovementDataSchema.Session
             set
             {
                 _commitHash = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("allowDirty")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="allowDirty")]
+        public bool AllowDirty
+        {
+            get
+            {
+                return _allowDirty;
+            }
+            set
+            {
+                _allowDirty = value;
             }
         }
     
@@ -166,6 +182,7 @@ namespace BciNoMovementDataSchema.Session
                 new Metadata
                 {
                     CommitHash = _commitHash,
+                    AllowDirty = _allowDirty,
                     Experiment = _experiment,
                     Notes = _notes,
                     RngSeed = _rngSeed,
