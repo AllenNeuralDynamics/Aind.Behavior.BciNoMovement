@@ -2,27 +2,29 @@
 <WorkflowBuilder Version="2.8.1"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
-                 xmlns:p1="clr-namespace:AllenNeuralDynamics.Core;assembly=AllenNeuralDynamics.Core"
-                 xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
-                 xmlns:p2="clr-namespace:BciNoMovementDataSchema.Session;assembly=Extensions"
-                 xmlns:p3="clr-namespace:BciNoMovementDataSchema.Rig;assembly=Extensions"
-                 xmlns:p4="clr-namespace:BciNoMovementDataSchema.TaskLogic;assembly=Extensions"
-                 xmlns:p5="clr-namespace:AllenNeuralDynamics.VersionControl;assembly=AllenNeuralDynamics.VersionControl"
+                 xmlns:num="clr-namespace:Bonsai.Numerics;assembly=Bonsai.Numerics"
+                 xmlns:p1="clr-namespace:Bonsai.Numerics.Distributions;assembly=Bonsai.Numerics"
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
-                 xmlns:p6="clr-namespace:AllenNeuralDynamics.Core.Logging;assembly=AllenNeuralDynamics.Core"
+                 xmlns:p2="clr-namespace:AllenNeuralDynamics.Core;assembly=AllenNeuralDynamics.Core"
+                 xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
+                 xmlns:p3="clr-namespace:BciNoMovementDataSchema.Session;assembly=Extensions"
+                 xmlns:p4="clr-namespace:BciNoMovementDataSchema.Rig;assembly=Extensions"
+                 xmlns:p5="clr-namespace:BciNoMovementDataSchema.TaskLogic;assembly=Extensions"
+                 xmlns:p6="clr-namespace:AllenNeuralDynamics.VersionControl;assembly=AllenNeuralDynamics.VersionControl"
+                 xmlns:p7="clr-namespace:AllenNeuralDynamics.Core.Logging;assembly=AllenNeuralDynamics.Core"
                  xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
                  xmlns:beh="clr-namespace:Harp.Behavior;assembly=Harp.Behavior"
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
-                 xmlns:p7="clr-namespace:System.Reactive;assembly=System.Reactive.Core"
-                 xmlns:p8="clr-namespace:Harp.LoadCells;assembly=Harp.LoadCells"
+                 xmlns:p8="clr-namespace:System.Reactive;assembly=System.Reactive.Core"
+                 xmlns:p9="clr-namespace:Harp.LoadCells;assembly=Harp.LoadCells"
                  xmlns:dsp="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp"
-                 xmlns:p9="clr-namespace:Harp.TimestampGeneratorGen3;assembly=Harp.TimestampGeneratorGen3"
-                 xmlns:p10="clr-namespace:;assembly=Extensions"
+                 xmlns:p10="clr-namespace:Harp.TimestampGeneratorGen3;assembly=Harp.TimestampGeneratorGen3"
+                 xmlns:p11="clr-namespace:;assembly=Extensions"
                  xmlns:spk="clr-namespace:Bonsai.Spinnaker;assembly=Bonsai.Spinnaker"
-                 xmlns:p11="clr-namespace:AllenNeuralDynamics.Zaber;assembly=AllenNeuralDynamics.Zaber"
-                 xmlns:p12="clr-namespace:Harp.Behavior;assembly=Extensions"
-                 xmlns:p13="clr-namespace:Harp.LoadCells;assembly=Extensions"
-                 xmlns:p14="clr-namespace:Harp.TimestampGenerator3;assembly=Extensions"
+                 xmlns:p12="clr-namespace:AllenNeuralDynamics.Zaber;assembly=AllenNeuralDynamics.Zaber"
+                 xmlns:p13="clr-namespace:Harp.Behavior;assembly=Extensions"
+                 xmlns:p14="clr-namespace:Harp.LoadCells;assembly=Extensions"
+                 xmlns:p15="clr-namespace:Harp.TimestampGenerator3;assembly=Extensions"
                  xmlns:ffmpeg="clr-namespace:Bonsai.FFmpeg;assembly=Bonsai.FFmpeg"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
@@ -54,18 +56,83 @@ Bci voltage to spout velocity]]></Text>
             <Expression xsi:type="rx:BehaviorSubject">
               <Name>BciBaselineThreshold</Name>
             </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>SubjectSchema</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Metadata.RngSeed</Selector>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="num:CreateRandom">
+                <num:Seed xsi:nil="true" />
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p1:CreateContinuousUniform">
+                <p1:Lower>0</p1:Lower>
+                <p1:Upper>10</p1:Upper>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p1:Sample" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Zip" />
+            </Expression>
+            <Expression xsi:type="scr:ExpressionTransform">
+              <scr:Name>CheckNull</scr:Name>
+              <scr:Expression>Item1.HasValue ? Item1.Value : Item2</scr:Expression>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Take">
+                <rx:Count>1</rx:Count>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:AsyncSubject">
+              <Name>RngSeedValue</Name>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="Seed" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="num:CreateRandom">
+                <num:Seed xsi:nil="true" />
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Take">
+                <rx:Count>1</rx:Count>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:AsyncSubject">
+              <Name>RngSeed</Name>
+            </Expression>
           </Nodes>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
             <Edge From="1" To="2" Label="Source1" />
+            <Edge From="3" To="4" Label="Source1" />
+            <Edge From="4" To="8" Label="Source1" />
+            <Edge From="5" To="6" Label="Source1" />
+            <Edge From="6" To="7" Label="Source1" />
+            <Edge From="7" To="8" Label="Source2" />
+            <Edge From="8" To="9" Label="Source1" />
+            <Edge From="9" To="10" Label="Source1" />
+            <Edge From="10" To="11" Label="Source1" />
+            <Edge From="11" To="12" Label="Source1" />
+            <Edge From="12" To="13" Label="Source1" />
+            <Edge From="13" To="14" Label="Source1" />
+            <Edge From="14" To="15" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="p1:EnumerateDataSchemaInputs">
-          <p1:FileFilter>YML</p1:FileFilter>
-          <p1:Directory>..\local\Subjects</p1:Directory>
-          <p1:DataSchema>test.yml</p1:DataSchema>
+        <Combinator xsi:type="p2:EnumerateDataSchemaInputs">
+          <p2:FileFilter>YML</p2:FileFilter>
+          <p2:Directory>..\local\Subjects</p2:Directory>
+          <p2:DataSchema>test.yml</p2:DataSchema>
         </Combinator>
       </Expression>
       <Expression xsi:type="PropertyMapping">
@@ -78,8 +145,8 @@ Bci voltage to spout velocity]]></Text>
           <io:Path>..\local\Subjects\test.yml</io:Path>
         </Combinator>
       </Expression>
-      <Expression xsi:type="p2:DeserializeFromYaml">
-        <p2:Type xsi:type="TypeMapping" TypeArguments="p2:BciNoMovementSession" />
+      <Expression xsi:type="p3:DeserializeFromYaml">
+        <p3:Type xsi:type="TypeMapping" TypeArguments="p3:BciNoMovementSession" />
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="rx:Take">
@@ -90,38 +157,10 @@ Bci voltage to spout velocity]]></Text>
         <Name>SubjectSchema</Name>
       </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="p1:EnumerateDataSchemaInputs">
-          <p1:FileFilter>YML</p1:FileFilter>
-          <p1:Directory>..\local\Rigs</p1:Directory>
-          <p1:DataSchema>rig.yml</p1:DataSchema>
-        </Combinator>
-      </Expression>
-      <Expression xsi:type="PropertyMapping">
-        <PropertyMappings>
-          <Property Name="Path" />
-        </PropertyMappings>
-      </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="io:ReadAllText">
-          <io:Path>..\local\Rigs\rig.yml</io:Path>
-        </Combinator>
-      </Expression>
-      <Expression xsi:type="p3:DeserializeFromYaml">
-        <p3:Type xsi:type="TypeMapping" TypeArguments="p3:BciNoMovementRig" />
-      </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="rx:Take">
-          <rx:Count>1</rx:Count>
-        </Combinator>
-      </Expression>
-      <Expression xsi:type="rx:AsyncSubject">
-        <Name>RigSchema</Name>
-      </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="p1:EnumerateDataSchemaInputs">
-          <p1:FileFilter>YML</p1:FileFilter>
-          <p1:Directory>C:\git\AllenNeuralDynamics\aind-bci-no-movement\local\TaskLogic</p1:Directory>
-          <p1:DataSchema>rig.yml</p1:DataSchema>
+        <Combinator xsi:type="p2:EnumerateDataSchemaInputs">
+          <p2:FileFilter>YML</p2:FileFilter>
+          <p2:Directory>..\local\Rigs</p2:Directory>
+          <p2:DataSchema>rig.yml</p2:DataSchema>
         </Combinator>
       </Expression>
       <Expression xsi:type="PropertyMapping">
@@ -135,7 +174,7 @@ Bci voltage to spout velocity]]></Text>
         </Combinator>
       </Expression>
       <Expression xsi:type="p4:DeserializeFromYaml">
-        <p4:Type xsi:type="TypeMapping" TypeArguments="p4:BciNoMovementTaskLogic" />
+        <p4:Type xsi:type="TypeMapping" TypeArguments="p4:BciNoMovementRig" />
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="rx:Take">
@@ -143,178 +182,220 @@ Bci voltage to spout velocity]]></Text>
         </Combinator>
       </Expression>
       <Expression xsi:type="rx:AsyncSubject">
-        <Name>TaskLogic</Name>
+        <Name>RigSchema</Name>
       </Expression>
-      <Expression xsi:type="Disable">
-        <Builder xsi:type="GroupWorkflow">
-          <Name>Validation</Name>
-          <Workflow>
-            <Nodes>
-              <Expression xsi:type="Combinator">
-                <Combinator xsi:type="p5:CreateRepository">
-                  <p5:Path>../.</p5:Path>
-                </Combinator>
-              </Expression>
-              <Expression xsi:type="Combinator">
-                <Combinator xsi:type="rx:Take">
-                  <rx:Count>1</rx:Count>
-                </Combinator>
-              </Expression>
-              <Expression xsi:type="rx:AsyncSubject">
-                <Name>Repository</Name>
-              </Expression>
-              <Expression xsi:type="Combinator">
-                <Combinator xsi:type="p5:IsRepositoryClean">
-                  <p5:IgnoreUntracked>false</p5:IgnoreUntracked>
-                </Combinator>
-              </Expression>
-              <Expression xsi:type="BitwiseNot" />
-              <Expression xsi:type="rx:Condition">
-                <Workflow>
-                  <Nodes>
-                    <Expression xsi:type="WorkflowInput">
-                      <Name>Source1</Name>
-                    </Expression>
-                    <Expression xsi:type="WorkflowOutput" />
-                  </Nodes>
-                  <Edges>
-                    <Edge From="0" To="1" Label="Source1" />
-                  </Edges>
-                </Workflow>
-              </Expression>
-              <Expression xsi:type="Combinator">
-                <Combinator xsi:type="p1:ThrowException">
-                  <p1:Message>Repository is not clean! Discard or stash changes first.</p1:Message>
-                </Combinator>
-              </Expression>
-              <Expression xsi:type="SubscribeSubject">
-                <Name>RigSchema</Name>
-              </Expression>
-              <Expression xsi:type="MemberSelector">
-                <Selector>Camera0.FrameRate,Camera1.FrameRate</Selector>
-              </Expression>
-              <Expression xsi:type="Equal" />
-              <Expression xsi:type="BitwiseNot" />
-              <Expression xsi:type="rx:Condition">
-                <Workflow>
-                  <Nodes>
-                    <Expression xsi:type="WorkflowInput">
-                      <Name>Source1</Name>
-                    </Expression>
-                    <Expression xsi:type="WorkflowOutput" />
-                  </Nodes>
-                  <Edges>
-                    <Edge From="0" To="1" Label="Source1" />
-                  </Edges>
-                </Workflow>
-              </Expression>
-              <Expression xsi:type="Combinator">
-                <Combinator xsi:type="rx:Take">
-                  <rx:Count>1</rx:Count>
-                </Combinator>
-              </Expression>
-              <Expression xsi:type="Combinator">
-                <Combinator xsi:type="p1:ThrowException">
-                  <p1:Message>Camera frame rates must match!</p1:Message>
-                </Combinator>
-              </Expression>
-              <Expression xsi:type="SubscribeSubject">
-                <Name>RigSchema</Name>
-              </Expression>
-              <Expression xsi:type="MemberSelector">
-                <Selector>Camera0.FrameRate,Camera0.Exposure</Selector>
-              </Expression>
-              <Expression xsi:type="scr:ExpressionTransform">
-                <scr:Expression>((1.0 / Item1) * 1000000) &lt;= Item2 + 500</scr:Expression>
-              </Expression>
-              <Expression xsi:type="rx:Condition">
-                <Workflow>
-                  <Nodes>
-                    <Expression xsi:type="WorkflowInput">
-                      <Name>Source1</Name>
-                    </Expression>
-                    <Expression xsi:type="WorkflowOutput" />
-                  </Nodes>
-                  <Edges>
-                    <Edge From="0" To="1" Label="Source1" />
-                  </Edges>
-                </Workflow>
-              </Expression>
-              <Expression xsi:type="Combinator">
-                <Combinator xsi:type="rx:Take">
-                  <rx:Count>1</rx:Count>
-                </Combinator>
-              </Expression>
-              <Expression xsi:type="Combinator">
-                <Combinator xsi:type="p1:ThrowException">
-                  <p1:Message>Camera0 Fps and Exposure not compatible.</p1:Message>
-                </Combinator>
-              </Expression>
-              <Expression xsi:type="SubscribeSubject">
-                <Name>RigSchema</Name>
-              </Expression>
-              <Expression xsi:type="MemberSelector">
-                <Selector>Camera0.FrameRate,Camera1.Exposure</Selector>
-              </Expression>
-              <Expression xsi:type="scr:ExpressionTransform">
-                <scr:Expression>((1.0 / Item1) * 1000000) &lt; Item2 + 1000</scr:Expression>
-              </Expression>
-              <Expression xsi:type="rx:Condition">
-                <Workflow>
-                  <Nodes>
-                    <Expression xsi:type="WorkflowInput">
-                      <Name>Source1</Name>
-                    </Expression>
-                    <Expression xsi:type="WorkflowOutput" />
-                  </Nodes>
-                  <Edges>
-                    <Edge From="0" To="1" Label="Source1" />
-                  </Edges>
-                </Workflow>
-              </Expression>
-              <Expression xsi:type="Combinator">
-                <Combinator xsi:type="rx:Take">
-                  <rx:Count>1</rx:Count>
-                </Combinator>
-              </Expression>
-              <Expression xsi:type="Combinator">
-                <Combinator xsi:type="p1:ThrowException">
-                  <p1:Message>Camera1 Fps and Exposure not compatible.</p1:Message>
-                </Combinator>
-              </Expression>
-            </Nodes>
-            <Edges>
-              <Edge From="0" To="1" Label="Source1" />
-              <Edge From="1" To="2" Label="Source1" />
-              <Edge From="2" To="3" Label="Source1" />
-              <Edge From="3" To="4" Label="Source1" />
-              <Edge From="4" To="5" Label="Source1" />
-              <Edge From="5" To="6" Label="Source1" />
-              <Edge From="7" To="8" Label="Source1" />
-              <Edge From="8" To="9" Label="Source1" />
-              <Edge From="9" To="10" Label="Source1" />
-              <Edge From="10" To="11" Label="Source1" />
-              <Edge From="11" To="12" Label="Source1" />
-              <Edge From="12" To="13" Label="Source1" />
-              <Edge From="14" To="15" Label="Source1" />
-              <Edge From="15" To="16" Label="Source1" />
-              <Edge From="16" To="17" Label="Source1" />
-              <Edge From="17" To="18" Label="Source1" />
-              <Edge From="18" To="19" Label="Source1" />
-              <Edge From="20" To="21" Label="Source1" />
-              <Edge From="21" To="22" Label="Source1" />
-              <Edge From="22" To="23" Label="Source1" />
-              <Edge From="23" To="24" Label="Source1" />
-              <Edge From="24" To="25" Label="Source1" />
-            </Edges>
-          </Workflow>
-        </Builder>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="p2:EnumerateDataSchemaInputs">
+          <p2:FileFilter>YML</p2:FileFilter>
+          <p2:Directory>C:\git\AllenNeuralDynamics\aind-bci-no-movement\local\TaskLogic</p2:Directory>
+          <p2:DataSchema>rig.yml</p2:DataSchema>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="PropertyMapping">
+        <PropertyMappings>
+          <Property Name="Path" />
+        </PropertyMappings>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="io:ReadAllText">
+          <io:Path>..\local\Rigs\rig.yml</io:Path>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="p5:DeserializeFromYaml">
+        <p5:Type xsi:type="TypeMapping" TypeArguments="p5:BciNoMovementTaskLogic" />
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:Take">
+          <rx:Count>1</rx:Count>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="rx:AsyncSubject">
+        <Name>TaskLogicSchema</Name>
+      </Expression>
+      <Expression xsi:type="GroupWorkflow">
+        <Name>Validation</Name>
+        <Workflow>
+          <Nodes>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p6:CreateRepository">
+                <p6:Path>../.</p6:Path>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Take">
+                <rx:Count>1</rx:Count>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:AsyncSubject">
+              <Name>Repository</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p6:IsRepositoryClean">
+                <p6:IgnoreUntracked>false</p6:IgnoreUntracked>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="BitwiseNot" />
+            <Expression xsi:type="SubscribeSubject">
+              <Name>SubjectSchema</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Metadata.AllowDirty</Selector>
+            </Expression>
+            <Expression xsi:type="BitwiseNot" />
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Zip" />
+            </Expression>
+            <Expression xsi:type="BitwiseAnd" />
+            <Expression xsi:type="rx:Condition">
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p2:ThrowException">
+                <p2:Message>Repository is not clean! Discard or stash changes first.</p2:Message>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>RigSchema</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Camera0.FrameRate,Camera1.FrameRate</Selector>
+            </Expression>
+            <Expression xsi:type="Equal" />
+            <Expression xsi:type="BitwiseNot" />
+            <Expression xsi:type="rx:Condition">
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Take">
+                <rx:Count>1</rx:Count>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p2:ThrowException">
+                <p2:Message>Camera frame rates must match!</p2:Message>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>RigSchema</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Camera0.FrameRate,Camera0.Exposure</Selector>
+            </Expression>
+            <Expression xsi:type="scr:ExpressionTransform">
+              <scr:Expression>((1.0 / Item1) * 1000000) &lt;= Item2 + 500</scr:Expression>
+            </Expression>
+            <Expression xsi:type="rx:Condition">
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Take">
+                <rx:Count>1</rx:Count>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p2:ThrowException">
+                <p2:Message>Camera0 Fps and Exposure not compatible.</p2:Message>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>RigSchema</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Camera0.FrameRate,Camera1.Exposure</Selector>
+            </Expression>
+            <Expression xsi:type="scr:ExpressionTransform">
+              <scr:Expression>((1.0 / Item1) * 1000000) &lt; Item2 + 1000</scr:Expression>
+            </Expression>
+            <Expression xsi:type="rx:Condition">
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Take">
+                <rx:Count>1</rx:Count>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p2:ThrowException">
+                <p2:Message>Camera1 Fps and Exposure not compatible.</p2:Message>
+              </Combinator>
+            </Expression>
+          </Nodes>
+          <Edges>
+            <Edge From="0" To="1" Label="Source1" />
+            <Edge From="1" To="2" Label="Source1" />
+            <Edge From="2" To="3" Label="Source1" />
+            <Edge From="3" To="4" Label="Source1" />
+            <Edge From="4" To="8" Label="Source1" />
+            <Edge From="5" To="6" Label="Source1" />
+            <Edge From="6" To="7" Label="Source1" />
+            <Edge From="7" To="8" Label="Source2" />
+            <Edge From="8" To="9" Label="Source1" />
+            <Edge From="9" To="10" Label="Source1" />
+            <Edge From="10" To="11" Label="Source1" />
+            <Edge From="12" To="13" Label="Source1" />
+            <Edge From="13" To="14" Label="Source1" />
+            <Edge From="14" To="15" Label="Source1" />
+            <Edge From="15" To="16" Label="Source1" />
+            <Edge From="16" To="17" Label="Source1" />
+            <Edge From="17" To="18" Label="Source1" />
+            <Edge From="19" To="20" Label="Source1" />
+            <Edge From="20" To="21" Label="Source1" />
+            <Edge From="21" To="22" Label="Source1" />
+            <Edge From="22" To="23" Label="Source1" />
+            <Edge From="23" To="24" Label="Source1" />
+            <Edge From="25" To="26" Label="Source1" />
+            <Edge From="26" To="27" Label="Source1" />
+            <Edge From="27" To="28" Label="Source1" />
+            <Edge From="28" To="29" Label="Source1" />
+            <Edge From="29" To="30" Label="Source1" />
+          </Edges>
+        </Workflow>
       </Expression>
       <Expression xsi:type="GroupWorkflow">
         <Name>Init</Name>
         <Workflow>
           <Nodes>
-            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p6:SoftwareEvent">
+            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p7:SoftwareEvent">
               <rx:Name>SoftwareEvent</rx:Name>
             </Expression>
           </Nodes>
@@ -514,7 +595,7 @@ Bci voltage to spout velocity]]></Text>
                                 <Name>HarpBehaviorCommands</Name>
                               </Expression>
                               <Expression xsi:type="SubscribeSubject">
-                                <Name>TaskLogic</Name>
+                                <Name>TaskLogicSchema</Name>
                               </Expression>
                               <Expression xsi:type="MemberSelector">
                                 <Selector>ValveOpenTime</Selector>
@@ -527,7 +608,7 @@ Bci voltage to spout velocity]]></Text>
                               <Expression xsi:type="MulticastSubject">
                                 <Name>ValveOpenTimeMs</Name>
                               </Expression>
-                              <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p7:Unit">
+                              <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p8:Unit">
                                 <rx:Name>TriggerValve</rx:Name>
                               </Expression>
                               <Expression xsi:type="beh:CreateMessage">
@@ -679,7 +760,7 @@ Bci voltage to spout velocity]]></Text>
                               <Expression xsi:type="MulticastSubject">
                                 <Name>HarpBehaviorCommands</Name>
                               </Expression>
-                              <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p7:Unit">
+                              <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p8:Unit">
                                 <rx:Name>AudioTrigger</rx:Name>
                               </Expression>
                               <Expression xsi:type="beh:CreateMessage">
@@ -814,7 +895,7 @@ Bci voltage to spout velocity]]></Text>
                           </PropertyMappings>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p8:Device">
+                          <Combinator xsi:type="p9:Device">
                             <harp:OperationMode>Active</harp:OperationMode>
                             <harp:OperationLed>On</harp:OperationLed>
                             <harp:DumpRegisters>true</harp:DumpRegisters>
@@ -868,10 +949,10 @@ Bci voltage to spout velocity]]></Text>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>HarpBehaviorHeartBeat</Name>
                         </Expression>
-                        <Expression xsi:type="p8:CreateMessage">
+                        <Expression xsi:type="p9:CreateMessage">
                           <harp:MessageType>Write</harp:MessageType>
-                          <harp:Payload xsi:type="p8:CreateEnableEventsPayload">
-                            <p8:EnableEvents>LoadCellData DigitalInput SyncOutput</p8:EnableEvents>
+                          <harp:Payload xsi:type="p9:CreateEnableEventsPayload">
+                            <p9:EnableEvents>LoadCellData DigitalInput SyncOutput</p9:EnableEvents>
                           </harp:Payload>
                         </Expression>
                         <Expression xsi:type="Combinator">
@@ -885,10 +966,10 @@ Bci voltage to spout velocity]]></Text>
                         <Expression xsi:type="SubscribeSubject">
                           <Name>HarpBehaviorHeartBeat</Name>
                         </Expression>
-                        <Expression xsi:type="p8:CreateMessage">
+                        <Expression xsi:type="p9:CreateMessage">
                           <harp:MessageType>Write</harp:MessageType>
-                          <harp:Payload xsi:type="p8:CreateAcquisitionStatePayload">
-                            <p8:AcquisitionState>Enabled</p8:AcquisitionState>
+                          <harp:Payload xsi:type="p9:CreateAcquisitionStatePayload">
+                            <p9:AcquisitionState>Enabled</p9:AcquisitionState>
                           </harp:Payload>
                         </Expression>
                         <Expression xsi:type="Combinator">
@@ -1060,7 +1141,7 @@ Bci voltage to spout velocity]]></Text>
                           </PropertyMappings>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p9:Device">
+                          <Combinator xsi:type="p10:Device">
                             <harp:OperationMode>Active</harp:OperationMode>
                             <harp:OperationLed>On</harp:OperationLed>
                             <harp:DumpRegisters>true</harp:DumpRegisters>
@@ -1228,17 +1309,17 @@ Bci voltage to spout velocity]]></Text>
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p10:BciSpinnakerCapture">
+                    <Combinator xsi:type="p11:BciSpinnakerCapture">
                       <spk:Index xsi:nil="true" />
                       <spk:ColorProcessing>Default</spk:ColorProcessing>
-                      <p10:ExposureTime>5000</p10:ExposureTime>
-                      <p10:Gain>5</p10:Gain>
-                      <p10:Binning>1</p10:Binning>
-                      <p10:Gamma>0.4</p10:Gamma>
-                      <p10:ImageSize>
-                        <p10:Width>1420</p10:Width>
-                        <p10:Height>1080</p10:Height>
-                      </p10:ImageSize>
+                      <p11:ExposureTime>5000</p11:ExposureTime>
+                      <p11:Gain>5</p11:Gain>
+                      <p11:Binning>1</p11:Binning>
+                      <p11:Gamma>0.4</p11:Gamma>
+                      <p11:ImageSize>
+                        <p11:Width>1420</p11:Width>
+                        <p11:Height>1080</p11:Height>
+                      </p11:ImageSize>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
@@ -1269,17 +1350,17 @@ Bci voltage to spout velocity]]></Text>
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p10:BciSpinnakerCapture">
+                    <Combinator xsi:type="p11:BciSpinnakerCapture">
                       <spk:Index xsi:nil="true" />
                       <spk:ColorProcessing>Default</spk:ColorProcessing>
-                      <p10:ExposureTime>5000</p10:ExposureTime>
-                      <p10:Gain>5</p10:Gain>
-                      <p10:Binning>1</p10:Binning>
-                      <p10:Gamma>0.4</p10:Gamma>
-                      <p10:ImageSize>
-                        <p10:Width>1420</p10:Width>
-                        <p10:Height>1080</p10:Height>
-                      </p10:ImageSize>
+                      <p11:ExposureTime>5000</p11:ExposureTime>
+                      <p11:Gain>5</p11:Gain>
+                      <p11:Binning>1</p11:Binning>
+                      <p11:Gamma>0.4</p11:Gamma>
+                      <p11:ImageSize>
+                        <p11:Width>1420</p11:Width>
+                        <p11:Height>1080</p11:Height>
+                      </p11:ImageSize>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
@@ -1348,9 +1429,9 @@ Bci voltage to spout velocity]]></Text>
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p11:CreateZaberDevice">
-                      <p11:Name>ZaberMotor</p11:Name>
-                      <p11:PortName>COM13</p11:PortName>
+                    <Combinator xsi:type="p12:CreateZaberDevice">
+                      <p12:Name>ZaberMotor</p12:Name>
+                      <p12:PortName>COM13</p12:PortName>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="rx:BehaviorSubject">
@@ -1368,7 +1449,7 @@ Bci voltage to spout velocity]]></Text>
                   <Expression xsi:type="rx:AsyncSubject">
                     <Name>ManipulatorSpoutAxis</Name>
                   </Expression>
-                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p7:Unit">
+                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p8:Unit">
                     <rx:Name>StopZaber</rx:Name>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
@@ -1389,9 +1470,9 @@ Bci voltage to spout velocity]]></Text>
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p11:Stop">
-                      <p11:PortName>ZaberMotor</p11:PortName>
-                      <p11:Axis xsi:nil="true" />
+                    <Combinator xsi:type="p12:Stop">
+                      <p12:PortName>ZaberMotor</p12:PortName>
+                      <p12:Axis xsi:nil="true" />
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Single">
@@ -1423,11 +1504,11 @@ Bci voltage to spout velocity]]></Text>
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p11:MoveAbsolute">
-                      <p11:PortName>ZaberMotor</p11:PortName>
-                      <p11:Axis>2</p11:Axis>
-                      <p11:Velocity xsi:nil="true" />
-                      <p11:Acceleration xsi:nil="true" />
+                    <Combinator xsi:type="p12:MoveAbsolute">
+                      <p12:PortName>ZaberMotor</p12:PortName>
+                      <p12:Axis>2</p12:Axis>
+                      <p12:Velocity xsi:nil="true" />
+                      <p12:Acceleration xsi:nil="true" />
                     </Combinator>
                   </Expression>
                 </Nodes>
@@ -1629,7 +1710,7 @@ Bci voltage to spout velocity]]></Text>
                   <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Double">
                     <rx:Name>SpoutAddDisplacement</rx:Name>
                   </Expression>
-                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p7:Unit">
+                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p8:Unit">
                     <rx:Name>GoToInitialPosition</rx:Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -1757,7 +1838,7 @@ Bci voltage to spout velocity]]></Text>
         <Workflow>
           <Nodes>
             <Expression xsi:type="SubscribeSubject">
-              <Name>TaskLogic</Name>
+              <Name>TaskLogicSchema</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
               <Selector>InterTrialInterval</Selector>
@@ -1838,7 +1919,7 @@ Bci voltage to spout velocity]]></Text>
                     <Combinator xsi:type="harp:CreateTimestamped" />
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>TaskLogic</Name>
+                    <Name>TaskLogicSchema</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>LowActivityTime</Selector>
@@ -1964,8 +2045,8 @@ Bci voltage to spout velocity]]></Text>
                   <Expression xsi:type="WorkflowOutput" />
                   <Expression xsi:type="Unit" />
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p6:CreateSoftwareEvent">
-                      <p6:EventName>CheckBaseline</p6:EventName>
+                    <Combinator xsi:type="p7:CreateSoftwareEvent">
+                      <p7:EventName>CheckBaseline</p7:EventName>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -2046,8 +2127,8 @@ Bci voltage to spout velocity]]></Text>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p6:CreateSoftwareEvent">
-                      <p6:EventName>ResponseLocked</p6:EventName>
+                    <Combinator xsi:type="p7:CreateSoftwareEvent">
+                      <p7:EventName>ResponseLocked</p7:EventName>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
@@ -2087,7 +2168,7 @@ Bci voltage to spout velocity]]></Text>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>TaskLogic</Name>
+                    <Name>TaskLogicSchema</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>NeuronResponseTime</Selector>
@@ -2112,8 +2193,8 @@ Bci voltage to spout velocity]]></Text>
                       <Nodes>
                         <Expression xsi:type="Unit" />
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p6:CreateSoftwareEvent">
-                            <p6:EventName>ResetTrial</p6:EventName>
+                          <Combinator xsi:type="p7:CreateSoftwareEvent">
+                            <p7:EventName>ResetTrial</p7:EventName>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="Combinator">
@@ -2144,7 +2225,7 @@ Bci voltage to spout velocity]]></Text>
                           <Name>AudioTrigger</Name>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
-                          <Name>TaskLogic</Name>
+                          <Name>TaskLogicSchema</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
                           <Selector>EnableSoundOnRewardZoneEntry</Selector>
@@ -2291,7 +2372,7 @@ Bci voltage to spout velocity]]></Text>
               <Workflow>
                 <Nodes>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>TaskLogic</Name>
+                    <Name>TaskLogicSchema</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>WaitForLick</Selector>
@@ -2322,7 +2403,7 @@ Bci voltage to spout velocity]]></Text>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
-                          <Name>TaskLogic</Name>
+                          <Name>TaskLogicSchema</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
                           <Selector>LickResponseTime</Selector>
@@ -2478,8 +2559,8 @@ Bci voltage to spout velocity]]></Text>
               <Combinator xsi:type="rx:Merge" />
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="p6:CreateSoftwareEvent">
-                <p6:EventName>TrialOutcome</p6:EventName>
+              <Combinator xsi:type="p7:CreateSoftwareEvent">
+                <p7:EventName>TrialOutcome</p7:EventName>
               </Combinator>
             </Expression>
             <Expression xsi:type="MulticastSubject">
@@ -2549,7 +2630,7 @@ Bci voltage to spout velocity]]></Text>
                     <Name>HarpBehaviorEvents</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p12:FilterVisibility" />
+                    <Combinator xsi:type="p13:FilterVisibility" />
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="beh:GroupByRegister" />
@@ -2577,10 +2658,10 @@ Bci voltage to spout velocity]]></Text>
                     <Name>HarpLoadCellsEvents</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p13:FilterVisibility" />
+                    <Combinator xsi:type="p14:FilterVisibility" />
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p8:GroupByRegister" />
+                    <Combinator xsi:type="p9:GroupByRegister" />
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:GenerateHarpLoggingPath.bonsai">
                     <SubjectName>LoggingRootPath</SubjectName>
@@ -2605,10 +2686,10 @@ Bci voltage to spout velocity]]></Text>
                     <Name>HarpClkGenEvents</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p14:FilterVisibility" />
+                    <Combinator xsi:type="p15:FilterVisibility" />
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p9:GroupByRegister" />
+                    <Combinator xsi:type="p10:GroupByRegister" />
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:GenerateHarpLoggingPath.bonsai">
                     <SubjectName>LoggingRootPath</SubjectName>
@@ -2813,7 +2894,7 @@ Bci voltage to spout velocity]]></Text>
                     <Combinator xsi:type="harp:CreateTimestamped" />
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="p6:TimestampSoftwareEvent" />
+                    <Combinator xsi:type="p7:TimestampSoftwareEvent" />
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogSoftwareEventsDemux.bonsai">
                     <LoggerName>SoftwareEvents</LoggerName>
@@ -2828,6 +2909,169 @@ Bci voltage to spout velocity]]></Text>
                   <Edge From="3" To="4" Label="Source1" />
                   <Edge From="4" To="5" Label="Source1" />
                   <Edge From="5" To="6" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="GroupWorkflow">
+              <Name>ConfigSchemaLogging</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>SubjectSchema</Name>
+                  </Expression>
+                  <Expression xsi:type="GroupWorkflow">
+                    <Name>ModifySchema</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="p3:SerializeToJson" />
+                        </Expression>
+                        <Expression xsi:type="p3:DeserializeFromJson">
+                          <p3:Type xsi:type="TypeMapping" TypeArguments="p3:BciNoMovementSession" />
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>Repository</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Head.Tip.Sha</Selector>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Zip" />
+                        </Expression>
+                        <Expression xsi:type="scr:ExpressionSink">
+                          <scr:Name>AddHash</scr:Name>
+                          <scr:Expression>it.Item1.Metadata.set_CommitHash(it.Item2)</scr:Expression>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Item1</Selector>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>RngSeedValue</Name>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Zip" />
+                        </Expression>
+                        <Expression xsi:type="scr:ExpressionSink">
+                          <scr:Name>AddRngSeedValue</scr:Name>
+                          <scr:Expression>it.Item1.Metadata.set_RngSeed(it.Item2)</scr:Expression>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Item1</Selector>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source1" />
+                        <Edge From="2" To="5" Label="Source1" />
+                        <Edge From="3" To="4" Label="Source1" />
+                        <Edge From="4" To="5" Label="Source2" />
+                        <Edge From="5" To="6" Label="Source1" />
+                        <Edge From="6" To="7" Label="Source1" />
+                        <Edge From="7" To="9" Label="Source1" />
+                        <Edge From="8" To="9" Label="Source2" />
+                        <Edge From="9" To="10" Label="Source1" />
+                        <Edge From="10" To="11" Label="Source1" />
+                        <Edge From="11" To="12" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="p3:SerializeToJson" />
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogDataSchema.bonsai">
+                    <SubjectName>LoggingRootPath</SubjectName>
+                    <LogName>Subject</LogName>
+                    <DeviceName>Config</DeviceName>
+                    <Extension>json</Extension>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>TaskLogicSchema</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="p5:SerializeToJson" />
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogDataSchema.bonsai">
+                    <SubjectName>LoggingRootPath</SubjectName>
+                    <LogName>Subject</LogName>
+                    <DeviceName>Config</DeviceName>
+                    <Extension>json</Extension>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>RigSchema</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="p4:SerializeToJson" />
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogDataSchema.bonsai">
+                    <SubjectName>LoggingRootPath</SubjectName>
+                    <LogName>Subject</LogName>
+                    <DeviceName>Config</DeviceName>
+                    <Extension>json</Extension>
+                  </Expression>
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="8" To="9" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="GroupWorkflow">
+              <Name>Logs</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>EndExperiment</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="StringProperty">
+                      <Value>ExperimentCompleted</Value>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="p7:CreateSoftwareEvent">
+                      <p7:EventName>SoftwareEvent</p7:EventName>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>HarpTimestampSource</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:WithLatestFrom" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="harp:CreateTimestamped" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="p7:TimestampSoftwareEvent" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="p7:SerializeToJson" />
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:LogDataSchema.bonsai">
+                    <SubjectName>LoggingRootPath</SubjectName>
+                    <LogName>EndSession</LogName>
+                    <DeviceName>config</DeviceName>
+                    <Extension>json</Extension>
+                  </Expression>
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="4" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source2" />
+                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -2867,7 +3111,7 @@ Bci voltage to spout velocity]]></Text>
         <Name>StartExperiment</Name>
         <rx:BufferSize xsi:nil="true" />
       </Expression>
-      <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p7:Unit">
+      <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p8:Unit">
         <rx:Name>EndExperiment</rx:Name>
       </Expression>
       <Expression xsi:type="Combinator">
