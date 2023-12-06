@@ -603,12 +603,6 @@ namespace BciNoMovementDataSchema.Rig
     
         private double _acceleration = 1299.63D;
     
-        private double _closePosition = 19D;
-    
-        private double _farPosition = 11D;
-    
-        private double _maxBciSpeed = 10D;
-    
         /// <summary>
         /// Axis of the manipulator to be controlled.
         /// </summary>
@@ -681,60 +675,6 @@ namespace BciNoMovementDataSchema.Rig
             }
         }
     
-        /// <summary>
-        /// Position (mm) of the manipulator when the spout is the closest to the animal.
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("closePosition")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="closePosition")]
-        [System.ComponentModel.DescriptionAttribute("Position (mm) of the manipulator when the spout is the closest to the animal.")]
-        public double ClosePosition
-        {
-            get
-            {
-                return _closePosition;
-            }
-            set
-            {
-                _closePosition = value;
-            }
-        }
-    
-        /// <summary>
-        /// Position (mm) of the manipulator when the spout is furthest from the animal.
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("farPosition")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="farPosition")]
-        [System.ComponentModel.DescriptionAttribute("Position (mm) of the manipulator when the spout is furthest from the animal.")]
-        public double FarPosition
-        {
-            get
-            {
-                return _farPosition;
-            }
-            set
-            {
-                _farPosition = value;
-            }
-        }
-    
-        /// <summary>
-        /// Maximum speed of the manipulator in mm/s when controlled by the BCI.
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("maxBciSpeed")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="maxBciSpeed")]
-        [System.ComponentModel.DescriptionAttribute("Maximum speed of the manipulator in mm/s when controlled by the BCI.")]
-        public double MaxBciSpeed
-        {
-            get
-            {
-                return _maxBciSpeed;
-            }
-            set
-            {
-                _maxBciSpeed = value;
-            }
-        }
-    
         public System.IObservable<Operation> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
@@ -743,10 +683,7 @@ namespace BciNoMovementDataSchema.Rig
                     Axis = _axis,
                     InvertDirection = _invertDirection,
                     MaxSpeed = _maxSpeed,
-                    Acceleration = _acceleration,
-                    ClosePosition = _closePosition,
-                    FarPosition = _farPosition,
-                    MaxBciSpeed = _maxBciSpeed
+                    Acceleration = _acceleration
                 }));
         }
     }

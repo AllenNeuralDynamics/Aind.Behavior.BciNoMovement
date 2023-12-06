@@ -7,65 +7,72 @@
     "valveOpenTime": {
       "default": 0.1,
       "minimum": 0,
-      "description": "Time in seconds to open the valve for reward delivery",
+      "description": "Interval (s) the valve stays open for water delivery.",
       "type": "number"
     },
     "lowActivityTime": {
       "default": 1,
       "minimum": 0,
-      "description": "Time in seconds to wait for the bci activity to be low",
+      "description": "Duration (s) BCI activity must stay low before starting anew trial.",
       "type": "number"
     },
     "lickResponseTime": {
       "default": 2,
       "minimum": 0,
-      "description": "Time in seconds to wait for the animal to collect reward",
+      "description": "Interval (s) for the animal to collect reward. Only applies if waitForLick is true.",
       "type": "number"
     },
     "waitForLick": {
       "default": true,
-      "description": "Wait for the animal to lick before delivering reward",
+      "description": "Determines whether the animal must lick to trigger reward delivery. If false, reward is immediately delivered.",
       "type": "boolean"
     },
     "enableSoundOnRewardZoneEntry": {
       "default": true,
-      "description": "Enables sound on reward zone entry",
+      "description": "Enables audio feedback on reward zone entry.",
       "type": "boolean"
     },
-    "enableAutoWater": {
-      "default": true,
-      "description": "Enables AutoWater mode.",
-      "type": "boolean"
-    },
-    "autoWaterTimeMultiplier": {
-      "default": 0.5,
-      "minimum": 0,
-      "description": "Multiplier for the AutoWater mode.",
-      "type": "number"
-    },
-    "quiescenceTime": {
+    "noMovementTimeBeforeTrial": {
       "default": 0,
       "minimum": 0,
-      "description": "Time in seconds to wait for the animal to stop moving",
+      "description": "Interval (s) subjects must not move for to start a new trial.",
       "type": "number"
     },
     "interTrialInterval": {
       "default": 0.5,
       "minimum": 0,
-      "description": "Time in seconds between trials",
+      "description": "Interval (s) between trials.",
       "type": "number"
     },
-    "neuronResponseTime" : {
+    "maxTrialTime" : {
       "default": 20,
       "minimum": 0,
-      "description": "Time in seconds to wait for the BCI signal to complete the trial",
+      "description": "Maximum trial duration (s)",
       "type": "number"
     },
     "rewardConsumeTime" : {
       "default": 2,
       "minimum": 0,
-      "description": "Time in seconds to wait for the animal to consume the reward",
+      "description": "Interval (s) to wait for the animal to consume a delivered reward.",
       "type": "number"
+    },
+    "closePosition" : {
+      "type": "number",
+      "minimum": 0,
+      "default": 19,
+      "description": "Position (mm) of the manipulator when the spout is the closest to the animal."
+    },
+    "farPositionOffset": {
+      "type": "number",
+      "minimum": 0,
+      "default": 8,
+      "description": "Offset applied to closePosition to determine the furthest position the spout can travel to."
+    },
+    "maxBciSpeed":{
+      "type": "number",
+      "minimum": 0,
+      "default": 10,
+      "description": "Maximum speed of the manipulator in mm/s when controlled by the BCI."
     }
   },
   "title": "BciNoMovementTaskLogic",

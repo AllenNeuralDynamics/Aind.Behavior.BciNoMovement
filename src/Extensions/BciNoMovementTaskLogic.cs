@@ -24,24 +24,26 @@ namespace BciNoMovementDataSchema.TaskLogic
     
         private bool _enableSoundOnRewardZoneEntry = true;
     
-        private bool _enableAutoWater = true;
-    
-        private double _autoWaterTimeMultiplier = 0.5D;
-    
-        private double _quiescenceTime = 0D;
+        private double _noMovementTimeBeforeTrial = 0D;
     
         private double _interTrialInterval = 0.5D;
     
-        private double _neuronResponseTime = 20D;
+        private double _maxTrialTime = 20D;
     
         private double _rewardConsumeTime = 2D;
     
+        private double _closePosition = 19D;
+    
+        private double _farPositionOffset = 8D;
+    
+        private double _maxBciSpeed = 10D;
+    
         /// <summary>
-        /// Time in seconds to open the valve for reward delivery
+        /// Interval (s) the valve stays open for water delivery.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("valveOpenTime")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="valveOpenTime")]
-        [System.ComponentModel.DescriptionAttribute("Time in seconds to open the valve for reward delivery")]
+        [System.ComponentModel.DescriptionAttribute("Interval (s) the valve stays open for water delivery.")]
         public double ValveOpenTime
         {
             get
@@ -55,11 +57,11 @@ namespace BciNoMovementDataSchema.TaskLogic
         }
     
         /// <summary>
-        /// Time in seconds to wait for the bci activity to be low
+        /// Duration (s) BCI activity must stay low before starting anew trial.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("lowActivityTime")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="lowActivityTime")]
-        [System.ComponentModel.DescriptionAttribute("Time in seconds to wait for the bci activity to be low")]
+        [System.ComponentModel.DescriptionAttribute("Duration (s) BCI activity must stay low before starting anew trial.")]
         public double LowActivityTime
         {
             get
@@ -73,11 +75,12 @@ namespace BciNoMovementDataSchema.TaskLogic
         }
     
         /// <summary>
-        /// Time in seconds to wait for the animal to collect reward
+        /// Interval (s) for the animal to collect reward. Only applies if waitForLick is true.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("lickResponseTime")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="lickResponseTime")]
-        [System.ComponentModel.DescriptionAttribute("Time in seconds to wait for the animal to collect reward")]
+        [System.ComponentModel.DescriptionAttribute("Interval (s) for the animal to collect reward. Only applies if waitForLick is tru" +
+            "e.")]
         public double LickResponseTime
         {
             get
@@ -91,11 +94,12 @@ namespace BciNoMovementDataSchema.TaskLogic
         }
     
         /// <summary>
-        /// Wait for the animal to lick before delivering reward
+        /// Determines whether the animal must lick to trigger reward delivery. If false, reward is immediately delivered.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("waitForLick")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="waitForLick")]
-        [System.ComponentModel.DescriptionAttribute("Wait for the animal to lick before delivering reward")]
+        [System.ComponentModel.DescriptionAttribute("Determines whether the animal must lick to trigger reward delivery. If false, rew" +
+            "ard is immediately delivered.")]
         public bool WaitForLick
         {
             get
@@ -109,11 +113,11 @@ namespace BciNoMovementDataSchema.TaskLogic
         }
     
         /// <summary>
-        /// Enables sound on reward zone entry
+        /// Enables audio feedback on reward zone entry.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("enableSoundOnRewardZoneEntry")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="enableSoundOnRewardZoneEntry")]
-        [System.ComponentModel.DescriptionAttribute("Enables sound on reward zone entry")]
+        [System.ComponentModel.DescriptionAttribute("Enables audio feedback on reward zone entry.")]
         public bool EnableSoundOnRewardZoneEntry
         {
             get
@@ -127,65 +131,29 @@ namespace BciNoMovementDataSchema.TaskLogic
         }
     
         /// <summary>
-        /// Enables AutoWater mode.
+        /// Interval (s) subjects must not move for to start a new trial.
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("enableAutoWater")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="enableAutoWater")]
-        [System.ComponentModel.DescriptionAttribute("Enables AutoWater mode.")]
-        public bool EnableAutoWater
+        [Newtonsoft.Json.JsonPropertyAttribute("noMovementTimeBeforeTrial")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="noMovementTimeBeforeTrial")]
+        [System.ComponentModel.DescriptionAttribute("Interval (s) subjects must not move for to start a new trial.")]
+        public double NoMovementTimeBeforeTrial
         {
             get
             {
-                return _enableAutoWater;
+                return _noMovementTimeBeforeTrial;
             }
             set
             {
-                _enableAutoWater = value;
+                _noMovementTimeBeforeTrial = value;
             }
         }
     
         /// <summary>
-        /// Multiplier for the AutoWater mode.
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("autoWaterTimeMultiplier")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="autoWaterTimeMultiplier")]
-        [System.ComponentModel.DescriptionAttribute("Multiplier for the AutoWater mode.")]
-        public double AutoWaterTimeMultiplier
-        {
-            get
-            {
-                return _autoWaterTimeMultiplier;
-            }
-            set
-            {
-                _autoWaterTimeMultiplier = value;
-            }
-        }
-    
-        /// <summary>
-        /// Time in seconds to wait for the animal to stop moving
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("quiescenceTime")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="quiescenceTime")]
-        [System.ComponentModel.DescriptionAttribute("Time in seconds to wait for the animal to stop moving")]
-        public double QuiescenceTime
-        {
-            get
-            {
-                return _quiescenceTime;
-            }
-            set
-            {
-                _quiescenceTime = value;
-            }
-        }
-    
-        /// <summary>
-        /// Time in seconds between trials
+        /// Interval (s) between trials.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("interTrialInterval")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="interTrialInterval")]
-        [System.ComponentModel.DescriptionAttribute("Time in seconds between trials")]
+        [System.ComponentModel.DescriptionAttribute("Interval (s) between trials.")]
         public double InterTrialInterval
         {
             get
@@ -199,29 +167,29 @@ namespace BciNoMovementDataSchema.TaskLogic
         }
     
         /// <summary>
-        /// Time in seconds to wait for the BCI signal to complete the trial
+        /// Maximum trial duration (s)
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("neuronResponseTime")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="neuronResponseTime")]
-        [System.ComponentModel.DescriptionAttribute("Time in seconds to wait for the BCI signal to complete the trial")]
-        public double NeuronResponseTime
+        [Newtonsoft.Json.JsonPropertyAttribute("maxTrialTime")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="maxTrialTime")]
+        [System.ComponentModel.DescriptionAttribute("Maximum trial duration (s)")]
+        public double MaxTrialTime
         {
             get
             {
-                return _neuronResponseTime;
+                return _maxTrialTime;
             }
             set
             {
-                _neuronResponseTime = value;
+                _maxTrialTime = value;
             }
         }
     
         /// <summary>
-        /// Time in seconds to wait for the animal to consume the reward
+        /// Interval (s) to wait for the animal to consume a delivered reward.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("rewardConsumeTime")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rewardConsumeTime")]
-        [System.ComponentModel.DescriptionAttribute("Time in seconds to wait for the animal to consume the reward")]
+        [System.ComponentModel.DescriptionAttribute("Interval (s) to wait for the animal to consume a delivered reward.")]
         public double RewardConsumeTime
         {
             get
@@ -231,6 +199,61 @@ namespace BciNoMovementDataSchema.TaskLogic
             set
             {
                 _rewardConsumeTime = value;
+            }
+        }
+    
+        /// <summary>
+        /// Position (mm) of the manipulator when the spout is the closest to the animal.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("closePosition")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="closePosition")]
+        [System.ComponentModel.DescriptionAttribute("Position (mm) of the manipulator when the spout is the closest to the animal.")]
+        public double ClosePosition
+        {
+            get
+            {
+                return _closePosition;
+            }
+            set
+            {
+                _closePosition = value;
+            }
+        }
+    
+        /// <summary>
+        /// Offset applied to closePosition to determine the furthest position the spout can travel to.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("farPositionOffset")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="farPositionOffset")]
+        [System.ComponentModel.DescriptionAttribute("Offset applied to closePosition to determine the furthest position the spout can " +
+            "travel to.")]
+        public double FarPositionOffset
+        {
+            get
+            {
+                return _farPositionOffset;
+            }
+            set
+            {
+                _farPositionOffset = value;
+            }
+        }
+    
+        /// <summary>
+        /// Maximum speed of the manipulator in mm/s when controlled by the BCI.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("maxBciSpeed")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="maxBciSpeed")]
+        [System.ComponentModel.DescriptionAttribute("Maximum speed of the manipulator in mm/s when controlled by the BCI.")]
+        public double MaxBciSpeed
+        {
+            get
+            {
+                return _maxBciSpeed;
+            }
+            set
+            {
+                _maxBciSpeed = value;
             }
         }
     
@@ -244,12 +267,13 @@ namespace BciNoMovementDataSchema.TaskLogic
                     LickResponseTime = _lickResponseTime,
                     WaitForLick = _waitForLick,
                     EnableSoundOnRewardZoneEntry = _enableSoundOnRewardZoneEntry,
-                    EnableAutoWater = _enableAutoWater,
-                    AutoWaterTimeMultiplier = _autoWaterTimeMultiplier,
-                    QuiescenceTime = _quiescenceTime,
+                    NoMovementTimeBeforeTrial = _noMovementTimeBeforeTrial,
                     InterTrialInterval = _interTrialInterval,
-                    NeuronResponseTime = _neuronResponseTime,
-                    RewardConsumeTime = _rewardConsumeTime
+                    MaxTrialTime = _maxTrialTime,
+                    RewardConsumeTime = _rewardConsumeTime,
+                    ClosePosition = _closePosition,
+                    FarPositionOffset = _farPositionOffset,
+                    MaxBciSpeed = _maxBciSpeed
                 }));
         }
     }

@@ -50,24 +50,6 @@
               "minimum": 0,
               "default": 1299.63,
               "description": "Acceleration of the manipulator in mm/s^2"
-            },
-            "closePosition" : {
-              "type": "number",
-              "minimum": 0,
-              "default": 19,
-              "description": "Position (mm) of the manipulator when the spout is the closest to the animal."
-            },
-            "farPosition": {
-              "type": "number",
-              "minimum": 0,
-              "default": 11,
-              "description": "Position (mm) of the manipulator when the spout is furthest from the animal."
-            },
-            "maxBciSpeed":{
-              "type": "number",
-              "minimum": 0,
-              "default": 10,
-              "description": "Maximum speed of the manipulator in mm/s when controlled by the BCI."
             }
             }
           }
