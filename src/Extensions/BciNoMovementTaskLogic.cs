@@ -28,7 +28,7 @@ namespace BciNoMovementDataSchema.TaskLogic
     
         private double _interTrialInterval = 0.5D;
     
-        private double _maxTrialTime = 20D;
+        private double _maxTrialDuration = 20D;
     
         private double _rewardConsumeTime = 2D;
     
@@ -169,18 +169,18 @@ namespace BciNoMovementDataSchema.TaskLogic
         /// <summary>
         /// Maximum trial duration (s)
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("maxTrialTime")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="maxTrialTime")]
+        [Newtonsoft.Json.JsonPropertyAttribute("maxTrialDuration")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="maxTrialDuration")]
         [System.ComponentModel.DescriptionAttribute("Maximum trial duration (s)")]
-        public double MaxTrialTime
+        public double MaxTrialDuration
         {
             get
             {
-                return _maxTrialTime;
+                return _maxTrialDuration;
             }
             set
             {
-                _maxTrialTime = value;
+                _maxTrialDuration = value;
             }
         }
     
@@ -269,7 +269,7 @@ namespace BciNoMovementDataSchema.TaskLogic
                     EnableSoundOnRewardZoneEntry = _enableSoundOnRewardZoneEntry,
                     NoMovementTimeBeforeTrial = _noMovementTimeBeforeTrial,
                     InterTrialInterval = _interTrialInterval,
-                    MaxTrialTime = _maxTrialTime,
+                    MaxTrialDuration = _maxTrialDuration,
                     RewardConsumeTime = _rewardConsumeTime,
                     ClosePosition = _closePosition,
                     FarPositionOffset = _farPositionOffset,

@@ -595,6 +595,8 @@ namespace BciNoMovementDataSchema.Rig
     public partial class Operation
     {
     
+        private System.Collections.Generic.List<string> _genericCommands = new System.Collections.Generic.List<string>();
+    
         private int _axis = 1;
     
         private bool _invertDirection = false;
@@ -602,6 +604,21 @@ namespace BciNoMovementDataSchema.Rig
         private double _maxSpeed = 12D;
     
         private double _acceleration = 1299.63D;
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("genericCommands")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="genericCommands")]
+        public System.Collections.Generic.List<string> GenericCommands
+        {
+            get
+            {
+                return _genericCommands;
+            }
+            set
+            {
+                _genericCommands = value;
+            }
+        }
     
         /// <summary>
         /// Axis of the manipulator to be controlled.
@@ -680,6 +697,7 @@ namespace BciNoMovementDataSchema.Rig
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
                 new Operation
                 {
+                    GenericCommands = _genericCommands,
                     Axis = _axis,
                     InvertDirection = _invertDirection,
                     MaxSpeed = _maxSpeed,

@@ -28,6 +28,11 @@
         "operation":{
           "type": "object",
           "properties": {
+            "genericCommands":{
+              "type": "array",
+              "default": [],
+              "items": {"type": "string"}
+            },
             "axis" : {
               "type": "integer",
               "minimum": 0,

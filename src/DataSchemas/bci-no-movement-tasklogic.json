@@ -44,7 +44,7 @@
       "description": "Interval (s) between trials.",
       "type": "number"
     },
-    "maxTrialTime" : {
+    "maxTrialDuration" : {
       "default": 20,
       "minimum": 0,
       "description": "Maximum trial duration (s)",
