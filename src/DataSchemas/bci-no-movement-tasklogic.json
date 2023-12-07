@@ -73,6 +73,26 @@
       "minimum": 0,
       "default": 10,
       "description": "Maximum speed of the manipulator in mm/s when controlled by the BCI."
+    },
+    "manipulatorResetPosition":{
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "number",
+          "default": 0,
+          "description": "Position of the X-axis manipulator"
+        },
+        "y": {
+          "type": "number",
+          "default": 0,
+          "description": "Position of the Y-axis manipulator"
+        },
+        "z": {
+          "type": "number",
+          "default": 0,
+          "description": "Position of the Z-axis manipulator"
+        }
+      }
     }
   },
   "title": "BciNoMovementTaskLogic",

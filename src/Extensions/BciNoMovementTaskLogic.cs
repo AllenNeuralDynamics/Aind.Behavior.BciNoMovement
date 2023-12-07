@@ -38,6 +38,8 @@ namespace BciNoMovementDataSchema.TaskLogic
     
         private double _maxBciSpeed = 10D;
     
+        private ManipulatorResetPosition _manipulatorResetPosition;
+    
         /// <summary>
         /// Interval (s) the valve stays open for water delivery.
         /// </summary>
@@ -257,6 +259,21 @@ namespace BciNoMovementDataSchema.TaskLogic
             }
         }
     
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("manipulatorResetPosition")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="manipulatorResetPosition")]
+        public ManipulatorResetPosition ManipulatorResetPosition
+        {
+            get
+            {
+                return _manipulatorResetPosition;
+            }
+            set
+            {
+                _manipulatorResetPosition = value;
+            }
+        }
+    
         public System.IObservable<BciNoMovementTaskLogic> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
@@ -273,7 +290,86 @@ namespace BciNoMovementDataSchema.TaskLogic
                     RewardConsumeTime = _rewardConsumeTime,
                     ClosePosition = _closePosition,
                     FarPositionOffset = _farPositionOffset,
-                    MaxBciSpeed = _maxBciSpeed
+                    MaxBciSpeed = _maxBciSpeed,
+                    ManipulatorResetPosition = _manipulatorResetPosition
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class ManipulatorResetPosition
+    {
+    
+        private double _x = 0D;
+    
+        private double _y = 0D;
+    
+        private double _z = 0D;
+    
+        /// <summary>
+        /// Position of the X-axis manipulator
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("x")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="x")]
+        [System.ComponentModel.DescriptionAttribute("Position of the X-axis manipulator")]
+        public double X
+        {
+            get
+            {
+                return _x;
+            }
+            set
+            {
+                _x = value;
+            }
+        }
+    
+        /// <summary>
+        /// Position of the Y-axis manipulator
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("y")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="y")]
+        [System.ComponentModel.DescriptionAttribute("Position of the Y-axis manipulator")]
+        public double Y
+        {
+            get
+            {
+                return _y;
+            }
+            set
+            {
+                _y = value;
+            }
+        }
+    
+        /// <summary>
+        /// Position of the Z-axis manipulator
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("z")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="z")]
+        [System.ComponentModel.DescriptionAttribute("Position of the Z-axis manipulator")]
+        public double Z
+        {
+            get
+            {
+                return _z;
+            }
+            set
+            {
+                _z = value;
+            }
+        }
+    
+        public System.IObservable<ManipulatorResetPosition> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new ManipulatorResetPosition
+                {
+                    X = _x,
+                    Y = _y,
+                    Z = _z
                 }));
         }
     }
@@ -297,6 +393,11 @@ namespace BciNoMovementDataSchema.TaskLogic
         {
             return Process<BciNoMovementTaskLogic>(source);
         }
+
+        public System.IObservable<string> Process(System.IObservable<ManipulatorResetPosition> source)
+        {
+            return Process<ManipulatorResetPosition>(source);
+        }
     }
 
 
@@ -306,6 +407,7 @@ namespace BciNoMovementDataSchema.TaskLogic
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BciNoMovementTaskLogic>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ManipulatorResetPosition>))]
     [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of JSON strings into data model objects.")]
     public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
@@ -357,6 +459,11 @@ namespace BciNoMovementDataSchema.TaskLogic
         {
             return Process<BciNoMovementTaskLogic>(source);
         }
+
+        public System.IObservable<string> Process(System.IObservable<ManipulatorResetPosition> source)
+        {
+            return Process<ManipulatorResetPosition>(source);
+        }
     }
 
 
@@ -366,6 +473,7 @@ namespace BciNoMovementDataSchema.TaskLogic
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BciNoMovementTaskLogic>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ManipulatorResetPosition>))]
     [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of YAML strings into data model objects.")]
     public partial class DeserializeFromYaml : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
