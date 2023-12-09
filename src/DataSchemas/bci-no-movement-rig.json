@@ -33,11 +33,11 @@
               "default": [],
               "items": {"type": "string"}
             },
-            "axis" : {
-              "type": "integer",
-              "minimum": 0,
-              "default": 1,
-              "description": "Axis of the manipulator to be controlled."
+            "spoutAxis" : {
+              "type": "string",
+              "enum": ["X", "Y", "Z"],
+              "default": "X",
+              "description": "Axis of the manipulator controlling the spout."
             },
             "invertDirection" : {
               "type": "boolean",

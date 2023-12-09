@@ -597,7 +597,7 @@ namespace BciNoMovementDataSchema.Rig
     
         private System.Collections.Generic.List<string> _genericCommands = new System.Collections.Generic.List<string>();
     
-        private int _axis = 1;
+        private OperationSpoutAxis _spoutAxis = BciNoMovementDataSchema.Rig.OperationSpoutAxis.X;
     
         private bool _invertDirection = false;
     
@@ -621,20 +621,21 @@ namespace BciNoMovementDataSchema.Rig
         }
     
         /// <summary>
-        /// Axis of the manipulator to be controlled.
+        /// Axis of the manipulator controlling the spout.
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("axis")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="axis")]
-        [System.ComponentModel.DescriptionAttribute("Axis of the manipulator to be controlled.")]
-        public int Axis
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("spoutAxis")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="spoutAxis")]
+        [System.ComponentModel.DescriptionAttribute("Axis of the manipulator controlling the spout.")]
+        public OperationSpoutAxis SpoutAxis
         {
             get
             {
-                return _axis;
+                return _spoutAxis;
             }
             set
             {
-                _axis = value;
+                _spoutAxis = value;
             }
         }
     
@@ -698,12 +699,29 @@ namespace BciNoMovementDataSchema.Rig
                 new Operation
                 {
                     GenericCommands = _genericCommands,
-                    Axis = _axis,
+                    SpoutAxis = _spoutAxis,
                     InvertDirection = _invertDirection,
                     MaxSpeed = _maxSpeed,
                     Acceleration = _acceleration
                 }));
         }
+    }
+
+
+    public enum OperationSpoutAxis
+    {
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="X")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="X")]
+        X = 0,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="Y")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Y")]
+        Y = 1,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="Z")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Z")]
+        Z = 2,
     }
 
 
