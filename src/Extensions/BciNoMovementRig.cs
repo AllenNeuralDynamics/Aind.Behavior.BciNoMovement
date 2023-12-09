@@ -479,6 +479,8 @@ namespace BciNoMovementDataSchema.Rig
     
         private ZaberManipulator _zaberManipulator = new ZaberManipulator();
     
+        private Networking _networking = new Networking();
+    
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("harpBehaviorBoard", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="harpBehaviorBoard")]
@@ -584,6 +586,21 @@ namespace BciNoMovementDataSchema.Rig
             }
         }
     
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("networking", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="networking")]
+        public Networking Networking
+        {
+            get
+            {
+                return _networking;
+            }
+            set
+            {
+                _networking = value;
+            }
+        }
+    
         public System.IObservable<BciNoMovementRig> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
@@ -595,7 +612,8 @@ namespace BciNoMovementDataSchema.Rig
                     Camera0 = _camera0,
                     Camera1 = _camera1,
                     Speaker = _speaker,
-                    ZaberManipulator = _zaberManipulator
+                    ZaberManipulator = _zaberManipulator,
+                    Networking = _networking
                 }));
         }
     }
@@ -685,6 +703,57 @@ namespace BciNoMovementDataSchema.Rig
                 {
                     Communication = _communication,
                     Operation = _operation
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class Networking
+    {
+    
+        private ZmqPublisher _zmqPublisher;
+    
+        private ZmqSubscriber _zmqSubscriber;
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("zmqPublisher")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="zmqPublisher")]
+        public ZmqPublisher ZmqPublisher
+        {
+            get
+            {
+                return _zmqPublisher;
+            }
+            set
+            {
+                _zmqPublisher = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("zmqSubscriber")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="zmqSubscriber")]
+        public ZmqSubscriber ZmqSubscriber
+        {
+            get
+            {
+                return _zmqSubscriber;
+            }
+            set
+            {
+                _zmqSubscriber = value;
+            }
+        }
+    
+        public System.IObservable<Networking> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new Networking
+                {
+                    ZmqPublisher = _zmqPublisher,
+                    ZmqSubscriber = _zmqSubscriber
                 }));
         }
     }
@@ -783,6 +852,104 @@ namespace BciNoMovementDataSchema.Rig
     }
 
 
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class ZmqPublisher
+    {
+    
+        private string _connectionString = "@tcp://localhost:5556";
+    
+        private string _topic = "bci-no-movement";
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("connectionString")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="connectionString")]
+        public string ConnectionString
+        {
+            get
+            {
+                return _connectionString;
+            }
+            set
+            {
+                _connectionString = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("topic")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="topic")]
+        public string Topic
+        {
+            get
+            {
+                return _topic;
+            }
+            set
+            {
+                _topic = value;
+            }
+        }
+    
+        public System.IObservable<ZmqPublisher> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new ZmqPublisher
+                {
+                    ConnectionString = _connectionString,
+                    Topic = _topic
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class ZmqSubscriber
+    {
+    
+        private string _connectionString = "tcp://localhost:5557";
+    
+        private string _topic = "bci-no-movement";
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("connectionString")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="connectionString")]
+        public string ConnectionString
+        {
+            get
+            {
+                return _connectionString;
+            }
+            set
+            {
+                _connectionString = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("topic")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="topic")]
+        public string Topic
+        {
+            get
+            {
+                return _topic;
+            }
+            set
+            {
+                _topic = value;
+            }
+        }
+    
+        public System.IObservable<ZmqSubscriber> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new ZmqSubscriber
+                {
+                    ConnectionString = _connectionString,
+                    Topic = _topic
+                }));
+        }
+    }
+
+
     /// <summary>
     /// Serializes a sequence of data model objects into JSON strings.
     /// </summary>
@@ -832,9 +999,24 @@ namespace BciNoMovementDataSchema.Rig
             return Process<ZaberManipulator>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<Networking> source)
+        {
+            return Process<Networking>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<Operation> source)
         {
             return Process<Operation>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<ZmqPublisher> source)
+        {
+            return Process<ZmqPublisher>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<ZmqSubscriber> source)
+        {
+            return Process<ZmqSubscriber>(source);
         }
     }
 
@@ -851,7 +1033,10 @@ namespace BciNoMovementDataSchema.Rig
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SerialDevice>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BciNoMovementRig>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZaberManipulator>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Networking>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Operation>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZmqPublisher>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZmqSubscriber>))]
     [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of JSON strings into data model objects.")]
     public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
@@ -934,9 +1119,24 @@ namespace BciNoMovementDataSchema.Rig
             return Process<ZaberManipulator>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<Networking> source)
+        {
+            return Process<Networking>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<Operation> source)
         {
             return Process<Operation>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<ZmqPublisher> source)
+        {
+            return Process<ZmqPublisher>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<ZmqSubscriber> source)
+        {
+            return Process<ZmqSubscriber>(source);
         }
     }
 
@@ -953,7 +1153,10 @@ namespace BciNoMovementDataSchema.Rig
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SerialDevice>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BciNoMovementRig>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZaberManipulator>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Networking>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Operation>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZmqPublisher>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZmqSubscriber>))]
     [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of YAML strings into data model objects.")]
     public partial class DeserializeFromYaml : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {

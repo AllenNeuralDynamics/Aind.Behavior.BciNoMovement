@@ -2,7 +2,7 @@
   "$id": "h...",
   "$schema": "https://json-schema.org/draft-07/schema",
   "definitions": {
-    "spoutAxis" : {
+    "spoutAxis": {
       "type": "string",
       "enum": ["X", "Y", "Z"],
       "default": "X",
@@ -22,7 +22,8 @@
             },
             {
               "type": "null"
-            }],
+            }
+          ],
           "default": null,
           "description": "The axis to send the command to."
         },
@@ -33,9 +34,7 @@
           "description": "The timeout in seconds for the command."
         }
       },
-      "required": [
-        "command"
-      ]
+      "required": ["command"]
     }
   },
   "properties": {
@@ -60,35 +59,68 @@
     "zaberManipulator": {
       "type": "object",
       "properties": {
-        "communication" : {"$ref": "bci-no-movement-hardware.json#/definitions/serialDevice"},
-        "operation":{
+        "communication": {
+          "$ref": "bci-no-movement-hardware.json#/definitions/serialDevice"
+        },
+        "operation": {
           "type": "object",
           "properties": {
-            "genericCommands":{
+            "genericCommands": {
               "type": "array",
               "default": [],
-              "items": {"$ref": "#/definitions/zaberGenericCommand"}
+              "items": { "$ref": "#/definitions/zaberGenericCommand" }
             },
-            "spoutAxis" : {
+            "spoutAxis": {
               "$ref": "#/definitions/spoutAxis"
             },
-            "maxSpeed" : {
+            "maxSpeed": {
               "type": "number",
               "minimum": 0,
               "default": 12.0,
               "description": "Maximum speed of the manipulator in mm/s"
             },
-            "acceleration" : {
+            "acceleration": {
               "type": "number",
               "minimum": 0,
               "default": 1299.63,
               "description": "Acceleration of the manipulator in mm/s^2"
             }
-            }
           }
         }
       }
     },
+    "networking": {
+      "type": "object",
+      "properties": {
+        "zmqPublisher": {
+          "type": "object",
+          "properties": {
+            "connectionString": {
+              "type": "string",
+              "default": "@tcp://localhost:5556"
+            },
+            "topic": {
+              "type": "string",
+              "default": "bci-no-movement"
+            }
+          }
+        },
+        "zmqSubscriber": {
+          "type": "object",
+          "properties": {
+            "connectionString": {
+              "type": "string",
+              "default": "tcp://localhost:5557"
+            },
+            "topic": {
+              "type": "string",
+              "default": "bci-no-movement"
+            }
+          }
+        }
+      }
+    }
+  },
   "required": [
     "harpBehaviorBoard",
     "harpLoadCellsBoard",
@@ -96,7 +128,8 @@
     "camera0",
     "camera1",
     "speaker",
-    "zaberManipulator"
+    "zaberManipulator",
+    "networking"
   ],
   "title": "BciNoMovementRig",
   "type": "object"
