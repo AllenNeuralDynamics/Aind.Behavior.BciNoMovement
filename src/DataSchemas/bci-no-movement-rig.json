@@ -39,11 +39,6 @@
               "default": "X",
               "description": "Axis of the manipulator controlling the spout."
             },
-            "invertDirection" : {
-              "type": "boolean",
-              "default": false,
-              "description": "Invert the direction of the manipulator."
-            },
             "maxSpeed" : {
               "type": "number",
               "minimum": 0,

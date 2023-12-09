@@ -13,7 +13,7 @@
     "lowActivityTime": {
       "default": 1,
       "minimum": 0,
-      "description": "Duration (s) BCI activity must stay low before starting anew trial.",
+      "description": "Duration (s) BCI activity must stay low before starting a new trial.",
       "type": "number"
     },
     "lickResponseTime": {

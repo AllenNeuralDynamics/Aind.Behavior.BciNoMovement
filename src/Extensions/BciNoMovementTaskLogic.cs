@@ -59,11 +59,11 @@ namespace BciNoMovementDataSchema.TaskLogic
         }
     
         /// <summary>
-        /// Duration (s) BCI activity must stay low before starting anew trial.
+        /// Duration (s) BCI activity must stay low before starting a new trial.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("lowActivityTime")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="lowActivityTime")]
-        [System.ComponentModel.DescriptionAttribute("Duration (s) BCI activity must stay low before starting anew trial.")]
+        [System.ComponentModel.DescriptionAttribute("Duration (s) BCI activity must stay low before starting a new trial.")]
         public double LowActivityTime
         {
             get

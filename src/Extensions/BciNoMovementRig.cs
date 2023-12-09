@@ -599,8 +599,6 @@ namespace BciNoMovementDataSchema.Rig
     
         private OperationSpoutAxis _spoutAxis = BciNoMovementDataSchema.Rig.OperationSpoutAxis.X;
     
-        private bool _invertDirection = false;
-    
         private double _maxSpeed = 12D;
     
         private double _acceleration = 1299.63D;
@@ -636,24 +634,6 @@ namespace BciNoMovementDataSchema.Rig
             set
             {
                 _spoutAxis = value;
-            }
-        }
-    
-        /// <summary>
-        /// Invert the direction of the manipulator.
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("invertDirection")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="invertDirection")]
-        [System.ComponentModel.DescriptionAttribute("Invert the direction of the manipulator.")]
-        public bool InvertDirection
-        {
-            get
-            {
-                return _invertDirection;
-            }
-            set
-            {
-                _invertDirection = value;
             }
         }
     
@@ -700,7 +680,6 @@ namespace BciNoMovementDataSchema.Rig
                 {
                     GenericCommands = _genericCommands,
                     SpoutAxis = _spoutAxis,
-                    InvertDirection = _invertDirection,
                     MaxSpeed = _maxSpeed,
                     Acceleration = _acceleration
                 }));
