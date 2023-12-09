@@ -1,7 +1,43 @@
 {
   "$id": "h...",
   "$schema": "https://json-schema.org/draft-07/schema",
-  "definitions": {},
+  "definitions": {
+    "spoutAxis" : {
+      "type": "string",
+      "enum": ["X", "Y", "Z"],
+      "default": "X",
+      "description": "Axis of the manipulator controlling the spout."
+    },
+    "zaberGenericCommand": {
+      "type": "object",
+      "properties": {
+        "command": {
+          "type": "string",
+          "description": "The command to send to the Zaber device."
+        },
+        "axis": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/spoutAxis"
+            },
+            {
+              "type": "null"
+            }],
+          "default": null,
+          "description": "The axis to send the command to."
+        },
+        "device": {
+          "type": ["null", "integer"],
+          "minimum": 0,
+          "default": null,
+          "description": "The timeout in seconds for the command."
+        }
+      },
+      "required": [
+        "command"
+      ]
+    }
+  },
   "properties": {
     "harpBehaviorBoard": {
       "$ref": "bci-no-movement-hardware.json#/definitions/harpBoard"
@@ -31,13 +67,10 @@
             "genericCommands":{
               "type": "array",
               "default": [],
-              "items": {"type": "string"}
+              "items": {"$ref": "#/definitions/zaberGenericCommand"}
             },
             "spoutAxis" : {
-              "type": "string",
-              "enum": ["X", "Y", "Z"],
-              "default": "X",
-              "description": "Axis of the manipulator controlling the spout."
+              "$ref": "#/definitions/spoutAxis"
             },
             "maxSpeed" : {
               "type": "number",

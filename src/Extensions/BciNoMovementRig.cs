@@ -9,6 +9,106 @@ namespace BciNoMovementDataSchema.Rig
 {
     #pragma warning disable // Disable all warnings
 
+    /// <summary>
+    /// Axis of the manipulator controlling the spout.
+    /// </summary>
+    public enum SpoutAxis
+    {
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="X")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="X")]
+        X = 0,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="Y")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Y")]
+        Y = 1,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="Z")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Z")]
+        Z = 2,
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class ZaberGenericCommand
+    {
+    
+        private string _command;
+    
+        private SpoutAxis? _axis;
+    
+        private int? _device;
+    
+        /// <summary>
+        /// The command to send to the Zaber device.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("command", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="command")]
+        [System.ComponentModel.DescriptionAttribute("The command to send to the Zaber device.")]
+        public string Command
+        {
+            get
+            {
+                return _command;
+            }
+            set
+            {
+                _command = value;
+            }
+        }
+    
+        /// <summary>
+        /// The axis to send the command to.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("axis")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="axis")]
+        [System.ComponentModel.DescriptionAttribute("The axis to send the command to.")]
+        public SpoutAxis? Axis
+        {
+            get
+            {
+                return _axis;
+            }
+            set
+            {
+                _axis = value;
+            }
+        }
+    
+        /// <summary>
+        /// The timeout in seconds for the command.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("device")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="device")]
+        [System.ComponentModel.DescriptionAttribute("The timeout in seconds for the command.")]
+        public int? Device
+        {
+            get
+            {
+                return _device;
+            }
+            set
+            {
+                _device = value;
+            }
+        }
+    
+        public System.IObservable<ZaberGenericCommand> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new ZaberGenericCommand
+                {
+                    Command = _command,
+                    Axis = _axis,
+                    Device = _device
+                }));
+        }
+    }
+
+
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class HarpBoard
@@ -595,9 +695,9 @@ namespace BciNoMovementDataSchema.Rig
     public partial class Operation
     {
     
-        private System.Collections.Generic.List<string> _genericCommands = new System.Collections.Generic.List<string>();
+        private System.Collections.Generic.List<ZaberGenericCommand> _genericCommands = new System.Collections.Generic.List<ZaberGenericCommand>();
     
-        private OperationSpoutAxis _spoutAxis = BciNoMovementDataSchema.Rig.OperationSpoutAxis.X;
+        private SpoutAxis _spoutAxis;
     
         private double _maxSpeed = 12D;
     
@@ -606,7 +706,7 @@ namespace BciNoMovementDataSchema.Rig
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("genericCommands")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="genericCommands")]
-        public System.Collections.Generic.List<string> GenericCommands
+        public System.Collections.Generic.List<ZaberGenericCommand> GenericCommands
         {
             get
             {
@@ -618,14 +718,10 @@ namespace BciNoMovementDataSchema.Rig
             }
         }
     
-        /// <summary>
-        /// Axis of the manipulator controlling the spout.
-        /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("spoutAxis")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="spoutAxis")]
-        [System.ComponentModel.DescriptionAttribute("Axis of the manipulator controlling the spout.")]
-        public OperationSpoutAxis SpoutAxis
+        public SpoutAxis SpoutAxis
         {
             get
             {
@@ -687,23 +783,6 @@ namespace BciNoMovementDataSchema.Rig
     }
 
 
-    public enum OperationSpoutAxis
-    {
-    
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="X")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="X")]
-        X = 0,
-    
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="Y")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Y")]
-        Y = 1,
-    
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="Z")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Z")]
-        Z = 2,
-    }
-
-
     /// <summary>
     /// Serializes a sequence of data model objects into JSON strings.
     /// </summary>
@@ -716,6 +795,11 @@ namespace BciNoMovementDataSchema.Rig
         private System.IObservable<string> Process<T>(System.IObservable<T> source)
         {
             return System.Reactive.Linq.Observable.Select(source, value => Newtonsoft.Json.JsonConvert.SerializeObject(value));
+        }
+
+        public System.IObservable<string> Process(System.IObservable<ZaberGenericCommand> source)
+        {
+            return Process<ZaberGenericCommand>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<HarpBoard> source)
@@ -760,6 +844,7 @@ namespace BciNoMovementDataSchema.Rig
     /// </summary>
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZaberGenericCommand>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpBoard>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PwmBuzzer>))]
@@ -814,6 +899,11 @@ namespace BciNoMovementDataSchema.Rig
             });
         }
 
+        public System.IObservable<string> Process(System.IObservable<ZaberGenericCommand> source)
+        {
+            return Process<ZaberGenericCommand>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<HarpBoard> source)
         {
             return Process<HarpBoard>(source);
@@ -856,6 +946,7 @@ namespace BciNoMovementDataSchema.Rig
     /// </summary>
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZaberGenericCommand>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpBoard>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<PwmBuzzer>))]
