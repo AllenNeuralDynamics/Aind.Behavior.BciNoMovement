@@ -72,7 +72,7 @@ Bci voltage to spout velocity]]></Text>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p1:CreateContinuousUniform">
                 <p1:Lower>0</p1:Lower>
-                <p1:Upper>10</p1:Upper>
+                <p1:Upper>1000000</p1:Upper>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -100,7 +100,7 @@ Bci voltage to spout velocity]]></Text>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="num:CreateRandom">
-                <num:Seed>0</num:Seed>
+                <num:Seed>2</num:Seed>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -1470,49 +1470,49 @@ Bci voltage to spout velocity]]></Text>
                   <Expression xsi:type="rx:BehaviorSubject">
                     <Name>Manipulator</Name>
                   </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>RigSchema</Name>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>RigSchema</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>ZaberManipulator.Operation.GenericCommands</Selector>
+                  </Expression>
+                  <Expression xsi:type="rx:Condition">
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
-                          <Selector>ZaberManipulator.Operation.GenericCommands</Selector>
+                          <Selector>Count</Selector>
                         </Expression>
-                        <Expression xsi:type="rx:Condition">
-                          <Workflow>
-                            <Nodes>
-                              <Expression xsi:type="WorkflowInput">
-                                <Name>Source1</Name>
-                              </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>Count</Selector>
-                              </Expression>
-                              <Expression xsi:type="GreaterThan">
-                                <Operand xsi:type="IntProperty">
-                                  <Value>0</Value>
-                                </Operand>
-                              </Expression>
-                              <Expression xsi:type="WorkflowOutput" />
-                            </Nodes>
-                            <Edges>
-                              <Edge From="0" To="1" Label="Source1" />
-                              <Edge From="1" To="2" Label="Source1" />
-                              <Edge From="2" To="3" Label="Source1" />
-                            </Edges>
-                          </Workflow>
+                        <Expression xsi:type="GreaterThan">
+                          <Operand xsi:type="IntProperty">
+                            <Value>0</Value>
+                          </Operand>
                         </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="rx:Merge" />
-                        </Expression>
-                        <Expression xsi:type="Combinator">
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Merge" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p12:GenericCommandMultiResponse">
-                            <p12:PortName>ZaberMotor</p12:PortName>
-                            <p12:Axis xsi:nil="true" />
-                          </Combinator>
-                        </Expression>
+                      <p12:PortName>ZaberMotor</p12:PortName>
+                      <p12:Axis xsi:nil="true" />
+                    </Combinator>
+                  </Expression>
                   <Expression xsi:type="rx:BehaviorSubject">
                     <Name>ManipulatorResponses</Name>
                   </Expression>
-                        <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p8:Unit">
-                          <rx:Name>HomingRoutine</rx:Name>
+                  <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p8:Unit">
+                    <rx:Name>HomingRoutine</rx:Name>
                   </Expression>
                   <Expression xsi:type="rx:CreateObservable">
                     <Name>HomingRoutine</Name>
@@ -1580,21 +1580,21 @@ Bci voltage to spout velocity]]></Text>
                                 <Combinator xsi:type="rx:Zip" />
                               </Expression>
                               <Expression xsi:type="WorkflowOutput" />
-                      </Nodes>
-                      <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="1" To="2" Label="Source1" />
+                            </Nodes>
+                            <Edges>
+                              <Edge From="0" To="1" Label="Source1" />
+                              <Edge From="1" To="2" Label="Source1" />
                               <Edge From="1" To="4" Label="Source1" />
                               <Edge From="1" To="6" Label="Source1" />
-                        <Edge From="2" To="3" Label="Source1" />
+                              <Edge From="2" To="3" Label="Source1" />
                               <Edge From="3" To="8" Label="Source1" />
                               <Edge From="4" To="5" Label="Source1" />
                               <Edge From="5" To="8" Label="Source2" />
-                        <Edge From="6" To="7" Label="Source1" />
+                              <Edge From="6" To="7" Label="Source1" />
                               <Edge From="7" To="8" Label="Source3" />
                               <Edge From="8" To="9" Label="Source1" />
-                      </Edges>
-                    </Workflow>
+                            </Edges>
+                          </Workflow>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="p12:WaitUntilIdle">
@@ -3378,11 +3378,11 @@ Bci voltage to spout velocity]]></Text>
         <Name>ZaberGUI</Name>
         <Workflow>
           <Nodes>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="p16:PushButton">
-          <p16:Label>ClosePosition</p16:Label>
-        </Combinator>
-      </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p16:PushButton">
+                <p16:Label>ClosePosition</p16:Label>
+              </Combinator>
+            </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>TaskLogicSchema</Name>
             </Expression>
@@ -3394,19 +3394,19 @@ Bci voltage to spout velocity]]></Text>
                 <Property Name="Value" />
               </PropertyMappings>
             </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="FloatProperty">
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="FloatProperty">
                 <Value>100000</Value>
-        </Combinator>
-      </Expression>
-      <Expression xsi:type="MulticastSubject">
-        <Name>SpoutGoToPosition</Name>
-      </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="p16:PushButton">
-          <p16:Label>FarPosition</p16:Label>
-        </Combinator>
-      </Expression>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="MulticastSubject">
+              <Name>SpoutGoToPosition</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p16:PushButton">
+                <p16:Label>FarPosition</p16:Label>
+              </Combinator>
+            </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>TaskLogicSchema</Name>
             </Expression>
@@ -3419,29 +3419,29 @@ Bci voltage to spout velocity]]></Text>
                 <Property Name="Value" />
               </PropertyMappings>
             </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="FloatProperty">
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="FloatProperty">
                 <Value>20000</Value>
-        </Combinator>
-      </Expression>
-      <Expression xsi:type="MulticastSubject">
-        <Name>SpoutGoToPosition</Name>
-      </Expression>
-      <Expression xsi:type="VisualizerMapping" />
-      <Expression xsi:type="VisualizerMapping" />
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="p16:PushButton">
-          <p16:Label>Home</p16:Label>
-        </Combinator>
-      </Expression>
-      <Expression xsi:type="VisualizerMapping" />
-      <Expression xsi:type="viz:TableLayoutPanelBuilder">
-        <viz:ColumnCount>3</viz:ColumnCount>
-        <viz:RowCount>1</viz:RowCount>
-        <viz:ColumnStyles />
-        <viz:RowStyles />
-        <viz:CellSpans />
-      </Expression>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="MulticastSubject">
+              <Name>SpoutGoToPosition</Name>
+            </Expression>
+            <Expression xsi:type="VisualizerMapping" />
+            <Expression xsi:type="VisualizerMapping" />
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p16:PushButton">
+                <p16:Label>Home</p16:Label>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="VisualizerMapping" />
+            <Expression xsi:type="viz:TableLayoutPanelBuilder">
+              <viz:ColumnCount>3</viz:ColumnCount>
+              <viz:RowCount>1</viz:RowCount>
+              <viz:ColumnStyles />
+              <viz:RowStyles />
+              <viz:CellSpans />
+            </Expression>
             <Expression xsi:type="VisualizerMapping" />
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p16:PushButton">
@@ -3479,10 +3479,10 @@ Bci voltage to spout velocity]]></Text>
               <viz:CellSpans />
             </Expression>
             <Expression xsi:type="WorkflowOutput" />
-      <Expression xsi:type="Unit" />
-      <Expression xsi:type="MulticastSubject">
-        <Name>HomingRoutine</Name>
-      </Expression>
+            <Expression xsi:type="Unit" />
+            <Expression xsi:type="MulticastSubject">
+              <Name>HomingRoutine</Name>
+            </Expression>
             <Expression xsi:type="ExternalizedMapping">
               <Property Name="ForceX" />
               <Property Name="ForceY" />
