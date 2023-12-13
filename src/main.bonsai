@@ -582,7 +582,9 @@ Bci voltage to spout velocity]]></Text>
 - DO2 -> MicroscopeStart
 - DO3 -> MicroscopeStop
 - SUPPLY0 -> Valve
-- DI3 -> MicroscopeArmed]]></Text>
+- DI3 -> MicroscopeArmed
+- LoadCell ???
+- Manipulator steps???]]></Text>
       </Expression>
       <Expression xsi:type="GroupWorkflow">
         <Name>Hardware</Name>
