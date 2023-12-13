@@ -4,6 +4,12 @@
   "definitions": {
   },
   "properties": {
+    "waitMicroscopeTime": {
+      "default": 0,
+      "minimum": 0,
+      "description": "Interval (s) after the animal successfully exists the quiescence period.",
+      "type": "number"
+    },
     "valveOpenTime": {
       "default": 0.1,
       "minimum": 0,

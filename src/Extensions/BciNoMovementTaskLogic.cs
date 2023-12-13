@@ -14,6 +14,8 @@ namespace BciNoMovementDataSchema.TaskLogic
     public partial class BciNoMovementTaskLogic
     {
     
+        private double _waitMicroscopeTime = 0D;
+    
         private double _valveOpenTime = 0.1D;
     
         private double _lowActivityTime = 1D;
@@ -39,6 +41,24 @@ namespace BciNoMovementDataSchema.TaskLogic
         private double _maxBciSpeed = 10D;
     
         private ManipulatorResetPosition _manipulatorResetPosition;
+    
+        /// <summary>
+        /// Interval (s) after the animal successfully exists the quiescence period.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("waitMicroscopeTime")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="waitMicroscopeTime")]
+        [System.ComponentModel.DescriptionAttribute("Interval (s) after the animal successfully exists the quiescence period.")]
+        public double WaitMicroscopeTime
+        {
+            get
+            {
+                return _waitMicroscopeTime;
+            }
+            set
+            {
+                _waitMicroscopeTime = value;
+            }
+        }
     
         /// <summary>
         /// Interval (s) the valve stays open for water delivery.
@@ -279,6 +299,7 @@ namespace BciNoMovementDataSchema.TaskLogic
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
                 new BciNoMovementTaskLogic
                 {
+                    WaitMicroscopeTime = _waitMicroscopeTime,
                     ValveOpenTime = _valveOpenTime,
                     LowActivityTime = _lowActivityTime,
                     LickResponseTime = _lickResponseTime,
