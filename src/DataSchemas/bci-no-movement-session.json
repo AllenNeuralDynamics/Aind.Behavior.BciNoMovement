@@ -27,6 +27,10 @@
         "rootPath": {
           "type": "string"
         },
+        "remoteDataPath":{
+          "type": ["null", "number"],
+          "default": null
+        },
         "subject": {
           "type": "string"
         },

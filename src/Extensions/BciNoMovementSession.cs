@@ -59,6 +59,8 @@ namespace BciNoMovementDataSchema.Session
     
         private string _rootPath;
     
+        private double? _remoteDataPath;
+    
         private string _subject;
     
         private string _version;
@@ -148,6 +150,21 @@ namespace BciNoMovementDataSchema.Session
             }
         }
     
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("remoteDataPath")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="remoteDataPath")]
+        public double? RemoteDataPath
+        {
+            get
+            {
+                return _remoteDataPath;
+            }
+            set
+            {
+                _remoteDataPath = value;
+            }
+        }
+    
         [Newtonsoft.Json.JsonPropertyAttribute("subject", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="subject")]
         public string Subject
@@ -187,6 +204,7 @@ namespace BciNoMovementDataSchema.Session
                     Notes = _notes,
                     RngSeed = _rngSeed,
                     RootPath = _rootPath,
+                    RemoteDataPath = _remoteDataPath,
                     Subject = _subject,
                     Version = _version
                 }));
