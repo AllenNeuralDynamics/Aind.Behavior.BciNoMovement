@@ -30,27 +30,6 @@
       ],
       "type": "object"
     },
-    "pwmBuzzer": {
-      "properties": {
-        "model": {
-          "default": "buzzer",
-          "type": "string"
-        },
-        "pin": {
-          "default": "DO1",
-          "type": "string"
-        },
-        "pwmDefaultPulseDuration": {
-          "default": 0.2,
-          "type": "number"
-        },
-        "pwmFrequency": {
-          "default": 1000,
-          "type": "number"
-        }
-      },
-      "type": "object"
-    },
     "serialDevice":{
       "properties": {
         "portName": {

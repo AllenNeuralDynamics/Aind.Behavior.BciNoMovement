@@ -53,9 +53,6 @@
     "camera1": {
       "$ref": "bci-no-movement-hardware.json#/definitions/spinnakerCamera"
     },
-    "speaker": {
-      "$ref": "bci-no-movement-hardware.json#/definitions/pwmBuzzer"
-    },
     "zaberManipulator": {
       "type": "object",
       "properties": {
@@ -127,7 +124,6 @@
     "harpTimestampGeneratorGen3",
     "camera0",
     "camera1",
-    "speaker",
     "zaberManipulator",
     "networking"
   ],
