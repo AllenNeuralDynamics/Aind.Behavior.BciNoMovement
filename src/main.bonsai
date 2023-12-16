@@ -4398,6 +4398,7 @@ Bci voltage to spout velocity]]></Text>
             </Expression>
             <Expression xsi:type="Format">
               <Format>{0}/{1}</Format>
+              <Selector>Item1, Item2</Selector>
             </Expression>
             <Expression xsi:type="PropertyMapping">
               <PropertyMappings>
