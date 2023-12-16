@@ -87,7 +87,7 @@ Bci voltage to spout velocity]]></Text>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="p1:CreateContinuousUniform">
+              <Combinator xsi:type="p1:CreateDiscreteUniform">
                 <p1:Lower>0</p1:Lower>
                 <p1:Upper>1000000</p1:Upper>
               </Combinator>
@@ -99,8 +99,8 @@ Bci voltage to spout velocity]]></Text>
               <Combinator xsi:type="rx:Zip" />
             </Expression>
             <Expression xsi:type="scr:ExpressionTransform">
-              <scr:Name>CheckNull</scr:Name>
-              <scr:Expression>Item1 == null ? Item1 : Item2</scr:Expression>
+              <scr:Name>RandomizeRng?</scr:Name>
+              <scr:Expression>Item1 == 0 ? Item1 : Item2</scr:Expression>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Take">
@@ -207,7 +207,7 @@ Bci voltage to spout velocity]]></Text>
         <Combinator xsi:type="p2:EnumerateDataSchemaInputs">
           <p2:FileFilter>JSON</p2:FileFilter>
           <p2:Directory>..\local\Rigs</p2:Directory>
-          <p2:DataSchema>rig.yml</p2:DataSchema>
+          <p2:DataSchema>rig.json</p2:DataSchema>
         </Combinator>
       </Expression>
       <Expression xsi:type="PropertyMapping">
