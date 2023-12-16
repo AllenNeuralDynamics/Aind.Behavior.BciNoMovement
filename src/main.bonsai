@@ -167,7 +167,6 @@ Bci voltage to spout velocity]]></Text>
         <Combinator xsi:type="p2:EnumerateDataSchemaInputs">
           <p2:FileFilter>YML</p2:FileFilter>
           <p2:Directory>..\local\Subjects</p2:Directory>
-          <p2:DataSchema>test.yml</p2:DataSchema>
         </Combinator>
       </Expression>
       <Expression xsi:type="PropertyMapping">
@@ -222,8 +221,7 @@ Bci voltage to spout velocity]]></Text>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="p2:EnumerateDataSchemaInputs">
           <p2:FileFilter>YML</p2:FileFilter>
-          <p2:Directory>C:\git\AllenNeuralDynamics\aind-bci-no-movement\local\TaskLogic</p2:Directory>
-          <p2:DataSchema>test.yml</p2:DataSchema>
+          <p2:Directory>..\local\TaskLogic</p2:Directory>
         </Combinator>
       </Expression>
       <Expression xsi:type="PropertyMapping">
