@@ -122,6 +122,7 @@
     "harpBehaviorBoard",
     "harpLoadCellsBoard",
     "harpTimestampGeneratorGen3",
+    "camera0",
     "zaberManipulator",
     "networking"
   ],
