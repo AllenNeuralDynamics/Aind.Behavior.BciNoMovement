@@ -59,7 +59,7 @@ namespace BciNoMovementDataSchema.Session
     
         private string _rootPath;
     
-        private double? _remoteDataPath;
+        private string _remoteDataPath;
     
         private string _subject;
     
@@ -150,10 +150,9 @@ namespace BciNoMovementDataSchema.Session
             }
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("remoteDataPath")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="remoteDataPath")]
-        public double? RemoteDataPath
+        public string RemoteDataPath
         {
             get
             {
