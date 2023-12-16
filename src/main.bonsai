@@ -919,43 +919,31 @@ Bci voltage to spout velocity]]></Text>
                           <Name>Buzzer</Name>
                           <Workflow>
                             <Nodes>
-                              <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Double">
-                                <rx:Name>AudioDuration</rx:Name>
-                              </Expression>
-                              <Expression xsi:type="Multiply">
-                                <Operand xsi:type="IntProperty">
-                                  <Value>1000</Value>
-                                </Operand>
-                              </Expression>
-                              <Expression xsi:type="beh:Format">
-                                <harp:MessageType>Write</harp:MessageType>
-                                <harp:Register xsi:type="beh:PulseDO1" />
-                              </Expression>
-                              <Expression xsi:type="MulticastSubject">
-                                <Name>HarpBehaviorCommands</Name>
-                              </Expression>
                               <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Int32">
-                                <rx:Name>AudioFrequency</rx:Name>
-                              </Expression>
-                              <Expression xsi:type="beh:Format">
-                                <harp:MessageType>Write</harp:MessageType>
-                                <harp:Register xsi:type="beh:PwmFrequencyDO1" />
-                              </Expression>
-                              <Expression xsi:type="MulticastSubject">
-                                <Name>HarpBehaviorCommands</Name>
-                              </Expression>
-                              <Expression xsi:type="rx:BehaviorSubject" TypeArguments="p8:Unit">
                                 <rx:Name>AudioTrigger</rx:Name>
                               </Expression>
-                              <Expression xsi:type="beh:CreateMessage">
-                                <harp:MessageType>Write</harp:MessageType>
-                                <harp:Payload xsi:type="beh:CreatePwmStartPayload">
-                                  <beh:PwmStart>PwmDO1</beh:PwmStart>
-                                </harp:Payload>
+                              <Expression xsi:type="Annotation">
+                                <Name>TrialStart</Name>
+                                <Text><![CDATA[]]></Text>
                               </Expression>
-                              <Expression xsi:type="MulticastSubject">
-                                <Name>HarpBehaviorCommands</Name>
+                              <Expression xsi:type="IncludeWorkflow" Path="Extensions\TriggerTone.bonsai">
+                                <ToneId>1</ToneId>
+                                <Frequency>500</Frequency>
+                                <DurationMs>100</DurationMs>
                               </Expression>
+                              <Expression xsi:type="Annotation">
+                                <Name>Reward</Name>
+                                <Text><![CDATA[]]></Text>
+                              </Expression>
+                              <Expression xsi:type="IncludeWorkflow" Path="Extensions\TriggerTone.bonsai">
+                                <ToneId>2</ToneId>
+                                <Frequency>100</Frequency>
+                                <DurationMs>20</DurationMs>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:Merge" />
+                              </Expression>
+                              <Expression xsi:type="WorkflowOutput" />
                               <Expression xsi:type="GroupWorkflow">
                                 <Name>InitialSettings</Name>
                                 <Workflow>
@@ -977,33 +965,11 @@ Bci voltage to spout velocity]]></Text>
                                     <Expression xsi:type="MulticastSubject">
                                       <Name>HarpBehaviorCommands</Name>
                                     </Expression>
-                                    <Expression xsi:type="SubscribeSubject">
-                                      <Name>RigSchema</Name>
-                                    </Expression>
-                                    <Expression xsi:type="MemberSelector">
-                                      <Selector>Speaker.PwmDefaultPulseDuration</Selector>
-                                    </Expression>
-                                    <Expression xsi:type="MulticastSubject">
-                                      <Name>AudioDuration</Name>
-                                    </Expression>
-                                    <Expression xsi:type="SubscribeSubject">
-                                      <Name>RigSchema</Name>
-                                    </Expression>
-                                    <Expression xsi:type="MemberSelector">
-                                      <Selector>Speaker.PwmFrequency</Selector>
-                                    </Expression>
-                                    <Expression xsi:type="MulticastSubject">
-                                      <Name>AudioFrequency</Name>
-                                    </Expression>
                                   </Nodes>
                                   <Edges>
                                     <Edge From="0" To="1" Label="Source1" />
                                     <Edge From="1" To="2" Label="Source1" />
                                     <Edge From="2" To="3" Label="Source1" />
-                                    <Edge From="4" To="5" Label="Source1" />
-                                    <Edge From="5" To="6" Label="Source1" />
-                                    <Edge From="7" To="8" Label="Source1" />
-                                    <Edge From="8" To="9" Label="Source1" />
                                   </Edges>
                                 </Workflow>
                               </Expression>
@@ -1020,16 +986,16 @@ Bci voltage to spout velocity]]></Text>
                               </Expression>
                             </Nodes>
                             <Edges>
-                              <Edge From="0" To="1" Label="Source1" />
-                              <Edge From="1" To="2" Label="Source1" />
-                              <Edge From="2" To="3" Label="Source1" />
-                              <Edge From="4" To="5" Label="Source1" />
+                              <Edge From="0" To="2" Label="Source1" />
+                              <Edge From="0" To="4" Label="Source1" />
+                              <Edge From="1" To="2" Label="Source2" />
+                              <Edge From="2" To="5" Label="Source1" />
+                              <Edge From="3" To="4" Label="Source2" />
+                              <Edge From="4" To="5" Label="Source2" />
                               <Edge From="5" To="6" Label="Source1" />
-                              <Edge From="7" To="8" Label="Source1" />
+                              <Edge From="7" To="10" Label="Source1" />
                               <Edge From="8" To="9" Label="Source1" />
-                              <Edge From="10" To="13" Label="Source1" />
-                              <Edge From="11" To="12" Label="Source1" />
-                              <Edge From="12" To="13" Label="Source2" />
+                              <Edge From="9" To="10" Label="Source2" />
                             </Edges>
                           </Workflow>
                         </Expression>
@@ -3297,7 +3263,11 @@ Bci voltage to spout velocity]]></Text>
                         <Expression xsi:type="MulticastSubject">
                           <Name>GoToInitialPosition</Name>
                         </Expression>
-                        <Expression xsi:type="Unit" />
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="IntProperty">
+                            <Value>0</Value>
+                          </Combinator>
+                        </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:Take">
                             <rx:Count>1</rx:Count>
@@ -3630,6 +3600,21 @@ Bci voltage to spout velocity]]></Text>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="IntProperty">
+                      <Value>2</Value>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Take">
+                      <rx:Count>1</rx:Count>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\TriggerTone.bonsai">
+                    <ToneId>1</ToneId>
+                    <Frequency>500</Frequency>
+                    <DurationMs>100</DurationMs>
+                  </Expression>
                 </Nodes>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
@@ -3642,6 +3627,8 @@ Bci voltage to spout velocity]]></Text>
                   <Edge From="7" To="8" Label="Source1" />
                   <Edge From="8" To="9" Label="Source1" />
                   <Edge From="9" To="10" Label="Source1" />
+                  <Edge From="11" To="12" Label="Source1" />
+                  <Edge From="12" To="13" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
