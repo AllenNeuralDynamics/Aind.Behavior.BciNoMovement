@@ -9,103 +9,37 @@ namespace BciNoMovementDataSchema.Rig
 {
     #pragma warning disable // Disable all warnings
 
-    /// <summary>
-    /// Axis of the manipulator controlling the spout.
-    /// </summary>
-    public enum SpoutAxis
+    public enum Axis
     {
     
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="X")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="X")]
-        X = 0,
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="1")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="1")]
+        _1 = 1,
     
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="Y")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Y")]
-        Y = 1,
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="2")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="2")]
+        _2 = 2,
     
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="Z")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Z")]
-        Z = 2,
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="3")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="3")]
+        _3 = 3,
+    
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="0")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="0")]
+        _0 = 0,
     }
 
 
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class ZaberGenericCommand
+    public enum ColorProcessing
     {
     
-        private string _command;
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="Default")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Default")]
+        Default = 0,
     
-        private SpoutAxis? _axis;
-    
-        private int? _device;
-    
-        /// <summary>
-        /// The command to send to the Zaber device.
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("command", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="command")]
-        [System.ComponentModel.DescriptionAttribute("The command to send to the Zaber device.")]
-        public string Command
-        {
-            get
-            {
-                return _command;
-            }
-            set
-            {
-                _command = value;
-            }
-        }
-    
-        /// <summary>
-        /// The axis to send the command to.
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("axis")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="axis")]
-        [System.ComponentModel.DescriptionAttribute("The axis to send the command to.")]
-        public SpoutAxis? Axis
-        {
-            get
-            {
-                return _axis;
-            }
-            set
-            {
-                _axis = value;
-            }
-        }
-    
-        /// <summary>
-        /// The timeout in seconds for the command.
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("device")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="device")]
-        [System.ComponentModel.DescriptionAttribute("The timeout in seconds for the command.")]
-        public int? Device
-        {
-            get
-            {
-                return _device;
-            }
-            set
-            {
-                _device = value;
-            }
-        }
-    
-        public System.IObservable<ZaberGenericCommand> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new ZaberGenericCommand
-                {
-                    Command = _command,
-                    Axis = _axis,
-                    Device = _device
-                }));
-        }
+        [System.Runtime.Serialization.EnumMemberAttribute(Value="NoColorProcessing")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="NoColorProcessing")]
+        NoColorProcessing = 1,
     }
 
 
@@ -114,28 +48,11 @@ namespace BciNoMovementDataSchema.Rig
     public partial class HarpBoard
     {
     
-        private HarpBoardDeviceType _deviceType;
-    
         private string _portName;
     
         private string _serialNumber;
     
         private string _deviceName;
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("deviceType", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="deviceType")]
-        public HarpBoardDeviceType DeviceType
-        {
-            get
-            {
-                return _deviceType;
-            }
-            set
-            {
-                _deviceType = value;
-            }
-        }
     
         [Newtonsoft.Json.JsonPropertyAttribute("portName", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="portName")]
@@ -184,7 +101,6 @@ namespace BciNoMovementDataSchema.Rig
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
                 new HarpBoard
                 {
-                    DeviceType = _deviceType,
                     PortName = _portName,
                     SerialNumber = _serialNumber,
                     DeviceName = _deviceName
@@ -195,91 +111,71 @@ namespace BciNoMovementDataSchema.Rig
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class SpinnakerCamera
+    public partial class Networking
     {
     
-        private int _binning = 1;
+        private ZmqConnection _zmqPublisher;
     
-        private SpinnakerCameraColorProcessing _colorProcessing = BciNoMovementDataSchema.Rig.SpinnakerCameraColorProcessing.Default;
+        private ZmqConnection _zmqSubscriber;
     
-        private int _exposure = 1000;
-    
-        private int _frameRate = 30;
-    
-        private double _gain = 0D;
-    
-        private string _serialNumber;
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("binning")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="binning")]
-        public int Binning
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("zmqPublisher")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="zmqPublisher")]
+        public ZmqConnection ZmqPublisher
         {
             get
             {
-                return _binning;
+                return _zmqPublisher;
             }
             set
             {
-                _binning = value;
+                _zmqPublisher = value;
             }
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("colorProcessing")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="colorProcessing")]
-        public SpinnakerCameraColorProcessing ColorProcessing
+        [Newtonsoft.Json.JsonPropertyAttribute("zmqSubscriber")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="zmqSubscriber")]
+        public ZmqConnection ZmqSubscriber
         {
             get
             {
-                return _colorProcessing;
+                return _zmqSubscriber;
             }
             set
             {
-                _colorProcessing = value;
+                _zmqSubscriber = value;
             }
         }
     
-        [Newtonsoft.Json.JsonPropertyAttribute("exposure")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="exposure")]
-        public int Exposure
+        public System.IObservable<Networking> Process()
         {
-            get
-            {
-                return _exposure;
-            }
-            set
-            {
-                _exposure = value;
-            }
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new Networking
+                {
+                    ZmqPublisher = _zmqPublisher,
+                    ZmqSubscriber = _zmqSubscriber
+                }));
         }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class SpinnakerCamera
+    {
     
-        [Newtonsoft.Json.JsonPropertyAttribute("frameRate")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="frameRate")]
-        public int FrameRate
-        {
-            get
-            {
-                return _frameRate;
-            }
-            set
-            {
-                _frameRate = value;
-            }
-        }
+        private string _serialNumber;
     
-        [Newtonsoft.Json.JsonPropertyAttribute("gain")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="gain")]
-        public double Gain
-        {
-            get
-            {
-                return _gain;
-            }
-            set
-            {
-                _gain = value;
-            }
-        }
+        private int _binning = 1;
+    
+        private ColorProcessing _colorProcessing = BciNoMovementDataSchema.Rig.ColorProcessing.Default;
+    
+        private int _exposure = 1000;
+    
+        private int _frameRate = 60;
+    
+        private double _gain = 0D;
     
         [Newtonsoft.Json.JsonPropertyAttribute("serialNumber", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="serialNumber")]
@@ -295,17 +191,108 @@ namespace BciNoMovementDataSchema.Rig
             }
         }
     
+        /// <summary>
+        /// Binning factor.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("binning")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="binning")]
+        [System.ComponentModel.DescriptionAttribute("Binning factor.")]
+        public int Binning
+        {
+            get
+            {
+                return _binning;
+            }
+            set
+            {
+                _binning = value;
+            }
+        }
+    
+        /// <summary>
+        /// Color processing.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("colorProcessing", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="colorProcessing")]
+        [System.ComponentModel.DescriptionAttribute("Color processing.")]
+        public ColorProcessing ColorProcessing
+        {
+            get
+            {
+                return _colorProcessing;
+            }
+            set
+            {
+                _colorProcessing = value;
+            }
+        }
+    
+        /// <summary>
+        /// Exposure time (us).
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("exposure")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="exposure")]
+        [System.ComponentModel.DescriptionAttribute("Exposure time (us).")]
+        public int Exposure
+        {
+            get
+            {
+                return _exposure;
+            }
+            set
+            {
+                _exposure = value;
+            }
+        }
+    
+        /// <summary>
+        /// Frame rate (Hz).
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("frameRate")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="frameRate")]
+        [System.ComponentModel.DescriptionAttribute("Frame rate (Hz).")]
+        public int FrameRate
+        {
+            get
+            {
+                return _frameRate;
+            }
+            set
+            {
+                _frameRate = value;
+            }
+        }
+    
+        /// <summary>
+        /// Gain (dB).
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("gain")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="gain")]
+        [System.ComponentModel.DescriptionAttribute("Gain (dB).")]
+        public double Gain
+        {
+            get
+            {
+                return _gain;
+            }
+            set
+            {
+                _gain = value;
+            }
+        }
+    
         public System.IObservable<SpinnakerCamera> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
                 new SpinnakerCamera
                 {
+                    SerialNumber = _serialNumber,
                     Binning = _binning,
                     ColorProcessing = _colorProcessing,
                     Exposure = _exposure,
                     FrameRate = _frameRate,
-                    Gain = _gain,
-                    SerialNumber = _serialNumber
+                    Gain = _gain
                 }));
         }
     }
@@ -313,65 +300,245 @@ namespace BciNoMovementDataSchema.Rig
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class SerialDevice
+    public partial class ZaberGenericCommand
     {
     
-        private string _portName = "COM1";
+        private string _command;
     
-        private string _deviceName;
+        private Axis _axis = BciNoMovementDataSchema.Rig.Axis._0;
     
-        private int _baudRate = 115200;
+        private int _device;
     
-        [Newtonsoft.Json.JsonPropertyAttribute("portName", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="portName")]
-        public string PortName
+        [Newtonsoft.Json.JsonPropertyAttribute("command", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="command")]
+        public string Command
         {
             get
             {
-                return _portName;
+                return _command;
             }
             set
             {
-                _portName = value;
+                _command = value;
             }
         }
     
-        [Newtonsoft.Json.JsonPropertyAttribute("deviceName", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="deviceName")]
-        public string DeviceName
+        /// <summary>
+        /// Axis to move.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("axis")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="axis")]
+        [System.ComponentModel.DescriptionAttribute("Axis to move.")]
+        public Axis Axis
         {
             get
             {
-                return _deviceName;
+                return _axis;
             }
             set
             {
-                _deviceName = value;
+                _axis = value;
             }
         }
     
-        [Newtonsoft.Json.JsonPropertyAttribute("baudRate")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="baudRate")]
-        public int BaudRate
+        /// <summary>
+        /// Device number.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("device")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="device")]
+        [System.ComponentModel.DescriptionAttribute("Device number.")]
+        public int Device
         {
             get
             {
-                return _baudRate;
+                return _device;
             }
             set
             {
-                _baudRate = value;
+                _device = value;
             }
         }
     
-        public System.IObservable<SerialDevice> Process()
+        public System.IObservable<ZaberGenericCommand> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new SerialDevice
+                new ZaberGenericCommand
                 {
-                    PortName = _portName,
-                    DeviceName = _deviceName,
-                    BaudRate = _baudRate
+                    Command = _command,
+                    Axis = _axis,
+                    Device = _device
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class ZaberManipulator
+    {
+    
+        private string _comPort = "COM1";
+    
+        private System.Collections.Generic.List<ZaberGenericCommand> _genericCommands = new System.Collections.Generic.List<ZaberGenericCommand>();
+    
+        private Axis _spoutAxis = BciNoMovementDataSchema.Rig.Axis._1;
+    
+        private double _maxSpeed = 10D;
+    
+        private double _acceleration = 1299.63D;
+    
+        /// <summary>
+        /// COM port of the manipulator.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("comPort")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="comPort")]
+        [System.ComponentModel.DescriptionAttribute("COM port of the manipulator.")]
+        public string ComPort
+        {
+            get
+            {
+                return _comPort;
+            }
+            set
+            {
+                _comPort = value;
+            }
+        }
+    
+        /// <summary>
+        /// List of generic commands to send to the manipulator.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("genericCommands")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="genericCommands")]
+        [System.ComponentModel.DescriptionAttribute("List of generic commands to send to the manipulator.")]
+        public System.Collections.Generic.List<ZaberGenericCommand> GenericCommands
+        {
+            get
+            {
+                return _genericCommands;
+            }
+            set
+            {
+                _genericCommands = value;
+            }
+        }
+    
+        /// <summary>
+        /// Axis of the spout.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("spoutAxis")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="spoutAxis")]
+        [System.ComponentModel.DescriptionAttribute("Axis of the spout.")]
+        public Axis SpoutAxis
+        {
+            get
+            {
+                return _spoutAxis;
+            }
+            set
+            {
+                _spoutAxis = value;
+            }
+        }
+    
+        /// <summary>
+        /// Maximum speed of the manipulator.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("maxSpeed")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="maxSpeed")]
+        [System.ComponentModel.DescriptionAttribute("Maximum speed of the manipulator.")]
+        public double MaxSpeed
+        {
+            get
+            {
+                return _maxSpeed;
+            }
+            set
+            {
+                _maxSpeed = value;
+            }
+        }
+    
+        /// <summary>
+        /// Acceleration of the manipulator.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("acceleration")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="acceleration")]
+        [System.ComponentModel.DescriptionAttribute("Acceleration of the manipulator.")]
+        public double Acceleration
+        {
+            get
+            {
+                return _acceleration;
+            }
+            set
+            {
+                _acceleration = value;
+            }
+        }
+    
+        public System.IObservable<ZaberManipulator> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new ZaberManipulator
+                {
+                    ComPort = _comPort,
+                    GenericCommands = _genericCommands,
+                    SpoutAxis = _spoutAxis,
+                    MaxSpeed = _maxSpeed,
+                    Acceleration = _acceleration
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class ZmqConnection
+    {
+    
+        private string _connectionString = "@tcp://localhost:5556";
+    
+        private string _topic = "";
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("connectionString")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="connectionString")]
+        public string ConnectionString
+        {
+            get
+            {
+                return _connectionString;
+            }
+            set
+            {
+                _connectionString = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("topic")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="topic")]
+        public string Topic
+        {
+            get
+            {
+                return _topic;
+            }
+            set
+            {
+                _topic = value;
+            }
+        }
+    
+        public System.IObservable<ZmqConnection> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new ZmqConnection
+                {
+                    ConnectionString = _connectionString,
+                    Topic = _topic
                 }));
         }
     }
@@ -381,6 +548,10 @@ namespace BciNoMovementDataSchema.Rig
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class BciNoMovementRig
     {
+    
+        private string _describedBy;
+    
+        private string _schema_version;
     
         private HarpBoard _harpBehaviorBoard = new HarpBoard();
     
@@ -394,7 +565,39 @@ namespace BciNoMovementDataSchema.Rig
     
         private ZaberManipulator _zaberManipulator = new ZaberManipulator();
     
-        private Networking _networking = new Networking();
+        private Networking _networking;
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("describedBy", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="describedBy")]
+        public string DescribedBy
+        {
+            get
+            {
+                return _describedBy;
+            }
+            set
+            {
+                _describedBy = value;
+            }
+        }
+    
+        /// <summary>
+        /// schema version
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("schema_version", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="schema_version")]
+        [System.ComponentModel.DescriptionAttribute("schema version")]
+        public string Schema_version
+        {
+            get
+            {
+                return _schema_version;
+            }
+            set
+            {
+                _schema_version = value;
+            }
+        }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("harpBehaviorBoard", Required=Newtonsoft.Json.Required.Always)]
@@ -487,7 +690,7 @@ namespace BciNoMovementDataSchema.Rig
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("networking", Required=Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonPropertyAttribute("networking")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="networking")]
         public Networking Networking
         {
@@ -506,6 +709,8 @@ namespace BciNoMovementDataSchema.Rig
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
                 new BciNoMovementRig
                 {
+                    DescribedBy = _describedBy,
+                    Schema_version = _schema_version,
                     HarpBehaviorBoard = _harpBehaviorBoard,
                     HarpLoadCellsBoard = _harpLoadCellsBoard,
                     HarpTimestampGeneratorGen3 = _harpTimestampGeneratorGen3,
@@ -513,337 +718,6 @@ namespace BciNoMovementDataSchema.Rig
                     Camera1 = _camera1,
                     ZaberManipulator = _zaberManipulator,
                     Networking = _networking
-                }));
-        }
-    }
-
-
-    public enum HarpBoardDeviceType
-    {
-    
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="custom")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="custom")]
-        Custom = 0,
-    
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="behavior")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="behavior")]
-        Behavior = 1,
-    
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="clockSynchronizer")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="clockSynchronizer")]
-        ClockSynchronizer = 2,
-    
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="timestampGeneratorGen3")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="timestampGeneratorGen3")]
-        TimestampGeneratorGen3 = 3,
-    
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="loadCells")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="loadCells")]
-        LoadCells = 4,
-    }
-
-
-    public enum SpinnakerCameraColorProcessing
-    {
-    
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="Default")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Default")]
-        Default = 0,
-    
-        [System.Runtime.Serialization.EnumMemberAttribute(Value="NoColorProcessing")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="NoColorProcessing")]
-        NoColorProcessing = 1,
-    }
-
-
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class ZaberManipulator
-    {
-    
-        private SerialDevice _communication;
-    
-        private Operation _operation;
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("communication")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="communication")]
-        public SerialDevice Communication
-        {
-            get
-            {
-                return _communication;
-            }
-            set
-            {
-                _communication = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("operation")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="operation")]
-        public Operation Operation
-        {
-            get
-            {
-                return _operation;
-            }
-            set
-            {
-                _operation = value;
-            }
-        }
-    
-        public System.IObservable<ZaberManipulator> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new ZaberManipulator
-                {
-                    Communication = _communication,
-                    Operation = _operation
-                }));
-        }
-    }
-
-
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Networking
-    {
-    
-        private ZmqPublisher _zmqPublisher;
-    
-        private ZmqSubscriber _zmqSubscriber;
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("zmqPublisher")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="zmqPublisher")]
-        public ZmqPublisher ZmqPublisher
-        {
-            get
-            {
-                return _zmqPublisher;
-            }
-            set
-            {
-                _zmqPublisher = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("zmqSubscriber")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="zmqSubscriber")]
-        public ZmqSubscriber ZmqSubscriber
-        {
-            get
-            {
-                return _zmqSubscriber;
-            }
-            set
-            {
-                _zmqSubscriber = value;
-            }
-        }
-    
-        public System.IObservable<Networking> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new Networking
-                {
-                    ZmqPublisher = _zmqPublisher,
-                    ZmqSubscriber = _zmqSubscriber
-                }));
-        }
-    }
-
-
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Operation
-    {
-    
-        private System.Collections.Generic.List<ZaberGenericCommand> _genericCommands = new System.Collections.Generic.List<ZaberGenericCommand>();
-    
-        private SpoutAxis _spoutAxis;
-    
-        private double _maxSpeed = 12D;
-    
-        private double _acceleration = 1299.63D;
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("genericCommands")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="genericCommands")]
-        public System.Collections.Generic.List<ZaberGenericCommand> GenericCommands
-        {
-            get
-            {
-                return _genericCommands;
-            }
-            set
-            {
-                _genericCommands = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("spoutAxis")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="spoutAxis")]
-        public SpoutAxis SpoutAxis
-        {
-            get
-            {
-                return _spoutAxis;
-            }
-            set
-            {
-                _spoutAxis = value;
-            }
-        }
-    
-        /// <summary>
-        /// Maximum speed of the manipulator in mm/s
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("maxSpeed")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="maxSpeed")]
-        [System.ComponentModel.DescriptionAttribute("Maximum speed of the manipulator in mm/s")]
-        public double MaxSpeed
-        {
-            get
-            {
-                return _maxSpeed;
-            }
-            set
-            {
-                _maxSpeed = value;
-            }
-        }
-    
-        /// <summary>
-        /// Acceleration of the manipulator in mm/s^2
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("acceleration")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="acceleration")]
-        [System.ComponentModel.DescriptionAttribute("Acceleration of the manipulator in mm/s^2")]
-        public double Acceleration
-        {
-            get
-            {
-                return _acceleration;
-            }
-            set
-            {
-                _acceleration = value;
-            }
-        }
-    
-        public System.IObservable<Operation> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new Operation
-                {
-                    GenericCommands = _genericCommands,
-                    SpoutAxis = _spoutAxis,
-                    MaxSpeed = _maxSpeed,
-                    Acceleration = _acceleration
-                }));
-        }
-    }
-
-
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class ZmqPublisher
-    {
-    
-        private string _connectionString = "@tcp://localhost:5556";
-    
-        private string _topic = "bci-no-movement";
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("connectionString")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="connectionString")]
-        public string ConnectionString
-        {
-            get
-            {
-                return _connectionString;
-            }
-            set
-            {
-                _connectionString = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("topic")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="topic")]
-        public string Topic
-        {
-            get
-            {
-                return _topic;
-            }
-            set
-            {
-                _topic = value;
-            }
-        }
-    
-        public System.IObservable<ZmqPublisher> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new ZmqPublisher
-                {
-                    ConnectionString = _connectionString,
-                    Topic = _topic
-                }));
-        }
-    }
-
-
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class ZmqSubscriber
-    {
-    
-        private string _connectionString = "tcp://localhost:5557";
-    
-        private string _topic = "bci-no-movement";
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("connectionString")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="connectionString")]
-        public string ConnectionString
-        {
-            get
-            {
-                return _connectionString;
-            }
-            set
-            {
-                _connectionString = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("topic")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="topic")]
-        public string Topic
-        {
-            get
-            {
-                return _topic;
-            }
-            set
-            {
-                _topic = value;
-            }
-        }
-    
-        public System.IObservable<ZmqSubscriber> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new ZmqSubscriber
-                {
-                    ConnectionString = _connectionString,
-                    Topic = _topic
                 }));
         }
     }
@@ -863,34 +737,9 @@ namespace BciNoMovementDataSchema.Rig
             return System.Reactive.Linq.Observable.Select(source, value => Newtonsoft.Json.JsonConvert.SerializeObject(value));
         }
 
-        public System.IObservable<string> Process(System.IObservable<ZaberGenericCommand> source)
-        {
-            return Process<ZaberGenericCommand>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<HarpBoard> source)
         {
             return Process<HarpBoard>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<SpinnakerCamera> source)
-        {
-            return Process<SpinnakerCamera>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<SerialDevice> source)
-        {
-            return Process<SerialDevice>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<BciNoMovementRig> source)
-        {
-            return Process<BciNoMovementRig>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<ZaberManipulator> source)
-        {
-            return Process<ZaberManipulator>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<Networking> source)
@@ -898,19 +747,29 @@ namespace BciNoMovementDataSchema.Rig
             return Process<Networking>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<Operation> source)
+        public System.IObservable<string> Process(System.IObservable<SpinnakerCamera> source)
         {
-            return Process<Operation>(source);
+            return Process<SpinnakerCamera>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<ZmqPublisher> source)
+        public System.IObservable<string> Process(System.IObservable<ZaberGenericCommand> source)
         {
-            return Process<ZmqPublisher>(source);
+            return Process<ZaberGenericCommand>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<ZmqSubscriber> source)
+        public System.IObservable<string> Process(System.IObservable<ZaberManipulator> source)
         {
-            return Process<ZmqSubscriber>(source);
+            return Process<ZaberManipulator>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<ZmqConnection> source)
+        {
+            return Process<ZmqConnection>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<BciNoMovementRig> source)
+        {
+            return Process<BciNoMovementRig>(source);
         }
     }
 
@@ -920,16 +779,13 @@ namespace BciNoMovementDataSchema.Rig
     /// </summary>
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZaberGenericCommand>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpBoard>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SerialDevice>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BciNoMovementRig>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZaberManipulator>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Networking>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Operation>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZmqPublisher>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZmqSubscriber>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZaberGenericCommand>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZaberManipulator>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZmqConnection>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BciNoMovementRig>))]
     [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of JSON strings into data model objects.")]
     public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
@@ -977,34 +833,9 @@ namespace BciNoMovementDataSchema.Rig
             });
         }
 
-        public System.IObservable<string> Process(System.IObservable<ZaberGenericCommand> source)
-        {
-            return Process<ZaberGenericCommand>(source);
-        }
-
         public System.IObservable<string> Process(System.IObservable<HarpBoard> source)
         {
             return Process<HarpBoard>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<SpinnakerCamera> source)
-        {
-            return Process<SpinnakerCamera>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<SerialDevice> source)
-        {
-            return Process<SerialDevice>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<BciNoMovementRig> source)
-        {
-            return Process<BciNoMovementRig>(source);
-        }
-
-        public System.IObservable<string> Process(System.IObservable<ZaberManipulator> source)
-        {
-            return Process<ZaberManipulator>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<Networking> source)
@@ -1012,19 +843,29 @@ namespace BciNoMovementDataSchema.Rig
             return Process<Networking>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<Operation> source)
+        public System.IObservable<string> Process(System.IObservable<SpinnakerCamera> source)
         {
-            return Process<Operation>(source);
+            return Process<SpinnakerCamera>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<ZmqPublisher> source)
+        public System.IObservable<string> Process(System.IObservable<ZaberGenericCommand> source)
         {
-            return Process<ZmqPublisher>(source);
+            return Process<ZaberGenericCommand>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<ZmqSubscriber> source)
+        public System.IObservable<string> Process(System.IObservable<ZaberManipulator> source)
         {
-            return Process<ZmqSubscriber>(source);
+            return Process<ZaberManipulator>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<ZmqConnection> source)
+        {
+            return Process<ZmqConnection>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<BciNoMovementRig> source)
+        {
+            return Process<BciNoMovementRig>(source);
         }
     }
 
@@ -1034,16 +875,13 @@ namespace BciNoMovementDataSchema.Rig
     /// </summary>
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZaberGenericCommand>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpBoard>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SerialDevice>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BciNoMovementRig>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZaberManipulator>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Networking>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Operation>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZmqPublisher>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZmqSubscriber>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZaberGenericCommand>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZaberManipulator>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZmqConnection>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BciNoMovementRig>))]
     [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of YAML strings into data model objects.")]
     public partial class DeserializeFromYaml : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {

@@ -14,87 +14,66 @@ namespace BciNoMovementDataSchema.Session
     public partial class BciNoMovementSession
     {
     
-        private Metadata _metadata = new Metadata();
+        private string _describedBy;
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("metadata", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="metadata")]
-        public Metadata Metadata
-        {
-            get
-            {
-                return _metadata;
-            }
-            set
-            {
-                _metadata = value;
-            }
-        }
-    
-        public System.IObservable<BciNoMovementSession> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new BciNoMovementSession
-                {
-                    Metadata = _metadata
-                }));
-        }
-    }
-
-
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Metadata
-    {
-    
-        private string _commitHash;
-    
-        private bool _allowDirty = false;
+        private string _schema_version;
     
         private string _experiment;
     
-        private string _notes = "";
-    
-        private double? _rngSeed;
-    
         private string _rootPath;
-    
-        private string _remoteDataPath;
     
         private string _subject;
     
         private string _version;
     
-        [Newtonsoft.Json.JsonPropertyAttribute("commitHash", Required=Newtonsoft.Json.Required.Always)]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="commitHash")]
-        public string CommitHash
+        private bool _allowDirty = false;
+    
+        private string _remoteDataPath = "";
+    
+        private double _rngSeed;
+    
+        private string _notes;
+    
+        private string _commitHash;
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("describedBy", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="describedBy")]
+        public string DescribedBy
         {
             get
             {
-                return _commitHash;
+                return _describedBy;
             }
             set
             {
-                _commitHash = value;
+                _describedBy = value;
             }
         }
     
-        [Newtonsoft.Json.JsonPropertyAttribute("allowDirty")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="allowDirty")]
-        public bool AllowDirty
+        /// <summary>
+        /// schema version
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("schema_version", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="schema_version")]
+        [System.ComponentModel.DescriptionAttribute("schema version")]
+        public string Schema_version
         {
             get
             {
-                return _allowDirty;
+                return _schema_version;
             }
             set
             {
-                _allowDirty = value;
+                _schema_version = value;
             }
         }
     
+        /// <summary>
+        /// Name of the experiment
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("experiment", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="experiment")]
+        [System.ComponentModel.DescriptionAttribute("Name of the experiment")]
         public string Experiment
         {
             get
@@ -107,37 +86,12 @@ namespace BciNoMovementDataSchema.Session
             }
         }
     
-        [Newtonsoft.Json.JsonPropertyAttribute("notes")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="notes")]
-        public string Notes
-        {
-            get
-            {
-                return _notes;
-            }
-            set
-            {
-                _notes = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("rngSeed")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rngSeed")]
-        public double? RngSeed
-        {
-            get
-            {
-                return _rngSeed;
-            }
-            set
-            {
-                _rngSeed = value;
-            }
-        }
-    
+        /// <summary>
+        /// Root path of the experiment
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("rootPath", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rootPath")]
+        [System.ComponentModel.DescriptionAttribute("Root path of the experiment")]
         public string RootPath
         {
             get
@@ -150,22 +104,12 @@ namespace BciNoMovementDataSchema.Session
             }
         }
     
-        [Newtonsoft.Json.JsonPropertyAttribute("remoteDataPath")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="remoteDataPath")]
-        public string RemoteDataPath
-        {
-            get
-            {
-                return _remoteDataPath;
-            }
-            set
-            {
-                _remoteDataPath = value;
-            }
-        }
-    
+        /// <summary>
+        /// Name of the subject
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("subject", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="subject")]
+        [System.ComponentModel.DescriptionAttribute("Name of the subject")]
         public string Subject
         {
             get
@@ -178,8 +122,12 @@ namespace BciNoMovementDataSchema.Session
             }
         }
     
+        /// <summary>
+        /// Version of the experiment
+        /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("version", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="version")]
+        [System.ComponentModel.DescriptionAttribute("Version of the experiment")]
         public string Version
         {
             get
@@ -192,20 +140,112 @@ namespace BciNoMovementDataSchema.Session
             }
         }
     
-        public System.IObservable<Metadata> Process()
+        /// <summary>
+        /// Allow code to run from dirty repository
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("allowDirty")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="allowDirty")]
+        [System.ComponentModel.DescriptionAttribute("Allow code to run from dirty repository")]
+        public bool AllowDirty
+        {
+            get
+            {
+                return _allowDirty;
+            }
+            set
+            {
+                _allowDirty = value;
+            }
+        }
+    
+        /// <summary>
+        /// Path to remote data. If empty, no attempt to copy data will be made
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("remoteDataPath")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="remoteDataPath")]
+        [System.ComponentModel.DescriptionAttribute("Path to remote data. If empty, no attempt to copy data will be made")]
+        public string RemoteDataPath
+        {
+            get
+            {
+                return _remoteDataPath;
+            }
+            set
+            {
+                _remoteDataPath = value;
+            }
+        }
+    
+        /// <summary>
+        /// Seed of the random number generator
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("rngSeed")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rngSeed")]
+        [System.ComponentModel.DescriptionAttribute("Seed of the random number generator")]
+        public double RngSeed
+        {
+            get
+            {
+                return _rngSeed;
+            }
+            set
+            {
+                _rngSeed = value;
+            }
+        }
+    
+        /// <summary>
+        /// Notes about the experiment
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("notes")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="notes")]
+        [System.ComponentModel.DescriptionAttribute("Notes about the experiment")]
+        public string Notes
+        {
+            get
+            {
+                return _notes;
+            }
+            set
+            {
+                _notes = value;
+            }
+        }
+    
+        /// <summary>
+        /// Commit hash of the repository
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("commitHash")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="commitHash")]
+        [System.ComponentModel.DescriptionAttribute("Commit hash of the repository")]
+        public string CommitHash
+        {
+            get
+            {
+                return _commitHash;
+            }
+            set
+            {
+                _commitHash = value;
+            }
+        }
+    
+        public System.IObservable<BciNoMovementSession> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
-                new Metadata
+                new BciNoMovementSession
                 {
-                    CommitHash = _commitHash,
-                    AllowDirty = _allowDirty,
+                    DescribedBy = _describedBy,
+                    Schema_version = _schema_version,
                     Experiment = _experiment,
-                    Notes = _notes,
-                    RngSeed = _rngSeed,
                     RootPath = _rootPath,
-                    RemoteDataPath = _remoteDataPath,
                     Subject = _subject,
-                    Version = _version
+                    Version = _version,
+                    AllowDirty = _allowDirty,
+                    RemoteDataPath = _remoteDataPath,
+                    RngSeed = _rngSeed,
+                    Notes = _notes,
+                    CommitHash = _commitHash
                 }));
         }
     }
@@ -229,11 +269,6 @@ namespace BciNoMovementDataSchema.Session
         {
             return Process<BciNoMovementSession>(source);
         }
-
-        public System.IObservable<string> Process(System.IObservable<Metadata> source)
-        {
-            return Process<Metadata>(source);
-        }
     }
 
 
@@ -243,7 +278,6 @@ namespace BciNoMovementDataSchema.Session
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BciNoMovementSession>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Metadata>))]
     [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of JSON strings into data model objects.")]
     public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
@@ -295,11 +329,6 @@ namespace BciNoMovementDataSchema.Session
         {
             return Process<BciNoMovementSession>(source);
         }
-
-        public System.IObservable<string> Process(System.IObservable<Metadata> source)
-        {
-            return Process<Metadata>(source);
-        }
     }
 
 
@@ -309,7 +338,6 @@ namespace BciNoMovementDataSchema.Session
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BciNoMovementSession>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Metadata>))]
     [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of YAML strings into data model objects.")]
     public partial class DeserializeFromYaml : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
