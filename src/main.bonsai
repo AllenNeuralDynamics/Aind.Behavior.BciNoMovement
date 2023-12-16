@@ -115,7 +115,7 @@ Bci voltage to spout velocity]]></Text>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="num:CreateRandom">
-                <num:Seed>359976</num:Seed>
+                <num:Seed>153141</num:Seed>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -136,8 +136,8 @@ Bci voltage to spout velocity]]></Text>
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:GenerateRootLoggingPath.bonsai">
-              <RootFolder xsi:nil="true" />
-              <Subject xsi:nil="true" />
+              <RootFolder>C:\data\</RootFolder>
+              <Subject>672102</Subject>
               <SubjectName>LoggingRootPath</SubjectName>
             </Expression>
           </Nodes>
@@ -167,6 +167,7 @@ Bci voltage to spout velocity]]></Text>
         <Combinator xsi:type="p2:EnumerateDataSchemaInputs">
           <p2:FileFilter>YML</p2:FileFilter>
           <p2:Directory>..\local\Subjects</p2:Directory>
+          <p2:DataSchema />
         </Combinator>
       </Expression>
       <Expression xsi:type="PropertyMapping">
@@ -176,7 +177,7 @@ Bci voltage to spout velocity]]></Text>
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="io:ReadAllText">
-          <io:Path>..\local\Subjects\test.yml</io:Path>
+          <io:Path>..\local\Subjects\randomsubject.yml</io:Path>
         </Combinator>
       </Expression>
       <Expression xsi:type="p3:DeserializeFromYaml">
@@ -222,6 +223,7 @@ Bci voltage to spout velocity]]></Text>
         <Combinator xsi:type="p2:EnumerateDataSchemaInputs">
           <p2:FileFilter>YML</p2:FileFilter>
           <p2:Directory>..\local\TaskLogic</p2:Directory>
+          <p2:DataSchema />
         </Combinator>
       </Expression>
       <Expression xsi:type="PropertyMapping">
@@ -231,7 +233,7 @@ Bci voltage to spout velocity]]></Text>
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="io:ReadAllText">
-          <io:Path>C:\git\AllenNeuralDynamics\aind-bci-no-movement\local\TaskLogic\test.yml</io:Path>
+          <io:Path>..\local\TaskLogic\settings.yml</io:Path>
         </Combinator>
       </Expression>
       <Expression xsi:type="p5:DeserializeFromYaml">
@@ -369,15 +371,15 @@ Bci voltage to spout velocity]]></Text>
             <Expression xsi:type="SubscribeSubject">
               <Name>RigSchema</Name>
             </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>Camera0.FrameRate,Camera1.FrameRate</Selector>
-            </Expression>
             <Expression xsi:type="rx:Condition">
               <Name>BothHasValue</Name>
               <Workflow>
                 <Nodes>
                   <Expression xsi:type="WorkflowInput">
                     <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Camera1,Camera0</Selector>
                   </Expression>
                   <Expression xsi:type="scr:ExpressionTransform">
                     <scr:Expression>(it.Item1 == null) or (it.Item2 == null)</scr:Expression>
@@ -389,8 +391,12 @@ Bci voltage to spout velocity]]></Text>
                   <Edge From="0" To="1" Label="Source1" />
                   <Edge From="1" To="2" Label="Source1" />
                   <Edge From="2" To="3" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source1" />
                 </Edges>
               </Workflow>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Camera0.FrameRate,Camera1.FrameRate</Selector>
             </Expression>
             <Expression xsi:type="Equal" />
             <Expression xsi:type="BitwiseNot" />
@@ -696,7 +702,7 @@ Bci voltage to spout velocity]]></Text>
                             <harp:VisualIndicators>On</harp:VisualIndicators>
                             <harp:Heartbeat>Enabled</harp:Heartbeat>
                             <harp:IgnoreErrors>false</harp:IgnoreErrors>
-                            <harp:PortName>COM11</harp:PortName>
+                            <harp:PortName>COM8</harp:PortName>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="rx:PublishSubject">
@@ -1357,7 +1363,7 @@ Bci voltage to spout velocity]]></Text>
                             <harp:VisualIndicators>On</harp:VisualIndicators>
                             <harp:Heartbeat>Disabled</harp:Heartbeat>
                             <harp:IgnoreErrors>false</harp:IgnoreErrors>
-                            <harp:PortName>COM12</harp:PortName>
+                            <harp:PortName>COM9</harp:PortName>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="rx:PublishSubject">
@@ -1520,9 +1526,9 @@ Bci voltage to spout velocity]]></Text>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p11:BciSpinnakerCapture">
                       <spk:Index xsi:nil="true" />
-                      <spk:SerialNumber>23022713</spk:SerialNumber>
+                      <spk:SerialNumber>MISSING</spk:SerialNumber>
                       <spk:ColorProcessing>Default</spk:ColorProcessing>
-                      <p11:ExposureTime>2000</p11:ExposureTime>
+                      <p11:ExposureTime>1000</p11:ExposureTime>
                       <p11:Gain>0</p11:Gain>
                       <p11:Binning>1</p11:Binning>
                       <p11:Gamma>0.4</p11:Gamma>
@@ -1655,7 +1661,7 @@ Bci voltage to spout velocity]]></Text>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p12:CreateZaberDevice">
                       <p12:Name>ZaberMotor</p12:Name>
-                      <p12:PortName>COM13</p12:PortName>
+                      <p12:PortName>COM10</p12:PortName>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="rx:BehaviorSubject">
@@ -1976,7 +1982,7 @@ Bci voltage to spout velocity]]></Text>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="IntProperty">
-                      <Value>1</Value>
+                      <Value>2</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Add">
@@ -2050,7 +2056,7 @@ Bci voltage to spout velocity]]></Text>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p12:MoveAbsolute">
                       <p12:PortName>ZaberMotor</p12:PortName>
-                      <p12:Axis>2</p12:Axis>
+                      <p12:Axis>3</p12:Axis>
                       <p12:Velocity xsi:nil="true" />
                       <p12:Acceleration xsi:nil="true" />
                     </Combinator>
