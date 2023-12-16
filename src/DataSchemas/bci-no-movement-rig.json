@@ -1,132 +1,283 @@
 {
-  "$id": "h...",
-  "$schema": "https://json-schema.org/draft-07/schema",
-  "definitions": {
-    "spoutAxis": {
-      "type": "string",
-      "enum": ["X", "Y", "Z"],
-      "default": "X",
-      "description": "Axis of the manipulator controlling the spout."
-    },
-    "zaberGenericCommand": {
-      "type": "object",
-      "properties": {
-        "command": {
-          "type": "string",
-          "description": "The command to send to the Zaber device."
-        },
-        "axis": {
-          "oneOf": [
-            {
-              "$ref": "#/definitions/spoutAxis"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null,
-          "description": "The axis to send the command to."
-        },
-        "device": {
-          "type": ["null", "integer"],
-          "minimum": 0,
-          "default": null,
-          "description": "The timeout in seconds for the command."
-        }
+   "definitions": {
+      "Axis": {
+         "enum": [
+            1,
+            2,
+            3,
+            0
+         ],
+         "title": "Axis",
+         "type": "integer"
       },
-      "required": ["command"]
-    }
-  },
-  "properties": {
-    "harpBehaviorBoard": {
-      "$ref": "bci-no-movement-hardware.json#/definitions/harpBoard"
-    },
-    "harpLoadCellsBoard": {
-      "$ref": "bci-no-movement-hardware.json#/definitions/harpBoard"
-    },
-    "harpTimestampGeneratorGen3": {
-      "$ref": "bci-no-movement-hardware.json#/definitions/harpBoard"
-    },
-    "camera0": {
-      "$ref": "bci-no-movement-hardware.json#/definitions/spinnakerCamera"
-    },
-    "camera1": {
-      "$ref": "bci-no-movement-hardware.json#/definitions/spinnakerCamera",
-      "default": null
-    },
-    "zaberManipulator": {
-      "type": "object",
-      "properties": {
-        "communication": {
-          "$ref": "bci-no-movement-hardware.json#/definitions/serialDevice"
-        },
-        "operation": {
-          "type": "object",
-          "properties": {
+      "ColorProcessing": {
+         "enum": [
+            "Default",
+            "NoColorProcessing"
+         ],
+         "title": "ColorProcessing",
+         "type": "string"
+      },
+      "HarpBoard": {
+         "additionalProperties": false,
+         "properties": {
+            "portName": {
+               "title": "Portname",
+               "type": "string"
+            },
+            "serialNumber": {
+               "default": null,
+               "title": "Serialnumber",
+               "type": "string"
+            },
+            "deviceName": {
+               "default": null,
+               "title": "Devicename",
+               "type": "string"
+            }
+         },
+         "required": [
+            "portName"
+         ],
+         "title": "HarpBoard",
+         "type": "object"
+      },
+      "Networking": {
+         "additionalProperties": false,
+         "properties": {
+            "zmqPublisher": {
+               "allOf": [
+                  {
+                     "$ref": "#/definitions/ZmqConnection"
+                  }
+               ],
+               "default": {
+                  "connectionString": "@tcp://localhost:5556",
+                  "topic": "bci-no-movement"
+               }
+            },
+            "zmqSubscriber": {
+               "allOf": [
+                  {
+                     "$ref": "#/definitions/ZmqConnection"
+                  }
+               ],
+               "default": {
+                  "connectionString": "@tcp://localhost:5557",
+                  "topic": "bci-no-movement"
+               }
+            }
+         },
+         "title": "Networking",
+         "type": "object"
+      },
+      "SpinnakerCamera": {
+         "additionalProperties": false,
+         "properties": {
+            "serialNumber": {
+               "title": "Serialnumber",
+               "type": "string"
+            },
+            "binning": {
+               "default": 1,
+               "description": "Binning factor.",
+               "minimum": 1,
+               "title": "Binning",
+               "type": "integer"
+            },
+            "colorProcessing": {
+               "Default": "Default",
+               "allOf": [
+                  {
+                     "$ref": "#/definitions/ColorProcessing"
+                  }
+               ],
+               "description": "Color processing."
+            },
+            "exposure": {
+               "default": 1000,
+               "description": "Exposure time (us).",
+               "minimum": 0,
+               "title": "Exposure",
+               "type": "integer"
+            },
+            "frameRate": {
+               "default": 60,
+               "description": "Frame rate (Hz).",
+               "minimum": 0,
+               "title": "Framerate",
+               "type": "integer"
+            },
+            "gain": {
+               "default": 0,
+               "description": "Gain (dB).",
+               "minimum": 0.0,
+               "title": "Gain",
+               "type": "number"
+            }
+         },
+         "required": [
+            "serialNumber",
+            "colorProcessing"
+         ],
+         "title": "SpinnakerCamera",
+         "type": "object"
+      },
+      "ZaberGenericCommand": {
+         "additionalProperties": false,
+         "properties": {
+            "command": {
+               "title": "Command",
+               "type": "string"
+            },
+            "axis": {
+               "allOf": [
+                  {
+                     "$ref": "#/definitions/Axis"
+                  }
+               ],
+               "default": 0,
+               "description": "Axis to move."
+            },
+            "device": {
+               "default": null,
+               "description": "Device number.",
+               "minimum": 0,
+               "title": "Device",
+               "type": "integer"
+            }
+         },
+         "required": [
+            "command"
+         ],
+         "title": "ZaberGenericCommand",
+         "type": "object"
+      },
+      "ZaberManipulator": {
+         "additionalProperties": false,
+         "properties": {
+            "comPort": {
+               "default": "COM1",
+               "description": "COM port of the manipulator.",
+               "title": "Comport",
+               "type": "string"
+            },
             "genericCommands": {
-              "type": "array",
-              "default": [],
-              "items": { "$ref": "#/definitions/zaberGenericCommand" }
+               "default": [],
+               "description": "List of generic commands to send to the manipulator.",
+               "items": {
+                  "$ref": "#/definitions/ZaberGenericCommand"
+               },
+               "title": "Genericcommands",
+               "type": "array"
             },
             "spoutAxis": {
-              "$ref": "#/definitions/spoutAxis"
+               "allOf": [
+                  {
+                     "$ref": "#/definitions/Axis"
+                  }
+               ],
+               "default": 1,
+               "description": "Axis of the spout."
             },
             "maxSpeed": {
-              "type": "number",
-              "minimum": 0,
-              "default": 12.0,
-              "description": "Maximum speed of the manipulator in mm/s"
+               "default": 10,
+               "description": "Maximum speed of the manipulator.",
+               "minimum": 0.0,
+               "title": "Maxspeed",
+               "type": "number"
             },
             "acceleration": {
-              "type": "number",
-              "minimum": 0,
-              "default": 1299.63,
-              "description": "Acceleration of the manipulator in mm/s^2"
+               "default": 1299.63,
+               "description": "Acceleration of the manipulator.",
+               "minimum": 0.0,
+               "title": "Acceleration",
+               "type": "number"
             }
-          }
-        }
-      }
-    },
-    "networking": {
-      "type": "object",
-      "properties": {
-        "zmqPublisher": {
-          "type": "object",
-          "properties": {
+         },
+         "title": "ZaberManipulator",
+         "type": "object"
+      },
+      "ZmqConnection": {
+         "additionalProperties": false,
+         "properties": {
             "connectionString": {
-              "type": "string",
-              "default": "@tcp://localhost:5556"
+               "default": "@tcp://localhost:5556",
+               "title": "Connectionstring",
+               "type": "string"
             },
             "topic": {
-              "type": "string",
-              "default": "bci-no-movement"
+               "default": "",
+               "title": "Topic",
+               "type": "string"
             }
-          }
-        },
-        "zmqSubscriber": {
-          "type": "object",
-          "properties": {
-            "connectionString": {
-              "type": "string",
-              "default": "tcp://localhost:5557"
-            },
-            "topic": {
-              "type": "string",
-              "default": "bci-no-movement"
-            }
-          }
-        }
+         },
+         "title": "ZmqConnection",
+         "type": "object"
       }
-    }
-  },
-  "required": [
-    "harpBehaviorBoard",
-    "harpLoadCellsBoard",
-    "harpTimestampGeneratorGen3",
-    "camera0",
-    "zaberManipulator",
-    "networking"
-  ],
-  "title": "BciNoMovementRig",
-  "type": "object"
+   },
+   "additionalProperties": false,
+   "properties": {
+      "describedBy": {
+         "title": "Describedby",
+         "type": "string"
+      },
+      "schema_version": {
+         "description": "schema version",
+         "pattern": "^\\d+.\\d+.\\d+$",
+         "title": "Version",
+         "type": "string"
+      },
+      "harpBehaviorBoard": {
+         "$ref": "#/definitions/HarpBoard"
+      },
+      "harpLoadCellsBoard": {
+         "$ref": "#/definitions/HarpBoard"
+      },
+      "harpTimestampGeneratorGen3": {
+         "$ref": "#/definitions/HarpBoard"
+      },
+      "camera0": {
+         "$ref": "#/definitions/SpinnakerCamera"
+      },
+      "camera1": {
+         "allOf": [
+            {
+               "$ref": "#/definitions/SpinnakerCamera"
+            }
+         ],
+         "default": null
+      },
+      "zaberManipulator": {
+         "$ref": "#/definitions/ZaberManipulator"
+      },
+      "networking": {
+         "allOf": [
+            {
+               "$ref": "#/definitions/Networking"
+            }
+         ],
+         "default": {
+            "zmqPublisher": {
+               "connectionString": "@tcp://localhost:5556",
+               "topic": "bci-no-movement"
+            },
+            "zmqSubscriber": {
+               "connectionString": "@tcp://localhost:5557",
+               "topic": "bci-no-movement"
+            }
+         }
+      }
+   },
+   "required": [
+      "describedBy",
+      "schema_version",
+      "harpBehaviorBoard",
+      "harpLoadCellsBoard",
+      "harpTimestampGeneratorGen3",
+      "camera0",
+      "zaberManipulator"
+   ],
+   "title": "BciNoMovementRig",
+   "type": "object"
 }

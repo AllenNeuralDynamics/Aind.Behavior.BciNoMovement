@@ -1,56 +1,75 @@
 {
-  "$id": "h...",
-  "$schema": "https://json-schema.org/draft-07/schema",
-  "definitions": {
-  },
-  "properties": {
-    "metadata": {
-      "properties": {
-        "commitHash": {
-          "default": null,
-          "type": ["null", "string"]
-        },
-        "allowDirty": {
-          "default": false,
-          "type": "boolean"
-        },
-        "experiment": {
-          "type": "string"
-        },
-        "notes": {
-          "default": "",
-          "type": "string"
-        },
-        "rngSeed": {
-          "type": ["null", "number"]
-        },
-        "rootPath": {
-          "type": "string"
-        },
-        "remoteDataPath":{
-          "type": ["null", "string"],
-          "default": null
-        },
-        "subject": {
-          "type": "string"
-        },
-        "version": {
-          "type": "string"
-        }
+   "additionalProperties": false,
+   "properties": {
+      "describedBy": {
+         "title": "Describedby",
+         "type": "string"
       },
-      "required": [
-        "rootPath",
-        "subject",
-        "experiment",
-        "version",
-        "commitHash"
-      ],
-      "type": "object"
-    }
-  },
-  "required": [
-    "metadata"
-  ],
-  "title": "BciNoMovementSession",
-  "type": "object"
+      "schema_version": {
+         "description": "schema version",
+         "pattern": "^\\d+.\\d+.\\d+$",
+         "title": "Version",
+         "type": "string"
+      },
+      "experiment": {
+         "description": "Name of the experiment",
+         "title": "Experiment",
+         "type": "string"
+      },
+      "rootPath": {
+         "description": "Root path of the experiment",
+         "title": "Rootpath",
+         "type": "string"
+      },
+      "subject": {
+         "description": "Name of the subject",
+         "title": "Subject",
+         "type": "string"
+      },
+      "version": {
+         "description": "Version of the experiment",
+         "title": "Version",
+         "type": "string"
+      },
+      "allowDirty": {
+         "default": false,
+         "description": "Allow code to run from dirty repository",
+         "title": "Allowdirty",
+         "type": "boolean"
+      },
+      "remoteDataPath": {
+         "default": "",
+         "description": "Path to remote data. If empty, no attempt to copy data will be made",
+         "title": "Remotedatapath",
+         "type": "string"
+      },
+      "rngSeed": {
+         "default": null,
+         "description": "Seed of the random number generator",
+         "title": "Rngseed",
+         "type": "number"
+      },
+      "notes": {
+         "default": null,
+         "description": "Notes about the experiment",
+         "title": "Notes",
+         "type": "string"
+      },
+      "commitHash": {
+         "default": null,
+         "description": "Commit hash of the repository",
+         "title": "Commithash",
+         "type": "string"
+      }
+   },
+   "required": [
+      "describedBy",
+      "schema_version",
+      "experiment",
+      "rootPath",
+      "subject",
+      "version"
+   ],
+   "title": "BciNoMovementSession",
+   "type": "object"
 }
