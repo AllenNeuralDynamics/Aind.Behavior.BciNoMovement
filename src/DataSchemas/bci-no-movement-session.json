@@ -44,10 +44,10 @@
          "type": "string"
       },
       "rngSeed": {
-         "default": null,
-         "description": "Seed of the random number generator",
+         "default": 0,
+         "description": "Seed of the random number generator. If 0 it will be randomized.",
          "title": "Rngseed",
-         "type": "number"
+         "type": "integer"
       },
       "notes": {
          "default": null,

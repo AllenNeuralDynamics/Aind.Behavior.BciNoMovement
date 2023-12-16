@@ -18,7 +18,7 @@ class BciNoMovementSession(AindCoreModel):
         default="",
         description="Path to remote data. If empty, no attempt to copy data will be made",
     )
-    rngSeed: float = Field(None, description="Seed of the random number generator")
+    rngSeed: int = Field(0, description="Seed of the random number generator. If 0 it will be randomized.")
     notes: str = Field(None, description="Notes about the experiment")
     commitHash: str = Field(None, description="Commit hash of the repository")
 

@@ -30,7 +30,7 @@ namespace BciNoMovementDataSchema.Session
     
         private string _remoteDataPath = "";
     
-        private double _rngSeed;
+        private int _rngSeed = 0;
     
         private string _notes;
     
@@ -177,12 +177,12 @@ namespace BciNoMovementDataSchema.Session
         }
     
         /// <summary>
-        /// Seed of the random number generator
+        /// Seed of the random number generator. If 0 it will be randomized.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("rngSeed")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="rngSeed")]
-        [System.ComponentModel.DescriptionAttribute("Seed of the random number generator")]
-        public double RngSeed
+        [System.ComponentModel.DescriptionAttribute("Seed of the random number generator. If 0 it will be randomized.")]
+        public int RngSeed
         {
             get
             {
