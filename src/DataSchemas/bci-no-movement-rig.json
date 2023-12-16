@@ -51,7 +51,8 @@
       "$ref": "bci-no-movement-hardware.json#/definitions/spinnakerCamera"
     },
     "camera1": {
-      "$ref": "bci-no-movement-hardware.json#/definitions/spinnakerCamera"
+      "$ref": "bci-no-movement-hardware.json#/definitions/spinnakerCamera",
+      "default": null
     },
     "zaberManipulator": {
       "type": "object",

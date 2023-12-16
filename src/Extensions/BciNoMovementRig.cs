@@ -390,7 +390,7 @@ namespace BciNoMovementDataSchema.Rig
     
         private SpinnakerCamera _camera0 = new SpinnakerCamera();
     
-        private SpinnakerCamera _camera1 = new SpinnakerCamera();
+        private SpinnakerCamera _camera1;
     
         private ZaberManipulator _zaberManipulator = new ZaberManipulator();
     
@@ -457,7 +457,7 @@ namespace BciNoMovementDataSchema.Rig
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("camera1", Required=Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonPropertyAttribute("camera1")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="camera1")]
         public SpinnakerCamera Camera1
         {
