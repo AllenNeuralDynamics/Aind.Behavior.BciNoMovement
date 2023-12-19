@@ -18,7 +18,10 @@ class BciNoMovementSession(AindCoreModel):
         default="",
         description="Path to remote data. If empty, no attempt to copy data will be made",
     )
-    rngSeed: int = Field(0, description="Seed of the random number generator. If 0 it will be randomized.")
+    rngSeed: int = Field(
+        0,
+        description="Seed of the random number generator. If 0 it will be randomized.",
+    )
     notes: str = Field(None, description="Notes about the experiment")
     commitHash: str = Field(None, description="Commit hash of the repository")
 
@@ -77,9 +80,22 @@ class BciNoMovementTaskLogic(AindCoreModel):
         ge=0,
         description="Offset (mm) from the close position to the far position.",
     )
-    maxBciSpeed: float = Field(
-        default=10, ge=0, description="Maximum speed (mm/s) of the BCI."
-    )
     manipulatorResetPosition: Point3d = Field(
         default=Point3d(), description="Position (mm) to reset the manipulator to."
+    )
+    bciBaselineThreshold: float = Field(
+        default=0,
+        ge=0,
+        description="Bci Activity threshold applied during the baseline period.",
+    )
+    movementBaselineThreshold: float = Field(
+        default=0,
+        ge=0,
+        description="Bci Activity threshold applied during the baseline period.",
+    )
+    passiveGain: float = Field(
+        default=1, description="Passive gain applied to the movement of the spout."
+    )
+    bciGain: float = Field(
+        default=1, description="BCI gain applied to the movement of the spout."
     )

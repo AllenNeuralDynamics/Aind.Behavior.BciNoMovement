@@ -120,9 +120,15 @@ namespace BciNoMovementDataSchema.TaskLogic
     
         private double _farPositionOffset = 8D;
     
-        private double _maxBciSpeed = 10D;
-    
         private Point3d _manipulatorResetPosition;
+    
+        private double _bciBaselineThreshold = 0D;
+    
+        private double _movementBaselineThreshold = 0D;
+    
+        private double _passiveGain = 1D;
+    
+        private double _bciGain = 1D;
     
         [Newtonsoft.Json.JsonPropertyAttribute("describedBy", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="describedBy")]
@@ -375,24 +381,6 @@ namespace BciNoMovementDataSchema.TaskLogic
         }
     
         /// <summary>
-        /// Maximum speed (mm/s) of the BCI.
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("maxBciSpeed")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="maxBciSpeed")]
-        [System.ComponentModel.DescriptionAttribute("Maximum speed (mm/s) of the BCI.")]
-        public double MaxBciSpeed
-        {
-            get
-            {
-                return _maxBciSpeed;
-            }
-            set
-            {
-                _maxBciSpeed = value;
-            }
-        }
-    
-        /// <summary>
         /// Position (mm) to reset the manipulator to.
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -408,6 +396,78 @@ namespace BciNoMovementDataSchema.TaskLogic
             set
             {
                 _manipulatorResetPosition = value;
+            }
+        }
+    
+        /// <summary>
+        /// Bci Activity threshold applied during the baseline period.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("bciBaselineThreshold")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="bciBaselineThreshold")]
+        [System.ComponentModel.DescriptionAttribute("Bci Activity threshold applied during the baseline period.")]
+        public double BciBaselineThreshold
+        {
+            get
+            {
+                return _bciBaselineThreshold;
+            }
+            set
+            {
+                _bciBaselineThreshold = value;
+            }
+        }
+    
+        /// <summary>
+        /// Bci Activity threshold applied during the baseline period.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("movementBaselineThreshold")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="movementBaselineThreshold")]
+        [System.ComponentModel.DescriptionAttribute("Bci Activity threshold applied during the baseline period.")]
+        public double MovementBaselineThreshold
+        {
+            get
+            {
+                return _movementBaselineThreshold;
+            }
+            set
+            {
+                _movementBaselineThreshold = value;
+            }
+        }
+    
+        /// <summary>
+        /// Passive gain applied to the movement of the spout.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("passiveGain")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="passiveGain")]
+        [System.ComponentModel.DescriptionAttribute("Passive gain applied to the movement of the spout.")]
+        public double PassiveGain
+        {
+            get
+            {
+                return _passiveGain;
+            }
+            set
+            {
+                _passiveGain = value;
+            }
+        }
+    
+        /// <summary>
+        /// BCI gain applied to the movement of the spout.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("bciGain")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="bciGain")]
+        [System.ComponentModel.DescriptionAttribute("BCI gain applied to the movement of the spout.")]
+        public double BciGain
+        {
+            get
+            {
+                return _bciGain;
+            }
+            set
+            {
+                _bciGain = value;
             }
         }
     
@@ -430,8 +490,11 @@ namespace BciNoMovementDataSchema.TaskLogic
                     MaxTrialDuration = _maxTrialDuration,
                     ClosePosition = _closePosition,
                     FarPositionOffset = _farPositionOffset,
-                    MaxBciSpeed = _maxBciSpeed,
-                    ManipulatorResetPosition = _manipulatorResetPosition
+                    ManipulatorResetPosition = _manipulatorResetPosition,
+                    BciBaselineThreshold = _bciBaselineThreshold,
+                    MovementBaselineThreshold = _movementBaselineThreshold,
+                    PassiveGain = _passiveGain,
+                    BciGain = _bciGain
                 }));
         }
     }

@@ -1,5 +1,16 @@
 import json
-from pyd_rig import BciNoMovementRig, HarpBoard, SpinnakerCamera, ZaberManipulator, ZaberGenericCommand, Axis, ColorProcessing, Networking, ZmqConnection
+from pyd_rig import (
+    BciNoMovementRig,
+    HarpBoard,
+    SpinnakerCamera,
+    ZaberManipulator,
+    ZaberGenericCommand,
+    Axis,
+    ColorProcessing,
+    Networking,
+    ZmqConnection,
+    Operation,
+)
 from pyd_session import BciNoMovementSession, BciNoMovementTaskLogic, Point3d
 
 rig = BciNoMovementRig(
@@ -8,11 +19,30 @@ rig = BciNoMovementRig(
     harpBehaviorBoard=HarpBoard(portName="COM8"),
     harpLoadCellsBoard=HarpBoard(portName="COM7"),
     harpTimestampGeneratorGen3=HarpBoard(portName="COM9"),
-    camera0=SpinnakerCamera(binning=1, colorProcessing=ColorProcessing.Default, exposure=2000, frameRate=200, gain=0, serialNumber="23381093"),
-    zaberManipulator=ZaberManipulator(comPort="COM10", maxSpeed=12, acceleration=1299.63, spoutAxis=Axis.Z, genericCommands=[]),
+    camera0=SpinnakerCamera(
+        binning=1,
+        colorProcessing=ColorProcessing.Default,
+        exposure=2000,
+        frameRate=200,
+        gain=0,
+        serialNumber="23381093",
+    ),
+    zaberManipulator=ZaberManipulator(
+        comPort="COM10",
+        maxSpeed=12,
+        acceleration=1299.63,
+        spoutAxis=Axis.Z,
+        genericCommands=[],
+    ),
     networking=Networking(
-        zmqPublisher=ZmqConnection(connectionString="@tcp://localhost:5556", topic="bci-no-movement"),
-        zmqSubscriber=ZmqConnection(connectionString="@tcp://localhost:5557", topic="bci-no-movement"))
+        zmqPublisher=ZmqConnection(
+            connectionString="@tcp://localhost:5556", topic="bci-no-movement"
+        ),
+        zmqSubscriber=ZmqConnection(
+            connectionString="@tcp://localhost:5557", topic="bci-no-movement"
+        ),
+    ),
+    operation=Operation(loadCellOffset=[0, 0, 0, 0, 0, 0, 0, 0]),
 )
 
 task_logic_settings = BciNoMovementTaskLogic(
@@ -29,9 +59,12 @@ task_logic_settings = BciNoMovementTaskLogic(
     waitForLick=True,
     farPositionOffset=80000,
     closePosition=100000,
-    maxBciSpeed=10,
     manipulatorResetPosition=Point3d(x=100000, y=100000, z=200000),
     waitMicroscopeTime=0.5,
+    bciBaselineThreshold=0.1,
+    movementBaselineThreshold=10000,
+    passiveGain=1,
+    bciGain=1,
 )
 
 session_info = BciNoMovementSession(
@@ -43,7 +76,8 @@ session_info = BciNoMovementSession(
     rootPath="C:/Data/",
     remoteDataPath="C:/DataRemote/",
     subject="test-subject",
-    version="0.0.1")
+    version="0.0.1",
+)
 
 
 BciNoMovementRig.model_validate(rig)

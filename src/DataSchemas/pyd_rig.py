@@ -81,6 +81,15 @@ class Networking(AindModel):
     )
 
 
+class Operation(AindModel):
+    loadCellOffset: List[int] = Field(
+        default=[0, 0, 0, 0, 0, 0, 0, 0],
+        min_items=8,
+        max_items=8,
+        description="Bias offset of a specific loadcell channel.",
+    )
+
+
 class BciNoMovementRig(AindCoreModel):
     harpBehaviorBoard: HarpBoard
     harpLoadCellsBoard: HarpBoard
@@ -89,3 +98,4 @@ class BciNoMovementRig(AindCoreModel):
     camera1: SpinnakerCamera = Field(default=None)
     zaberManipulator: ZaberManipulator
     networking: Networking = Field(default=Networking())
+    operation: Operation = Field(default=Operation())

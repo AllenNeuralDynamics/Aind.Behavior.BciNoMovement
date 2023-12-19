@@ -162,6 +162,43 @@ namespace BciNoMovementDataSchema.Rig
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class Operation
+    {
+    
+        private System.Collections.Generic.List<int> _loadCellOffset = new System.Collections.Generic.List<int>();
+    
+        /// <summary>
+        /// Bias offset of a specific loadcell channel.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("loadCellOffset")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="loadCellOffset")]
+        [System.ComponentModel.DescriptionAttribute("Bias offset of a specific loadcell channel.")]
+        public System.Collections.Generic.List<int> LoadCellOffset
+        {
+            get
+            {
+                return _loadCellOffset;
+            }
+            set
+            {
+                _loadCellOffset = value;
+            }
+        }
+    
+        public System.IObservable<Operation> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new Operation
+                {
+                    LoadCellOffset = _loadCellOffset
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class SpinnakerCamera
     {
     
@@ -567,6 +604,8 @@ namespace BciNoMovementDataSchema.Rig
     
         private Networking _networking;
     
+        private Operation _operation;
+    
         [Newtonsoft.Json.JsonPropertyAttribute("describedBy", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="describedBy")]
         public string DescribedBy
@@ -704,6 +743,21 @@ namespace BciNoMovementDataSchema.Rig
             }
         }
     
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("operation")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="operation")]
+        public Operation Operation
+        {
+            get
+            {
+                return _operation;
+            }
+            set
+            {
+                _operation = value;
+            }
+        }
+    
         public System.IObservable<BciNoMovementRig> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
@@ -717,7 +771,8 @@ namespace BciNoMovementDataSchema.Rig
                     Camera0 = _camera0,
                     Camera1 = _camera1,
                     ZaberManipulator = _zaberManipulator,
-                    Networking = _networking
+                    Networking = _networking,
+                    Operation = _operation
                 }));
         }
     }
@@ -745,6 +800,11 @@ namespace BciNoMovementDataSchema.Rig
         public System.IObservable<string> Process(System.IObservable<Networking> source)
         {
             return Process<Networking>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<Operation> source)
+        {
+            return Process<Operation>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<SpinnakerCamera> source)
@@ -781,6 +841,7 @@ namespace BciNoMovementDataSchema.Rig
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpBoard>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Networking>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Operation>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZaberGenericCommand>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZaberManipulator>))]
@@ -843,6 +904,11 @@ namespace BciNoMovementDataSchema.Rig
             return Process<Networking>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<Operation> source)
+        {
+            return Process<Operation>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<SpinnakerCamera> source)
         {
             return Process<SpinnakerCamera>(source);
@@ -877,6 +943,7 @@ namespace BciNoMovementDataSchema.Rig
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpBoard>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Networking>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Operation>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZaberGenericCommand>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZaberManipulator>))]

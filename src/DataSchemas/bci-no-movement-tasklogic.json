@@ -120,13 +120,6 @@
          "title": "Farpositionoffset",
          "type": "number"
       },
-      "maxBciSpeed": {
-         "default": 10,
-         "description": "Maximum speed (mm/s) of the BCI.",
-         "minimum": 0.0,
-         "title": "Maxbcispeed",
-         "type": "number"
-      },
       "manipulatorResetPosition": {
          "allOf": [
             {
@@ -139,6 +132,32 @@
             "z": 0.0
          },
          "description": "Position (mm) to reset the manipulator to."
+      },
+      "bciBaselineThreshold": {
+         "default": 0,
+         "description": "Bci Activity threshold applied during the baseline period.",
+         "minimum": 0.0,
+         "title": "Bcibaselinethreshold",
+         "type": "number"
+      },
+      "movementBaselineThreshold": {
+         "default": 0,
+         "description": "Bci Activity threshold applied during the baseline period.",
+         "minimum": 0.0,
+         "title": "Movementbaselinethreshold",
+         "type": "number"
+      },
+      "passiveGain": {
+         "default": 1,
+         "description": "Passive gain applied to the movement of the spout.",
+         "title": "Passivegain",
+         "type": "number"
+      },
+      "bciGain": {
+         "default": 1,
+         "description": "BCI gain applied to the movement of the spout.",
+         "title": "Bcigain",
+         "type": "number"
       }
    },
    "required": [

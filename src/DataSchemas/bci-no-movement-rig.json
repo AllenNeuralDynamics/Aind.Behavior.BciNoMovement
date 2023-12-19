@@ -71,6 +71,33 @@
          "title": "Networking",
          "type": "object"
       },
+      "Operation": {
+         "additionalProperties": false,
+         "properties": {
+            "loadCellOffset": {
+               "default": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+               ],
+               "description": "Bias offset of a specific loadcell channel.",
+               "items": {
+                  "type": "integer"
+               },
+               "maxItems": 8,
+               "minItems": 8,
+               "title": "Loadcelloffset",
+               "type": "array"
+            }
+         },
+         "title": "Operation",
+         "type": "object"
+      },
       "SpinnakerCamera": {
          "additionalProperties": false,
          "properties": {
@@ -266,6 +293,25 @@
                "connectionString": "@tcp://localhost:5557",
                "topic": "bci-no-movement"
             }
+         }
+      },
+      "operation": {
+         "allOf": [
+            {
+               "$ref": "#/definitions/Operation"
+            }
+         ],
+         "default": {
+            "loadCellOffset": [
+               0,
+               0,
+               0,
+               0,
+               0,
+               0,
+               0,
+               0
+            ]
          }
       }
    },
