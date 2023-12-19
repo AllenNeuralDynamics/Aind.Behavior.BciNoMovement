@@ -1,6 +1,7 @@
 # Import core types
 import json
 from pydantic import Field
+from typing import Optional
 
 # Import aind-datas-schema types
 from aind_data_schema.base import AindModel, AindCoreModel
@@ -30,6 +31,21 @@ class Point3d(AindModel):
     x: float = Field(default=0, description="X coordinate")
     y: float = Field(default=0, description="Y coordinate")
     z: float = Field(default=0, description="Z coordinate")
+
+
+class Control(AindModel):
+    baselineThreshold: float = Field(
+        default=0,
+        ge=0,
+        description="The threshold to be applied to the signal to define baseline",
+    )
+    gain: float = Field(default=1, description="The gain to be applied to the signal")
+    lowPassCutOff: float = Field(
+        default=-1, description="Low pass cut off frequency(Hz)"
+    )
+    highPassCutOff: float = Field(
+        default=-1, description="High pass cut off frequency(Hz)"
+    )
 
 
 class BciNoMovementTaskLogic(AindCoreModel):
@@ -83,21 +99,9 @@ class BciNoMovementTaskLogic(AindCoreModel):
     manipulatorResetPosition: Point3d = Field(
         default=Point3d(), description="Position (mm) to reset the manipulator to."
     )
-    bciBaselineThreshold: float = Field(
-        default=0,
-        ge=0,
-        description="Bci Activity threshold applied during the baseline period.",
-    )
-    movementBaselineThreshold: float = Field(
-        default=0,
-        ge=0,
-        description="Bci Activity threshold applied during the baseline period.",
-    )
-    passiveGain: float = Field(
-        default=1, description="Passive gain applied to the movement of the spout."
-    )
-    bciGain: float = Field(
-        default=1, description="BCI gain applied to the movement of the spout."
+    bciControl: Control = Field(default=Control(), description="BCI control parameters")
+    noMovementControl: Control = Field(
+        default=Control(), description="No movement control parameters"
     )
     skip2pHandshake: bool = Field(default=False, description="Skip 2p handshake")
     punishOnMovementDuration: float = Field(

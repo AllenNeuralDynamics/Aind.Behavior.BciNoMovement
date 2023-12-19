@@ -11,6 +11,105 @@ namespace BciNoMovementDataSchema.TaskLogic
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class Control
+    {
+    
+        private double _baselineThreshold = 0D;
+    
+        private double _gain = 1D;
+    
+        private double _lowPassCutOff = -1D;
+    
+        private double _highPassCutOff = -1D;
+    
+        /// <summary>
+        /// The threshold to be applied to the signal to define baseline
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("baselineThreshold")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="baselineThreshold")]
+        [System.ComponentModel.DescriptionAttribute("The threshold to be applied to the signal to define baseline")]
+        public double BaselineThreshold
+        {
+            get
+            {
+                return _baselineThreshold;
+            }
+            set
+            {
+                _baselineThreshold = value;
+            }
+        }
+    
+        /// <summary>
+        /// The gain to be applied to the signal
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("gain")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="gain")]
+        [System.ComponentModel.DescriptionAttribute("The gain to be applied to the signal")]
+        public double Gain
+        {
+            get
+            {
+                return _gain;
+            }
+            set
+            {
+                _gain = value;
+            }
+        }
+    
+        /// <summary>
+        /// Low pass cut off frequency(Hz)
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("lowPassCutOff")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="lowPassCutOff")]
+        [System.ComponentModel.DescriptionAttribute("Low pass cut off frequency(Hz)")]
+        public double LowPassCutOff
+        {
+            get
+            {
+                return _lowPassCutOff;
+            }
+            set
+            {
+                _lowPassCutOff = value;
+            }
+        }
+    
+        /// <summary>
+        /// High pass cut off frequency(Hz)
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("highPassCutOff")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="highPassCutOff")]
+        [System.ComponentModel.DescriptionAttribute("High pass cut off frequency(Hz)")]
+        public double HighPassCutOff
+        {
+            get
+            {
+                return _highPassCutOff;
+            }
+            set
+            {
+                _highPassCutOff = value;
+            }
+        }
+    
+        public System.IObservable<Control> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new Control
+                {
+                    BaselineThreshold = _baselineThreshold,
+                    Gain = _gain,
+                    LowPassCutOff = _lowPassCutOff,
+                    HighPassCutOff = _highPassCutOff
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class Point3d
     {
     
@@ -122,13 +221,9 @@ namespace BciNoMovementDataSchema.TaskLogic
     
         private Point3d _manipulatorResetPosition;
     
-        private double _bciBaselineThreshold = 0D;
+        private Control _bciControl;
     
-        private double _movementBaselineThreshold = 0D;
-    
-        private double _passiveGain = 1D;
-    
-        private double _bciGain = 1D;
+        private Control _noMovementControl;
     
         private bool _skip2pHandshake = false;
     
@@ -404,74 +499,40 @@ namespace BciNoMovementDataSchema.TaskLogic
         }
     
         /// <summary>
-        /// Bci Activity threshold applied during the baseline period.
+        /// BCI control parameters
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("bciBaselineThreshold")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="bciBaselineThreshold")]
-        [System.ComponentModel.DescriptionAttribute("Bci Activity threshold applied during the baseline period.")]
-        public double BciBaselineThreshold
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("bciControl")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="bciControl")]
+        [System.ComponentModel.DescriptionAttribute("BCI control parameters")]
+        public Control BciControl
         {
             get
             {
-                return _bciBaselineThreshold;
+                return _bciControl;
             }
             set
             {
-                _bciBaselineThreshold = value;
+                _bciControl = value;
             }
         }
     
         /// <summary>
-        /// Bci Activity threshold applied during the baseline period.
+        /// No movement control parameters
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("movementBaselineThreshold")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="movementBaselineThreshold")]
-        [System.ComponentModel.DescriptionAttribute("Bci Activity threshold applied during the baseline period.")]
-        public double MovementBaselineThreshold
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("noMovementControl")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="noMovementControl")]
+        [System.ComponentModel.DescriptionAttribute("No movement control parameters")]
+        public Control NoMovementControl
         {
             get
             {
-                return _movementBaselineThreshold;
+                return _noMovementControl;
             }
             set
             {
-                _movementBaselineThreshold = value;
-            }
-        }
-    
-        /// <summary>
-        /// Passive gain applied to the movement of the spout.
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("passiveGain")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="passiveGain")]
-        [System.ComponentModel.DescriptionAttribute("Passive gain applied to the movement of the spout.")]
-        public double PassiveGain
-        {
-            get
-            {
-                return _passiveGain;
-            }
-            set
-            {
-                _passiveGain = value;
-            }
-        }
-    
-        /// <summary>
-        /// BCI gain applied to the movement of the spout.
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("bciGain")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="bciGain")]
-        [System.ComponentModel.DescriptionAttribute("BCI gain applied to the movement of the spout.")]
-        public double BciGain
-        {
-            get
-            {
-                return _bciGain;
-            }
-            set
-            {
-                _bciGain = value;
+                _noMovementControl = value;
             }
         }
     
@@ -532,10 +593,8 @@ namespace BciNoMovementDataSchema.TaskLogic
                     ClosePosition = _closePosition,
                     FarPositionOffset = _farPositionOffset,
                     ManipulatorResetPosition = _manipulatorResetPosition,
-                    BciBaselineThreshold = _bciBaselineThreshold,
-                    MovementBaselineThreshold = _movementBaselineThreshold,
-                    PassiveGain = _passiveGain,
-                    BciGain = _bciGain,
+                    BciControl = _bciControl,
+                    NoMovementControl = _noMovementControl,
                     Skip2pHandshake = _skip2pHandshake,
                     PunishOnMovementDuration = _punishOnMovementDuration
                 }));
@@ -557,6 +616,11 @@ namespace BciNoMovementDataSchema.TaskLogic
             return System.Reactive.Linq.Observable.Select(source, value => Newtonsoft.Json.JsonConvert.SerializeObject(value));
         }
 
+        public System.IObservable<string> Process(System.IObservable<Control> source)
+        {
+            return Process<Control>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<Point3d> source)
         {
             return Process<Point3d>(source);
@@ -574,6 +638,7 @@ namespace BciNoMovementDataSchema.TaskLogic
     /// </summary>
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Control>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Point3d>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BciNoMovementTaskLogic>))]
     [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of JSON strings into data model objects.")]
@@ -623,6 +688,11 @@ namespace BciNoMovementDataSchema.TaskLogic
             });
         }
 
+        public System.IObservable<string> Process(System.IObservable<Control> source)
+        {
+            return Process<Control>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<Point3d> source)
         {
             return Process<Point3d>(source);
@@ -640,6 +710,7 @@ namespace BciNoMovementDataSchema.TaskLogic
     /// </summary>
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Control>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Point3d>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BciNoMovementTaskLogic>))]
     [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of YAML strings into data model objects.")]

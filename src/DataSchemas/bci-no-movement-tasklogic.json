@@ -1,5 +1,37 @@
 {
    "definitions": {
+      "Control": {
+         "additionalProperties": false,
+         "properties": {
+            "baselineThreshold": {
+               "default": 0,
+               "description": "The threshold to be applied to the signal to define baseline",
+               "minimum": 0.0,
+               "title": "Baselinethreshold",
+               "type": "number"
+            },
+            "gain": {
+               "default": 1,
+               "description": "The gain to be applied to the signal",
+               "title": "Gain",
+               "type": "number"
+            },
+            "lowPassCutOff": {
+               "default": -1,
+               "description": "Low pass cut off frequency(Hz)",
+               "title": "Lowpasscutoff",
+               "type": "number"
+            },
+            "highPassCutOff": {
+               "default": -1,
+               "description": "High pass cut off frequency(Hz)",
+               "title": "Highpasscutoff",
+               "type": "number"
+            }
+         },
+         "title": "Control",
+         "type": "object"
+      },
       "Point3d": {
          "additionalProperties": false,
          "properties": {
@@ -133,31 +165,33 @@
          },
          "description": "Position (mm) to reset the manipulator to."
       },
-      "bciBaselineThreshold": {
-         "default": 0,
-         "description": "Bci Activity threshold applied during the baseline period.",
-         "minimum": 0.0,
-         "title": "Bcibaselinethreshold",
-         "type": "number"
+      "bciControl": {
+         "allOf": [
+            {
+               "$ref": "#/definitions/Control"
+            }
+         ],
+         "default": {
+            "baselineThreshold": 0.0,
+            "gain": 1.0,
+            "lowPassCutOff": -1.0,
+            "highPassCutOff": -1.0
+         },
+         "description": "BCI control parameters"
       },
-      "movementBaselineThreshold": {
-         "default": 0,
-         "description": "Bci Activity threshold applied during the baseline period.",
-         "minimum": 0.0,
-         "title": "Movementbaselinethreshold",
-         "type": "number"
-      },
-      "passiveGain": {
-         "default": 1,
-         "description": "Passive gain applied to the movement of the spout.",
-         "title": "Passivegain",
-         "type": "number"
-      },
-      "bciGain": {
-         "default": 1,
-         "description": "BCI gain applied to the movement of the spout.",
-         "title": "Bcigain",
-         "type": "number"
+      "noMovementControl": {
+         "allOf": [
+            {
+               "$ref": "#/definitions/Control"
+            }
+         ],
+         "default": {
+            "baselineThreshold": 0.0,
+            "gain": 1.0,
+            "lowPassCutOff": -1.0,
+            "highPassCutOff": -1.0
+         },
+         "description": "No movement control parameters"
       },
       "skip2pHandshake": {
          "default": false,

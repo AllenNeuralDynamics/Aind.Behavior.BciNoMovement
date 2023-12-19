@@ -11,7 +11,7 @@ from pyd_rig import (
     ZmqConnection,
     Operation,
 )
-from pyd_session import BciNoMovementSession, BciNoMovementTaskLogic, Point3d
+from pyd_session import BciNoMovementSession, BciNoMovementTaskLogic, Point3d, Control
 
 rig = BciNoMovementRig(
     schema_version="0.0.1",
@@ -62,10 +62,11 @@ task_logic_settings = BciNoMovementTaskLogic(
     closePosition=100000,
     manipulatorResetPosition=Point3d(x=100000, y=100000, z=200000),
     waitMicroscopeTime=0.5,
-    bciBaselineThreshold=1.5,
-    movementBaselineThreshold=20000,
-    passiveGain=1,
-    bciGain=1,
+    noMovementControl=Control(
+        gain=1, baselineThreshold=20000, lowPassCutOff=50, highPassCutOff=0.001
+    ),
+    bciControl=Control(
+        gain=1, baselineThreshold=1.5),
     skip2pHandshake=True,
     punishOnMovementDuration=0.1,
 )
