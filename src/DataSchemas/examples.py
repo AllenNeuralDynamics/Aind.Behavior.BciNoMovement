@@ -42,8 +42,9 @@ rig = BciNoMovementRig(
             connectionString="@tcp://localhost:5557", topic="bci-no-movement"
         ),
     ),
-    operation=Operation(loadCellOffset=[0, 0, 0, 0, 0, 0, 0, 0]),
+    operation=Operation(loadCellOffset=[0, 0, 0, 0, 0, 0, 0, 0], loadCellIndex=0),
 )
+
 
 task_logic_settings = BciNoMovementTaskLogic(
     schema_version="0.0.1",
@@ -62,7 +63,7 @@ task_logic_settings = BciNoMovementTaskLogic(
     manipulatorResetPosition=Point3d(x=100000, y=100000, z=200000),
     waitMicroscopeTime=0.5,
     bciBaselineThreshold=1.5,
-    movementBaselineThreshold=10000000,
+    movementBaselineThreshold=20000,
     passiveGain=1,
     bciGain=1,
     skip2pHandshake=True,

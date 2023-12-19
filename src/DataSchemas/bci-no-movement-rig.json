@@ -93,6 +93,14 @@
                "minItems": 8,
                "title": "Loadcelloffset",
                "type": "array"
+            },
+            "loadCellIndex": {
+               "default": 0,
+               "description": "Index of the loadcell channel to use.",
+               "maximum": 7,
+               "minimum": 0,
+               "title": "Loadcellindex",
+               "type": "integer"
             }
          },
          "title": "Operation",
@@ -311,7 +319,8 @@
                0,
                0,
                0
-            ]
+            ],
+            "loadCellIndex": 0
          }
       }
    },

@@ -167,6 +167,8 @@ namespace BciNoMovementDataSchema.Rig
     
         private System.Collections.Generic.List<int> _loadCellOffset = new System.Collections.Generic.List<int>();
     
+        private int _loadCellIndex = 0;
+    
         /// <summary>
         /// Bias offset of a specific loadcell channel.
         /// </summary>
@@ -186,12 +188,31 @@ namespace BciNoMovementDataSchema.Rig
             }
         }
     
+        /// <summary>
+        /// Index of the loadcell channel to use.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("loadCellIndex")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="loadCellIndex")]
+        [System.ComponentModel.DescriptionAttribute("Index of the loadcell channel to use.")]
+        public int LoadCellIndex
+        {
+            get
+            {
+                return _loadCellIndex;
+            }
+            set
+            {
+                _loadCellIndex = value;
+            }
+        }
+    
         public System.IObservable<Operation> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
                 new Operation
                 {
-                    LoadCellOffset = _loadCellOffset
+                    LoadCellOffset = _loadCellOffset,
+                    LoadCellIndex = _loadCellIndex
                 }));
         }
     }

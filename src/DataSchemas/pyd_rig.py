@@ -88,6 +88,12 @@ class Operation(AindModel):
         max_items=8,
         description="Bias offset of a specific loadcell channel.",
     )
+    loadCellIndex: int = Field(
+        default=0,
+        ge=0,
+        le=7,
+        description="Index of the loadcell channel to use.",
+    )
 
 
 class BciNoMovementRig(AindCoreModel):
