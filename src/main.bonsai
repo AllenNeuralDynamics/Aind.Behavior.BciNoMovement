@@ -127,7 +127,7 @@ Bci voltage to spout velocity]]></Text>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="num:CreateRandom">
-                <num:Seed>153141</num:Seed>
+                <num:Seed>0</num:Seed>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -148,8 +148,8 @@ Bci voltage to spout velocity]]></Text>
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="AllenNeuralDynamics.Core:GenerateRootLoggingPath.bonsai">
-              <RootFolder>C:\data\</RootFolder>
-              <Subject>672102</Subject>
+              <RootFolder>C:/Data/</RootFolder>
+              <Subject>test-subject</Subject>
               <SubjectName>LoggingRootPath</SubjectName>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -193,7 +193,7 @@ Bci voltage to spout velocity]]></Text>
         <Combinator xsi:type="p2:EnumerateDataSchemaInputs">
           <p2:FileFilter>JSON</p2:FileFilter>
           <p2:Directory>..\local\Subjects</p2:Directory>
-          <p2:DataSchema />
+          <p2:DataSchema>bci_no_movement_session.json</p2:DataSchema>
         </Combinator>
       </Expression>
       <Expression xsi:type="PropertyMapping">
@@ -203,7 +203,7 @@ Bci voltage to spout velocity]]></Text>
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="io:ReadAllText">
-          <io:Path>..\local\Subjects\randomsubject.yml</io:Path>
+          <io:Path>..\local\Subjects\bci_no_movement_session.json</io:Path>
         </Combinator>
       </Expression>
       <Expression xsi:type="p3:DeserializeFromJson">
@@ -221,7 +221,7 @@ Bci voltage to spout velocity]]></Text>
         <Combinator xsi:type="p2:EnumerateDataSchemaInputs">
           <p2:FileFilter>JSON</p2:FileFilter>
           <p2:Directory>..\local\Rigs</p2:Directory>
-          <p2:DataSchema>rig.json</p2:DataSchema>
+          <p2:DataSchema>bci_no_movement_rig.json</p2:DataSchema>
         </Combinator>
       </Expression>
       <Expression xsi:type="PropertyMapping">
@@ -231,7 +231,7 @@ Bci voltage to spout velocity]]></Text>
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="io:ReadAllText">
-          <io:Path>..\local\Rigs\rig.yml</io:Path>
+          <io:Path>..\local\Rigs\bci_no_movement_rig.json</io:Path>
         </Combinator>
       </Expression>
       <Expression xsi:type="p4:DeserializeFromJson">
@@ -249,7 +249,7 @@ Bci voltage to spout velocity]]></Text>
         <Combinator xsi:type="p2:EnumerateDataSchemaInputs">
           <p2:FileFilter>JSON</p2:FileFilter>
           <p2:Directory>..\local\TaskLogic</p2:Directory>
-          <p2:DataSchema />
+          <p2:DataSchema>bci_no_movement_task_logic.json</p2:DataSchema>
         </Combinator>
       </Expression>
       <Expression xsi:type="PropertyMapping">
@@ -259,7 +259,7 @@ Bci voltage to spout velocity]]></Text>
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="io:ReadAllText">
-          <io:Path>..\local\TaskLogic\settings.yml</io:Path>
+          <io:Path>..\local\TaskLogic\bci_no_movement_task_logic.json</io:Path>
         </Combinator>
       </Expression>
       <Expression xsi:type="p5:DeserializeFromJson">
@@ -316,7 +316,7 @@ Bci voltage to spout velocity]]></Text>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="zmq:Subscriber">
-                <zmq:ConnectionString>tcp://localhost:5557</zmq:ConnectionString>
+                <zmq:ConnectionString>@tcp://localhost:5557</zmq:ConnectionString>
                 <zmq:Topic>bci-no-movement</zmq:Topic>
               </Combinator>
             </Expression>
@@ -681,8 +681,7 @@ Bci voltage to spout velocity]]></Text>
 - DO3 -> MicroscopeStop
 - SUPPLY0 -> Valve
 - DI0 -> MicroscopeArmed
-- LoadCell ???
-- Manipulator steps???]]></Text>
+- Manipulator steps DIO0]]></Text>
       </Expression>
       <Expression xsi:type="GroupWorkflow">
         <Name>Hardware</Name>
@@ -1538,7 +1537,7 @@ Bci voltage to spout velocity]]></Text>
                         <Expression xsi:type="harp:CreateMessage">
                           <harp:MessageType>Write</harp:MessageType>
                           <harp:Payload xsi:type="harp:CreateMessagePayload">
-                            <harp:Address>49</harp:Address>
+                            <harp:Address>55</harp:Address>
                             <harp:PayloadType>S16</harp:PayloadType>
                             <harp:Value>255</harp:Value>
                           </harp:Payload>
@@ -1824,9 +1823,9 @@ Bci voltage to spout velocity]]></Text>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p11:BciSpinnakerCapture">
                       <spk:Index xsi:nil="true" />
-                      <spk:SerialNumber>MISSING</spk:SerialNumber>
+                      <spk:SerialNumber>23381093</spk:SerialNumber>
                       <spk:ColorProcessing>Default</spk:ColorProcessing>
-                      <p11:ExposureTime>1000</p11:ExposureTime>
+                      <p11:ExposureTime>2000</p11:ExposureTime>
                       <p11:Gain>0</p11:Gain>
                       <p11:Binning>1</p11:Binning>
                       <p11:Gamma>0.4</p11:Gamma>
@@ -2287,7 +2286,7 @@ Bci voltage to spout velocity]]></Text>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="IntProperty">
-                      <Value>2</Value>
+                      <Value>3</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="rx:AsyncSubject">
@@ -2461,6 +2460,10 @@ Bci voltage to spout velocity]]></Text>
                   <Expression xsi:type="MemberSelector">
                     <Selector>Value</Selector>
                   </Expression>
+                  <Expression xsi:type="scr:ExpressionTransform">
+                    <scr:Name>ToDouble</scr:Name>
+                    <scr:Expression>double(it)</scr:Expression>
+                  </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="dsp:Abs" />
                   </Expression>
@@ -2489,12 +2492,13 @@ Bci voltage to spout velocity]]></Text>
                   <Edge From="8" To="9" Label="Source1" />
                   <Edge From="9" To="10" Label="Source1" />
                   <Edge From="11" To="12" Label="Source1" />
-                  <Edge From="11" To="14" Label="Source1" />
+                  <Edge From="11" To="15" Label="Source1" />
                   <Edge From="12" To="13" Label="Source1" />
-                  <Edge From="13" To="15" Label="Source1" />
-                  <Edge From="14" To="15" Label="Source2" />
-                  <Edge From="15" To="16" Label="Source1" />
+                  <Edge From="13" To="14" Label="Source1" />
+                  <Edge From="14" To="16" Label="Source1" />
+                  <Edge From="15" To="16" Label="Source2" />
                   <Edge From="16" To="17" Label="Source1" />
+                  <Edge From="17" To="18" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -2855,7 +2859,7 @@ Bci voltage to spout velocity]]></Text>
                         </Expression>
                         <Expression xsi:type="LessThan">
                           <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Int16">
-                            <Value>0</Value>
+                            <Value>1</Value>
                           </Operand>
                         </Expression>
                         <Expression xsi:type="Combinator">
@@ -3067,8 +3071,8 @@ Bci voltage to spout velocity]]></Text>
                           </PropertyMappings>
                         </Expression>
                         <Expression xsi:type="LessThan">
-                          <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Int16">
-                            <Value>0</Value>
+                          <Operand xsi:type="DoubleProperty">
+                            <Value>10000000</Value>
                           </Operand>
                         </Expression>
                         <Expression xsi:type="Combinator">
@@ -3273,6 +3277,11 @@ Bci voltage to spout velocity]]></Text>
                   <Expression xsi:type="MemberSelector">
                     <Selector>Item2</Selector>
                   </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Take">
+                      <rx:Count>1</rx:Count>
+                    </Combinator>
+                  </Expression>
                   <Expression xsi:type="WorkflowOutput" />
                   <Expression xsi:type="Unit" />
                   <Expression xsi:type="Combinator">
@@ -3300,9 +3309,10 @@ Bci voltage to spout velocity]]></Text>
                   <Edge From="6" To="7" Label="Source1" />
                   <Edge From="7" To="8" Label="Source1" />
                   <Edge From="8" To="9" Label="Source1" />
-                  <Edge From="10" To="11" Label="Source1" />
+                  <Edge From="9" To="10" Label="Source1" />
                   <Edge From="11" To="12" Label="Source1" />
                   <Edge From="12" To="13" Label="Source1" />
+                  <Edge From="13" To="14" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -3644,7 +3654,7 @@ Bci voltage to spout velocity]]></Text>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:Timer">
-                      <rx:DueTime>PT1M</rx:DueTime>
+                      <rx:DueTime>PT20S</rx:DueTime>
                       <rx:Period>PT0S</rx:Period>
                     </Combinator>
                   </Expression>
@@ -3682,7 +3692,7 @@ Bci voltage to spout velocity]]></Text>
                       <Nodes>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="IntProperty">
-                            <Value>0</Value>
+                            <Value>1</Value>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="Combinator">
@@ -3745,7 +3755,7 @@ Bci voltage to spout velocity]]></Text>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="dsp:Rescale">
                       <dsp:Min>0</dsp:Min>
-                      <dsp:Max>3.3</dsp:Max>
+                      <dsp:Max>1</dsp:Max>
                       <dsp:RangeMin>0</dsp:RangeMin>
                       <dsp:RangeMax>0.05</dsp:RangeMax>
                       <dsp:RescaleType>Linear</dsp:RescaleType>
@@ -3781,7 +3791,7 @@ Bci voltage to spout velocity]]></Text>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="DoubleProperty">
-                      <Value>0</Value>
+                      <Value>1</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -3827,8 +3837,8 @@ Bci voltage to spout velocity]]></Text>
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="GreaterThan">
-                    <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Int16">
-                      <Value>0</Value>
+                    <Operand xsi:type="DoubleProperty">
+                      <Value>10000000</Value>
                     </Operand>
                   </Expression>
                   <Expression xsi:type="rx:Condition">
@@ -3870,7 +3880,7 @@ Bci voltage to spout velocity]]></Text>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:Delay">
-                      <rx:DueTime>PT0S</rx:DueTime>
+                      <rx:DueTime>PT0.1S</rx:DueTime>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -4158,10 +4168,8 @@ Bci voltage to spout velocity]]></Text>
                       <rx:Count>1</rx:Count>
                     </Combinator>
                   </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="Extensions\TriggerTone.bonsai">
-                    <ToneId>1</ToneId>
-                    <Frequency>500</Frequency>
-                    <DurationMs>100</DurationMs>
+                  <Expression xsi:type="MulticastSubject">
+                    <Name>AudioTrigger</Name>
                   </Expression>
                 </Nodes>
                 <Edges>
@@ -4463,10 +4471,10 @@ Bci voltage to spout velocity]]></Text>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="ffmpeg:VideoWriter">
-                      <ffmpeg:FileName>C:\Users\bruno.cruz\Desktop\test.mp4</ffmpeg:FileName>
+                      <ffmpeg:FileName>C:/Data/test-subject/20231219T100916/Camera0/Video.mp4</ffmpeg:FileName>
                       <ffmpeg:Suffix>None</ffmpeg:Suffix>
                       <ffmpeg:Overwrite>false</ffmpeg:Overwrite>
-                      <ffmpeg:FrameRate>30</ffmpeg:FrameRate>
+                      <ffmpeg:FrameRate>400</ffmpeg:FrameRate>
                       <ffmpeg:OutputArguments>-vcodec h264_nvenc -crf: 23 -threads 4</ffmpeg:OutputArguments>
                     </Combinator>
                   </Expression>

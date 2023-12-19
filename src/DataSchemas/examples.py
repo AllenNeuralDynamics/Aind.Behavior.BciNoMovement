@@ -61,11 +61,11 @@ task_logic_settings = BciNoMovementTaskLogic(
     closePosition=100000,
     manipulatorResetPosition=Point3d(x=100000, y=100000, z=200000),
     waitMicroscopeTime=0.5,
-    bciBaselineThreshold=0.1,
-    movementBaselineThreshold=10000,
+    bciBaselineThreshold=1.5,
+    movementBaselineThreshold=10000000,
     passiveGain=1,
     bciGain=1,
-    skip2pHandshake=False,
+    skip2pHandshake=True,
     punishOnMovementDuration=0.1,
 )
 
