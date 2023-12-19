@@ -130,6 +130,8 @@ namespace BciNoMovementDataSchema.TaskLogic
     
         private double _bciGain = 1D;
     
+        private bool _skip2pHandshake = false;
+    
         [Newtonsoft.Json.JsonPropertyAttribute("describedBy", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="describedBy")]
         public string DescribedBy
@@ -471,6 +473,24 @@ namespace BciNoMovementDataSchema.TaskLogic
             }
         }
     
+        /// <summary>
+        /// Skip 2p handshake
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("skip2pHandshake")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="skip2pHandshake")]
+        [System.ComponentModel.DescriptionAttribute("Skip 2p handshake")]
+        public bool Skip2pHandshake
+        {
+            get
+            {
+                return _skip2pHandshake;
+            }
+            set
+            {
+                _skip2pHandshake = value;
+            }
+        }
+    
         public System.IObservable<BciNoMovementTaskLogic> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
@@ -494,7 +514,8 @@ namespace BciNoMovementDataSchema.TaskLogic
                     BciBaselineThreshold = _bciBaselineThreshold,
                     MovementBaselineThreshold = _movementBaselineThreshold,
                     PassiveGain = _passiveGain,
-                    BciGain = _bciGain
+                    BciGain = _bciGain,
+                    Skip2pHandshake = _skip2pHandshake
                 }));
         }
     }

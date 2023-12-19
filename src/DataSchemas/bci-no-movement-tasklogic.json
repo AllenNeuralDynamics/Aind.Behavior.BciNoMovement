@@ -158,6 +158,12 @@
          "description": "BCI gain applied to the movement of the spout.",
          "title": "Bcigain",
          "type": "number"
+      },
+      "skip2pHandshake": {
+         "default": false,
+         "description": "Skip 2p handshake",
+         "title": "Skip2Phandshake",
+         "type": "boolean"
       }
    },
    "required": [

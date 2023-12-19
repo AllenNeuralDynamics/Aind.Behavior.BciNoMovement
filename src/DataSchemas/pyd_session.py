@@ -99,3 +99,4 @@ class BciNoMovementTaskLogic(AindCoreModel):
     bciGain: float = Field(
         default=1, description="BCI gain applied to the movement of the spout."
     )
+    skip2pHandshake: bool = Field(default=False, description="Skip 2p handshake")
