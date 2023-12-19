@@ -66,6 +66,7 @@ task_logic_settings = BciNoMovementTaskLogic(
     passiveGain=1,
     bciGain=1,
     skip2pHandshake=False,
+    punishOnMovementDuration=0.1,
 )
 
 session_info = BciNoMovementSession(

@@ -100,3 +100,8 @@ class BciNoMovementTaskLogic(AindCoreModel):
         default=1, description="BCI gain applied to the movement of the spout."
     )
     skip2pHandshake: bool = Field(default=False, description="Skip 2p handshake")
+    punishOnMovementDuration: float = Field(
+        default=0,
+        ge=0,
+        description="The duration (s) that the spout will stop updating if the animal moves during the trial.",
+    )

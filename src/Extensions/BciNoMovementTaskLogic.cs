@@ -132,6 +132,8 @@ namespace BciNoMovementDataSchema.TaskLogic
     
         private bool _skip2pHandshake = false;
     
+        private double _punishOnMovementDuration = 0D;
+    
         [Newtonsoft.Json.JsonPropertyAttribute("describedBy", Required=Newtonsoft.Json.Required.Always)]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="describedBy")]
         public string DescribedBy
@@ -491,6 +493,25 @@ namespace BciNoMovementDataSchema.TaskLogic
             }
         }
     
+        /// <summary>
+        /// The duration (s) that the spout will stop updating if the animal moves during the trial.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("punishOnMovementDuration")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="punishOnMovementDuration")]
+        [System.ComponentModel.DescriptionAttribute("The duration (s) that the spout will stop updating if the animal moves during the" +
+            " trial.")]
+        public double PunishOnMovementDuration
+        {
+            get
+            {
+                return _punishOnMovementDuration;
+            }
+            set
+            {
+                _punishOnMovementDuration = value;
+            }
+        }
+    
         public System.IObservable<BciNoMovementTaskLogic> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
@@ -515,7 +536,8 @@ namespace BciNoMovementDataSchema.TaskLogic
                     MovementBaselineThreshold = _movementBaselineThreshold,
                     PassiveGain = _passiveGain,
                     BciGain = _bciGain,
-                    Skip2pHandshake = _skip2pHandshake
+                    Skip2pHandshake = _skip2pHandshake,
+                    PunishOnMovementDuration = _punishOnMovementDuration
                 }));
         }
     }
