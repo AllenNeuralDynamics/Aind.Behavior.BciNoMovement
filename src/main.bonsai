@@ -5435,7 +5435,16 @@ Item2 as ManipulatorSpoutAxis)</scr:Expression>
               <viz:ColumnCount>1</viz:ColumnCount>
               <viz:RowCount>2</viz:RowCount>
               <viz:ColumnStyles />
-              <viz:RowStyles />
+              <viz:RowStyles>
+                <viz:RowStyle>
+                  <viz:SizeType>Percent</viz:SizeType>
+                  <viz:Height>0.3</viz:Height>
+                </viz:RowStyle>
+                <viz:RowStyle>
+                  <viz:SizeType>Percent</viz:SizeType>
+                  <viz:Height>0.7</viz:Height>
+                </viz:RowStyle>
+              </viz:RowStyles>
               <viz:CellSpans />
             </Expression>
             <Expression xsi:type="WorkflowOutput" />
@@ -5706,11 +5715,20 @@ Item2 as ManipulatorSpoutAxis)</scr:Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>SoftwareEvent</Name>
             </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>HarpTimestampSource</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:WithLatestFrom" />
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Item1</Selector>
+            </Expression>
             <Expression xsi:type="MemberSelector">
               <Selector>Name</Selector>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>Timestamp</Selector>
+              <Selector>Item2</Selector>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p6:SerializeToJson" />
@@ -5755,30 +5773,33 @@ Item2 as ManipulatorSpoutAxis)</scr:Expression>
             <Edge From="1" To="2" Label="Source2" />
             <Edge From="2" To="3" Label="Source1" />
             <Edge From="3" To="4" Label="Source1" />
-            <Edge From="4" To="25" Label="Source1" />
+            <Edge From="4" To="28" Label="Source1" />
             <Edge From="5" To="7" Label="Source1" />
             <Edge From="6" To="7" Label="Source2" />
             <Edge From="7" To="8" Label="Source1" />
             <Edge From="8" To="9" Label="Source1" />
-            <Edge From="9" To="25" Label="Source2" />
+            <Edge From="9" To="28" Label="Source2" />
             <Edge From="10" To="11" Label="Source1" />
             <Edge From="11" To="12" Label="Source1" />
             <Edge From="12" To="13" Label="Source1" />
-            <Edge From="13" To="25" Label="Source3" />
-            <Edge From="14" To="15" Label="Source1" />
+            <Edge From="13" To="28" Label="Source3" />
             <Edge From="14" To="16" Label="Source1" />
-            <Edge From="14" To="17" Label="Source1" />
-            <Edge From="15" To="18" Label="Source1" />
-            <Edge From="16" To="18" Label="Source2" />
-            <Edge From="17" To="18" Label="Source3" />
-            <Edge From="18" To="19" Label="Source1" />
-            <Edge From="19" To="25" Label="Source4" />
-            <Edge From="20" To="22" Label="Source1" />
-            <Edge From="21" To="22" Label="Source2" />
-            <Edge From="22" To="23" Label="Source1" />
-            <Edge From="23" To="24" Label="Source1" />
-            <Edge From="24" To="25" Label="Source5" />
+            <Edge From="15" To="16" Label="Source2" />
+            <Edge From="16" To="17" Label="Source1" />
+            <Edge From="16" To="19" Label="Source1" />
+            <Edge From="17" To="18" Label="Source1" />
+            <Edge From="17" To="20" Label="Source1" />
+            <Edge From="18" To="21" Label="Source1" />
+            <Edge From="19" To="21" Label="Source2" />
+            <Edge From="20" To="21" Label="Source3" />
+            <Edge From="21" To="22" Label="Source1" />
+            <Edge From="22" To="28" Label="Source4" />
+            <Edge From="23" To="25" Label="Source1" />
+            <Edge From="24" To="25" Label="Source2" />
             <Edge From="25" To="26" Label="Source1" />
+            <Edge From="26" To="27" Label="Source1" />
+            <Edge From="27" To="28" Label="Source5" />
+            <Edge From="28" To="29" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -5786,10 +5807,23 @@ Item2 as ManipulatorSpoutAxis)</scr:Expression>
         <VisualizerType xsi:type="TypeMapping" TypeArguments="viz:TableLayoutPanelVisualizer" />
       </Expression>
       <Expression xsi:type="viz:TableLayoutPanelBuilder">
-        <viz:ColumnCount>3</viz:ColumnCount>
-        <viz:RowCount>1</viz:RowCount>
+        <viz:ColumnCount>1</viz:ColumnCount>
+        <viz:RowCount>3</viz:RowCount>
         <viz:ColumnStyles />
-        <viz:RowStyles />
+        <viz:RowStyles>
+          <viz:RowStyle>
+            <viz:SizeType>Percent</viz:SizeType>
+            <viz:Height>0.2</viz:Height>
+          </viz:RowStyle>
+          <viz:RowStyle>
+            <viz:SizeType>Percent</viz:SizeType>
+            <viz:Height>0.1</viz:Height>
+          </viz:RowStyle>
+          <viz:RowStyle>
+            <viz:SizeType>Percent</viz:SizeType>
+            <viz:Height>0.7</viz:Height>
+          </viz:RowStyle>
+        </viz:RowStyles>
         <viz:CellSpans />
       </Expression>
     </Nodes>
