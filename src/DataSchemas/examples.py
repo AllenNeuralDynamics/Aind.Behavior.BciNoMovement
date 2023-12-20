@@ -59,14 +59,12 @@ task_logic_settings = BciNoMovementTaskLogic(
     valveOpenTime=0.1,
     waitForLick=True,
     farPositionOffset=80000,
-    closePosition=100000,
     manipulatorResetPosition=Point3d(x=100000, y=100000, z=200000),
     waitMicroscopeTime=0.5,
     noMovementControl=Control(
         gain=1, baselineThreshold=20000, lowPassCutOff=50, highPassCutOff=0.001
     ),
-    bciControl=Control(
-        gain=1, baselineThreshold=1.5),
+    bciControl=Control(gain=1, baselineThreshold=1.5),
     skip2pHandshake=True,
     punishOnMovementDuration=0.1,
 )
