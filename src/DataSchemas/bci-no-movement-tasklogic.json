@@ -138,13 +138,6 @@
          "title": "Maxtrialduration",
          "type": "number"
       },
-      "closePosition": {
-         "default": 19,
-         "description": "Position (mm) of the close position.",
-         "minimum": 0.0,
-         "title": "Closeposition",
-         "type": "number"
-      },
       "farPositionOffset": {
          "default": 8,
          "description": "Offset (mm) from the close position to the far position.",

@@ -88,9 +88,6 @@ class BciNoMovementTaskLogic(AindCoreModel):
     maxTrialDuration: float = Field(
         default=20, ge=0, description="Maximum duration (s) of a trial."
     )
-    closePosition: float = Field(
-        default=19, ge=0, description="Position (mm) of the close position."
-    )
     farPositionOffset: float = Field(
         default=8,
         ge=0,

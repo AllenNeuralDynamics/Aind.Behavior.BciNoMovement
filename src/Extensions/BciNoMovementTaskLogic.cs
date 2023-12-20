@@ -215,8 +215,6 @@ namespace BciNoMovementDataSchema.TaskLogic
     
         private double _maxTrialDuration = 20D;
     
-        private double _closePosition = 19D;
-    
         private double _farPositionOffset = 8D;
     
         private Point3d _manipulatorResetPosition;
@@ -444,24 +442,6 @@ namespace BciNoMovementDataSchema.TaskLogic
         }
     
         /// <summary>
-        /// Position (mm) of the close position.
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("closePosition")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="closePosition")]
-        [System.ComponentModel.DescriptionAttribute("Position (mm) of the close position.")]
-        public double ClosePosition
-        {
-            get
-            {
-                return _closePosition;
-            }
-            set
-            {
-                _closePosition = value;
-            }
-        }
-    
-        /// <summary>
         /// Offset (mm) from the close position to the far position.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("farPositionOffset")]
@@ -590,7 +570,6 @@ namespace BciNoMovementDataSchema.TaskLogic
                     InterTrialInterval = _interTrialInterval,
                     RewardConsumeTime = _rewardConsumeTime,
                     MaxTrialDuration = _maxTrialDuration,
-                    ClosePosition = _closePosition,
                     FarPositionOffset = _farPositionOffset,
                     ManipulatorResetPosition = _manipulatorResetPosition,
                     BciControl = _bciControl,
