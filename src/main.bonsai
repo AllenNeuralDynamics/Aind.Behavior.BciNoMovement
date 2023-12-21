@@ -2334,82 +2334,12 @@
                             <p12:Axis xsi:nil="true" />
                           </Combinator>
                         </Expression>
-                        <Expression xsi:type="rx:SelectMany">
-                          <Name>ResetPosition</Name>
-                          <Workflow>
-                            <Nodes>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>TaskLogicSchema</Name>
-                              </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>ManipulatorResetPosition</Selector>
-                              </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>X</Selector>
-                              </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="p12:MoveAbsolute">
-                                  <p12:PortName>ZaberMotor</p12:PortName>
-                                  <p12:Axis>1</p12:Axis>
-                                  <p12:Velocity xsi:nil="true" />
-                                  <p12:Acceleration xsi:nil="true" />
-                                </Combinator>
-                              </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>Y</Selector>
-                              </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="p12:MoveAbsolute">
-                                  <p12:PortName>ZaberMotor</p12:PortName>
-                                  <p12:Axis>2</p12:Axis>
-                                  <p12:Velocity xsi:nil="true" />
-                                  <p12:Acceleration xsi:nil="true" />
-                                </Combinator>
-                              </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>Z</Selector>
-                              </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="p12:MoveAbsolute">
-                                  <p12:PortName>ZaberMotor</p12:PortName>
-                                  <p12:Axis>3</p12:Axis>
-                                  <p12:Velocity xsi:nil="true" />
-                                  <p12:Acceleration xsi:nil="true" />
-                                </Combinator>
-                              </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="rx:Zip" />
-                              </Expression>
                               <Expression xsi:type="WorkflowOutput" />
                             </Nodes>
                             <Edges>
                               <Edge From="0" To="1" Label="Source1" />
                               <Edge From="1" To="2" Label="Source1" />
-                              <Edge From="1" To="4" Label="Source1" />
-                              <Edge From="1" To="6" Label="Source1" />
                               <Edge From="2" To="3" Label="Source1" />
-                              <Edge From="3" To="8" Label="Source1" />
-                              <Edge From="4" To="5" Label="Source1" />
-                              <Edge From="5" To="8" Label="Source2" />
-                              <Edge From="6" To="7" Label="Source1" />
-                              <Edge From="7" To="8" Label="Source3" />
-                              <Edge From="8" To="9" Label="Source1" />
-                            </Edges>
-                          </Workflow>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p12:WaitUntilIdle">
-                            <p12:Axis xsi:nil="true" />
-                          </Combinator>
-                        </Expression>
-                        <Expression xsi:type="WorkflowOutput" />
-                      </Nodes>
-                      <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="1" To="2" Label="Source1" />
-                        <Edge From="2" To="3" Label="Source1" />
-                        <Edge From="3" To="4" Label="Source1" />
-                        <Edge From="4" To="5" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -2428,6 +2358,9 @@
                   <Expression xsi:type="MemberSelector">
                     <Selector>SpoutAxis</Selector>
                   </Expression>
+                  <Expression xsi:type="scr:ExpressionTransform">
+                    <scr:Expression>byte(it)</scr:Expression>
+                  </Expression>
                   <Expression xsi:type="InputMapping">
                     <PropertyMappings>
                       <Property Name="Value" Selector="it" />
@@ -2436,7 +2369,12 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="IntProperty">
-                      <Value>3</Value>
+                      <Value>1</Value>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Take">
+                      <rx:Count>1</rx:Count>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="rx:AsyncSubject">
@@ -2494,11 +2432,6 @@
                   <Expression xsi:type="rx:BehaviorSubject" TypeArguments="sys:Single">
                     <rx:Name>MoveSpoutAbsolute</rx:Name>
                   </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:SampleInterval">
-                      <rx:Interval>PT0.01S</rx:Interval>
-                    </Combinator>
-                  </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>ManipulatorSpoutAxis</Name>
                   </Expression>
@@ -2510,7 +2443,7 @@
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p12:MoveAbsolute">
                       <p12:PortName>ZaberMotor</p12:PortName>
-                      <p12:Axis>3</p12:Axis>
+                      <p12:Axis>1</p12:Axis>
                       <p12:Velocity xsi:nil="true" />
                       <p12:Acceleration xsi:nil="true" />
                     </Combinator>
@@ -2538,22 +2471,23 @@
                   <Edge From="18" To="19" Label="Source1" />
                   <Edge From="19" To="20" Label="Source1" />
                   <Edge From="20" To="21" Label="Source1" />
+                  <Edge From="21" To="22" Label="Source1" />
                   <Edge From="22" To="23" Label="Source1" />
                   <Edge From="24" To="25" Label="Source1" />
-                  <Edge From="24" To="27" Label="Source1" />
-                  <Edge From="24" To="29" Label="Source1" />
-                  <Edge From="25" To="26" Label="Source1" />
+                  <Edge From="26" To="27" Label="Source1" />
+                  <Edge From="26" To="29" Label="Source1" />
                   <Edge From="26" To="31" Label="Source1" />
                   <Edge From="27" To="28" Label="Source1" />
-                  <Edge From="28" To="31" Label="Source2" />
+                  <Edge From="28" To="33" Label="Source1" />
                   <Edge From="29" To="30" Label="Source1" />
-                  <Edge From="30" To="31" Label="Source3" />
+                  <Edge From="30" To="33" Label="Source2" />
                   <Edge From="31" To="32" Label="Source1" />
+                  <Edge From="32" To="33" Label="Source3" />
                   <Edge From="33" To="34" Label="Source1" />
-                  <Edge From="34" To="37" Label="Source1" />
-                  <Edge From="35" To="36" Label="Source1" />
-                  <Edge From="36" To="37" Label="Source2" />
-                  <Edge From="37" To="38" Label="Source1" />
+                  <Edge From="35" To="38" Label="Source1" />
+                  <Edge From="36" To="37" Label="Source1" />
+                  <Edge From="37" To="38" Label="Source2" />
+                  <Edge From="38" To="39" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -3024,7 +2958,7 @@
                     <Name>ManipulatorSpoutAxis</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:WithLatestFrom" />
+                    <Combinator xsi:type="rx:CombineLatest" />
                   </Expression>
                   <Expression xsi:type="scr:ExpressionTransform">
                     <scr:Expression>new(
@@ -5673,8 +5607,8 @@ Item2 as ManipulatorSpoutAxis)</scr:Expression>
               <viz:SymbolType>None</viz:SymbolType>
               <viz:LineWidth>2</viz:LineWidth>
               <viz:Capacity xsi:nil="true" />
-              <viz:Min xsi:nil="true" />
-              <viz:Max xsi:nil="true" />
+              <viz:Min>-0.5</viz:Min>
+              <viz:Max>4</viz:Max>
             </Expression>
             <Expression xsi:type="VisualizerMapping">
               <VisualizerType xsi:type="TypeMapping" TypeArguments="viz:RollingGraphVisualizer" />
@@ -5694,14 +5628,26 @@ Item2 as ManipulatorSpoutAxis)</scr:Expression>
               <viz:SymbolType>None</viz:SymbolType>
               <viz:LineWidth>2</viz:LineWidth>
               <viz:Capacity xsi:nil="true" />
-              <viz:Min xsi:nil="true" />
-              <viz:Max xsi:nil="true" />
+              <viz:Min>-3000</viz:Min>
+              <viz:Max>32000</viz:Max>
             </Expression>
             <Expression xsi:type="VisualizerMapping">
               <VisualizerType xsi:type="TypeMapping" TypeArguments="viz:RollingGraphVisualizer" />
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>Camera0FrameEvent</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Value</Selector>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Image</Selector>
+            </Expression>
+            <Expression xsi:type="VisualizerMapping">
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="p18:IplImageVisualizer" />
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>Camera1FrameEvent</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
               <Selector>Value</Selector>
@@ -5743,12 +5689,36 @@ Item2 as ManipulatorSpoutAxis)</scr:Expression>
               <Name>SpoutPositionInstruction</Name>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
+              <Name>ClosePosition</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>ClosePosition</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>TaskLogicSchema</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>FarPositionOffset</Selector>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:CombineLatest" />
+            </Expression>
+            <Expression xsi:type="Subtract" />
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:CombineLatest" />
+            </Expression>
+            <Expression xsi:type="scr:ExpressionTransform">
+              <scr:Expression>new(Item1 as Position, Item2 as Close, Item3 as Far)</scr:Expression>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
               <Name>HarpTimestampSource</Name>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:WithLatestFrom" />
             </Expression>
             <Expression xsi:type="viz:RollingGraphBuilder">
+              <viz:IndexSelector>Item2</viz:IndexSelector>
+              <viz:ValueSelector>Item1.Position,Item1.Close,Item1.Far</viz:ValueSelector>
               <viz:SymbolType>None</viz:SymbolType>
               <viz:LineWidth>1</viz:LineWidth>
               <viz:Capacity xsi:nil="true" />
@@ -5773,33 +5743,45 @@ Item2 as ManipulatorSpoutAxis)</scr:Expression>
             <Edge From="1" To="2" Label="Source2" />
             <Edge From="2" To="3" Label="Source1" />
             <Edge From="3" To="4" Label="Source1" />
-            <Edge From="4" To="28" Label="Source1" />
+            <Edge From="4" To="40" Label="Source1" />
             <Edge From="5" To="7" Label="Source1" />
             <Edge From="6" To="7" Label="Source2" />
             <Edge From="7" To="8" Label="Source1" />
             <Edge From="8" To="9" Label="Source1" />
-            <Edge From="9" To="28" Label="Source2" />
+            <Edge From="9" To="40" Label="Source2" />
             <Edge From="10" To="11" Label="Source1" />
             <Edge From="11" To="12" Label="Source1" />
             <Edge From="12" To="13" Label="Source1" />
-            <Edge From="13" To="28" Label="Source3" />
-            <Edge From="14" To="16" Label="Source1" />
-            <Edge From="15" To="16" Label="Source2" />
+            <Edge From="13" To="40" Label="Source3" />
+            <Edge From="14" To="15" Label="Source1" />
+            <Edge From="15" To="16" Label="Source1" />
             <Edge From="16" To="17" Label="Source1" />
-            <Edge From="16" To="19" Label="Source1" />
-            <Edge From="17" To="18" Label="Source1" />
-            <Edge From="17" To="20" Label="Source1" />
-            <Edge From="18" To="21" Label="Source1" />
-            <Edge From="19" To="21" Label="Source2" />
-            <Edge From="20" To="21" Label="Source3" />
+            <Edge From="17" To="40" Label="Source4" />
+            <Edge From="18" To="20" Label="Source1" />
+            <Edge From="19" To="20" Label="Source2" />
+            <Edge From="20" To="21" Label="Source1" />
+            <Edge From="20" To="23" Label="Source1" />
             <Edge From="21" To="22" Label="Source1" />
-            <Edge From="22" To="28" Label="Source4" />
-            <Edge From="23" To="25" Label="Source1" />
-            <Edge From="24" To="25" Label="Source2" />
+            <Edge From="21" To="24" Label="Source1" />
+            <Edge From="22" To="25" Label="Source1" />
+            <Edge From="23" To="25" Label="Source2" />
+            <Edge From="24" To="25" Label="Source3" />
             <Edge From="25" To="26" Label="Source1" />
-            <Edge From="26" To="27" Label="Source1" />
-            <Edge From="27" To="28" Label="Source5" />
-            <Edge From="28" To="29" Label="Source1" />
+            <Edge From="26" To="40" Label="Source5" />
+            <Edge From="27" To="34" Label="Source1" />
+            <Edge From="28" To="34" Label="Source2" />
+            <Edge From="29" To="32" Label="Source1" />
+            <Edge From="30" To="31" Label="Source1" />
+            <Edge From="31" To="32" Label="Source2" />
+            <Edge From="32" To="33" Label="Source1" />
+            <Edge From="33" To="34" Label="Source3" />
+            <Edge From="34" To="35" Label="Source1" />
+            <Edge From="35" To="37" Label="Source1" />
+            <Edge From="36" To="37" Label="Source2" />
+            <Edge From="37" To="38" Label="Source1" />
+            <Edge From="38" To="39" Label="Source1" />
+            <Edge From="39" To="40" Label="Source6" />
+            <Edge From="40" To="41" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
