@@ -23,6 +23,7 @@
                  xmlns:p11="clr-namespace:;assembly=Extensions"
                  xmlns:spk="clr-namespace:Bonsai.Spinnaker;assembly=Bonsai.Spinnaker"
                  xmlns:p12="clr-namespace:AllenNeuralDynamics.Zaber;assembly=AllenNeuralDynamics.Zaber"
+                 xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
                  xmlns:p13="clr-namespace:OpenCV.Net;assembly=OpenCV.Net"
                  xmlns:p14="clr-namespace:Harp.Behavior;assembly=Extensions"
                  xmlns:p15="clr-namespace:Harp.LoadCells;assembly=Extensions"
@@ -30,7 +31,6 @@
                  xmlns:ffmpeg="clr-namespace:Bonsai.FFmpeg;assembly=Bonsai.FFmpeg"
                  xmlns:p17="clr-namespace:AllenNeuralDynamics.Core.Design;assembly=AllenNeuralDynamics.Core.Design"
                  xmlns:viz="clr-namespace:Bonsai.Design.Visualizers;assembly=Bonsai.Design.Visualizers"
-                 xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
                  xmlns:p18="clr-namespace:Bonsai.Vision.Design;assembly=Bonsai.Vision.Design"
                  xmlns:p19="clr-namespace:Bonsai.Design;assembly=Bonsai.Design"
                  xmlns="https://bonsai-rx.org/2018/workflow">
@@ -2349,6 +2349,16 @@
                   <Expression xsi:type="rx:BehaviorSubject">
                     <Name>IsHomed</Name>
                   </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="cv:CreatePoint3d">
+                      <cv:X>0</cv:X>
+                      <cv:Y>0</cv:Y>
+                      <cv:Z>0</cv:Z>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="MulticastSubject">
+                    <Name>Force3dManipulatorPosition</Name>
+                  </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>RigSchema</Name>
                   </Expression>
@@ -2465,27 +2475,29 @@
                   <Edge From="12" To="13" Label="Source1" />
                   <Edge From="13" To="14" Label="Source1" />
                   <Edge From="14" To="15" Label="Source1" />
+                  <Edge From="15" To="16" Label="Source1" />
                   <Edge From="16" To="17" Label="Source1" />
-                  <Edge From="17" To="18" Label="Source1" />
                   <Edge From="18" To="19" Label="Source1" />
                   <Edge From="19" To="20" Label="Source1" />
                   <Edge From="20" To="21" Label="Source1" />
                   <Edge From="21" To="22" Label="Source1" />
                   <Edge From="22" To="23" Label="Source1" />
+                  <Edge From="23" To="24" Label="Source1" />
                   <Edge From="24" To="25" Label="Source1" />
                   <Edge From="26" To="27" Label="Source1" />
-                  <Edge From="26" To="29" Label="Source1" />
-                  <Edge From="26" To="31" Label="Source1" />
-                  <Edge From="27" To="28" Label="Source1" />
+                  <Edge From="28" To="29" Label="Source1" />
+                  <Edge From="28" To="31" Label="Source1" />
                   <Edge From="28" To="33" Label="Source1" />
                   <Edge From="29" To="30" Label="Source1" />
-                  <Edge From="30" To="33" Label="Source2" />
+                  <Edge From="30" To="35" Label="Source1" />
                   <Edge From="31" To="32" Label="Source1" />
-                  <Edge From="32" To="33" Label="Source3" />
-                  <Edge From="34" To="37" Label="Source1" />
-                  <Edge From="35" To="36" Label="Source1" />
-                  <Edge From="36" To="37" Label="Source2" />
+                  <Edge From="32" To="35" Label="Source2" />
+                  <Edge From="33" To="34" Label="Source1" />
+                  <Edge From="34" To="35" Label="Source3" />
+                  <Edge From="36" To="39" Label="Source1" />
                   <Edge From="37" To="38" Label="Source1" />
+                  <Edge From="38" To="39" Label="Source2" />
+                  <Edge From="39" To="40" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -5293,7 +5305,7 @@ Item2 as ManipulatorSpoutAxis)</scr:Expression>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="FloatProperty">
-                <Value>800000</Value>
+                <Value>0</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="MulticastSubject">
@@ -5314,7 +5326,7 @@ Item2 as ManipulatorSpoutAxis)</scr:Expression>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="FloatProperty">
-                <Value>300000</Value>
+                <Value>0</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="MulticastSubject">
@@ -5338,10 +5350,50 @@ Item2 as ManipulatorSpoutAxis)</scr:Expression>
             <Expression xsi:type="VisualizerMapping" />
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p17:PushButton">
-                <p17:Label>ForcePosition</p17:Label>
+                <p17:Label>-X</p17:Label>
               </Combinator>
             </Expression>
             <Expression xsi:type="VisualizerMapping" />
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p17:PushButton">
+                <p17:Label>+X</p17:Label>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="VisualizerMapping" />
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p17:PushButton">
+                <p17:Label>-Y</p17:Label>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="VisualizerMapping" />
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p17:PushButton">
+                <p17:Label>+Y</p17:Label>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="VisualizerMapping" />
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p17:PushButton">
+                <p17:Label>-Z</p17:Label>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="VisualizerMapping" />
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p17:PushButton">
+                <p17:Label>+Z</p17:Label>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="VisualizerMapping" />
+            <Expression xsi:type="viz:TableLayoutPanelBuilder">
+              <viz:ColumnCount>2</viz:ColumnCount>
+              <viz:RowCount>3</viz:RowCount>
+              <viz:ColumnStyles />
+              <viz:RowStyles />
+              <viz:CellSpans />
+            </Expression>
+            <Expression xsi:type="VisualizerMapping">
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="viz:TableLayoutPanelVisualizer" />
+            </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p17:PropertyGridSource" />
             </Expression>
@@ -5357,12 +5409,12 @@ Item2 as ManipulatorSpoutAxis)</scr:Expression>
             <Expression xsi:type="VisualizerMapping" />
             <Expression xsi:type="viz:TableLayoutPanelBuilder">
               <viz:ColumnCount>2</viz:ColumnCount>
-              <viz:RowCount>2</viz:RowCount>
+              <viz:RowCount>4</viz:RowCount>
               <viz:ColumnStyles />
               <viz:RowStyles />
               <viz:CellSpans>
-                <viz:CellSpan ColumnSpan="1" RowSpan="1" />
-                <viz:CellSpan ColumnSpan="1" RowSpan="2" />
+                <viz:CellSpan ColumnSpan="1" RowSpan="3" />
+                <viz:CellSpan ColumnSpan="1" RowSpan="4" />
                 <viz:CellSpan ColumnSpan="1" RowSpan="1" />
               </viz:CellSpans>
             </Expression>
@@ -5383,22 +5435,158 @@ Item2 as ManipulatorSpoutAxis)</scr:Expression>
               </viz:RowStyles>
               <viz:CellSpans />
             </Expression>
-            <Expression xsi:type="WorkflowOutput" />
             <Expression xsi:type="Unit" />
             <Expression xsi:type="MulticastSubject">
               <Name>HomingRoutine</Name>
             </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="StringProperty">
+                <Value>-X</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="StringProperty">
+                <Value>+X</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="StringProperty">
+                <Value>-Y</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="StringProperty">
+                <Value>+Y</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="StringProperty">
+                <Value>-Z</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="StringProperty">
+                <Value>+Z</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Merge" />
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>GuiDisplaceManipulator</Name>
+            </Expression>
             <Expression xsi:type="ExternalizedMapping">
-              <Property Name="X" DisplayName="X" Category="ForcePosition" />
-              <Property Name="Y" Category="ForcePosition" />
-              <Property Name="Z" Category="ForcePosition" />
+              <Property Name="Value" DisplayName="X" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="DoubleProperty">
+                <Value>10</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="Value" DisplayName="Y" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="DoubleProperty">
+                <Value>10</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="Value" DisplayName="Z" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="DoubleProperty">
+                <Value>10</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:CombineLatest" />
+            </Expression>
+            <Expression xsi:type="InputMapping">
+              <PropertyMappings>
+                <Property Name="X" Selector="Item1" />
+                <Property Name="Y" Selector="Item2" />
+                <Property Name="Z" Selector="Item3" />
+              </PropertyMappings>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:CreatePoint3d">
-                <cv:X>1000000</cv:X>
-                <cv:Y>10000</cv:Y>
-                <cv:Z>10000</cv:Z>
+                <cv:X>10</cv:X>
+                <cv:Y>10</cv:Y>
+                <cv:Z>10</cv:Z>
               </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>CurrentManipulatorDisplacements</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>GuiDisplaceManipulator</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>CurrentManipulatorDisplacements</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:WithLatestFrom" />
+            </Expression>
+            <Expression xsi:type="scr:ExpressionTransform">
+              <scr:Name>GetAxisAndDirection</scr:Name>
+              <scr:Expression>(Item1[0] == '-' ? -1.0 : 1.0) * (Item1[1] == 'X' ? Item2.X : 0)</scr:Expression>
+            </Expression>
+            <Expression xsi:type="scr:ExpressionTransform">
+              <scr:Name>GetAxisAndDirection</scr:Name>
+              <scr:Expression>(Item1[0] == '-' ? -1.0 : 1.0) * (Item1[1] == 'Y' ? Item2.Y : 0)</scr:Expression>
+            </Expression>
+            <Expression xsi:type="scr:ExpressionTransform">
+              <scr:Name>GetAxisAndDirection</scr:Name>
+              <scr:Expression>(Item1[0] == '-' ? -1.0 : 1.0) * (Item1[1] == 'Z' ? Item2.Z : 0)</scr:Expression>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Zip" />
+            </Expression>
+            <Expression xsi:type="InputMapping">
+              <PropertyMappings>
+                <Property Name="X" Selector="Item1" />
+                <Property Name="Y" Selector="Item2" />
+                <Property Name="Z" Selector="Item3" />
+              </PropertyMappings>
+              <Selector>it</Selector>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="cv:CreatePoint3d">
+                <cv:X>-0</cv:X>
+                <cv:Y>-0</cv:Y>
+                <cv:Z>-10</cv:Z>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:SelectMany">
+              <Name>Increment</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>Force3dManipulatorPosition</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Take">
+                      <rx:Count>1</rx:Count>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Zip" />
+                  </Expression>
+                  <Expression xsi:type="Add" />
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="3" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source2" />
+                  <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
+                </Edges>
+              </Workflow>
             </Expression>
             <Expression xsi:type="MulticastSubject">
               <Name>Force3dManipulatorPosition</Name>
@@ -5509,24 +5697,66 @@ Item2 as ManipulatorSpoutAxis)</scr:Expression>
             <Edge From="10" To="14" Label="Source1" />
             <Edge From="11" To="14" Label="Source2" />
             <Edge From="12" To="13" Label="Source1" />
-            <Edge From="12" To="27" Label="Source1" />
+            <Edge From="12" To="38" Label="Source1" />
             <Edge From="13" To="14" Label="Source3" />
             <Edge From="14" To="15" Label="Source1" />
-            <Edge From="15" To="25" Label="Source1" />
+            <Edge From="15" To="37" Label="Source1" />
             <Edge From="16" To="17" Label="Source1" />
-            <Edge From="16" To="30" Label="Source1" />
-            <Edge From="17" To="23" Label="Source1" />
+            <Edge From="16" To="40" Label="Source1" />
+            <Edge From="17" To="28" Label="Source1" />
             <Edge From="18" To="19" Label="Source1" />
-            <Edge From="19" To="23" Label="Source2" />
+            <Edge From="18" To="41" Label="Source1" />
+            <Edge From="19" To="28" Label="Source2" />
             <Edge From="20" To="21" Label="Source1" />
-            <Edge From="21" To="22" Label="Source1" />
-            <Edge From="22" To="23" Label="Source3" />
-            <Edge From="23" To="24" Label="Source1" />
-            <Edge From="24" To="25" Label="Source2" />
-            <Edge From="25" To="26" Label="Source1" />
-            <Edge From="27" To="28" Label="Source1" />
-            <Edge From="29" To="30" Label="Source2" />
+            <Edge From="20" To="42" Label="Source1" />
+            <Edge From="21" To="28" Label="Source3" />
+            <Edge From="22" To="23" Label="Source1" />
+            <Edge From="22" To="43" Label="Source1" />
+            <Edge From="23" To="28" Label="Source4" />
+            <Edge From="24" To="25" Label="Source1" />
+            <Edge From="24" To="44" Label="Source1" />
+            <Edge From="25" To="28" Label="Source5" />
+            <Edge From="26" To="27" Label="Source1" />
+            <Edge From="26" To="45" Label="Source1" />
+            <Edge From="27" To="28" Label="Source6" />
+            <Edge From="28" To="29" Label="Source1" />
+            <Edge From="29" To="35" Label="Source1" />
             <Edge From="30" To="31" Label="Source1" />
+            <Edge From="31" To="35" Label="Source2" />
+            <Edge From="32" To="33" Label="Source1" />
+            <Edge From="33" To="34" Label="Source1" />
+            <Edge From="34" To="35" Label="Source3" />
+            <Edge From="35" To="36" Label="Source1" />
+            <Edge From="36" To="37" Label="Source2" />
+            <Edge From="38" To="39" Label="Source1" />
+            <Edge From="40" To="46" Label="Source1" />
+            <Edge From="41" To="46" Label="Source2" />
+            <Edge From="42" To="46" Label="Source3" />
+            <Edge From="43" To="46" Label="Source4" />
+            <Edge From="44" To="46" Label="Source5" />
+            <Edge From="45" To="46" Label="Source6" />
+            <Edge From="46" To="47" Label="Source1" />
+            <Edge From="48" To="49" Label="Source1" />
+            <Edge From="49" To="54" Label="Source1" />
+            <Edge From="50" To="51" Label="Source1" />
+            <Edge From="51" To="54" Label="Source2" />
+            <Edge From="52" To="53" Label="Source1" />
+            <Edge From="53" To="54" Label="Source3" />
+            <Edge From="54" To="55" Label="Source1" />
+            <Edge From="55" To="56" Label="Source2" />
+            <Edge From="56" To="57" Label="Source1" />
+            <Edge From="58" To="60" Label="Source1" />
+            <Edge From="59" To="60" Label="Source2" />
+            <Edge From="60" To="61" Label="Source1" />
+            <Edge From="60" To="62" Label="Source1" />
+            <Edge From="60" To="63" Label="Source1" />
+            <Edge From="61" To="64" Label="Source1" />
+            <Edge From="62" To="64" Label="Source2" />
+            <Edge From="63" To="64" Label="Source3" />
+            <Edge From="64" To="65" Label="Source1" />
+            <Edge From="65" To="66" Label="Source1" />
+            <Edge From="66" To="67" Label="Source1" />
+            <Edge From="67" To="68" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
