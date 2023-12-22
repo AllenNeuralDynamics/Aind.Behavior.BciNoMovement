@@ -45,8 +45,13 @@ class Axis(IntEnum):
 
 class ZaberGenericCommand(AindModel):
     command: str
-    axis: Axis = Field(default=Axis.NONE, description="Axis to move.")
+    axis: int = Field(default=0, description="Motor to send the instruction to.")
     device: int = Field(default=None, ge=0, description="Device number.")
+
+
+class ZaberAxis(AindModel):
+    deviceIndex: int = Field(ge=0, description="Device number.")
+    axisIndex: int = Field(ge=0, description="Motor to send the instruction to.")
 
 
 class ZaberManipulator(AindModel):
@@ -61,6 +66,7 @@ class ZaberManipulator(AindModel):
     acceleration: float = Field(
         default=1299.63, ge=0, description="Acceleration of the manipulator."
     )
+    zaberAxisLookUpTable: dict[Axis, ZaberAxis] = Field(default={}, description="Manipulator axis mapping.")
 
 
 class ZmqConnection(AindModel):

@@ -5,6 +5,7 @@ from pyd_rig import (
     SpinnakerCamera,
     ZaberManipulator,
     ZaberGenericCommand,
+    ZaberAxis,
     Axis,
     ColorProcessing,
     Networking,
@@ -12,6 +13,17 @@ from pyd_rig import (
     Operation,
 )
 from pyd_session import BciNoMovementSession, BciNoMovementTaskLogic, Point3d, Control
+
+
+zaberCommands = [
+    ZaberGenericCommand(command='set limit.home.pos 0', device=1, axis=1),
+    ZaberGenericCommand(command='set limit.away.pos 1100000', device=1, axis=1),
+    ZaberGenericCommand(command='set limit.home.pos 0', device=1, axis=2),
+    ZaberGenericCommand(command='set limit.away.pos 1100000', device=1, axis=2),
+    ZaberGenericCommand(command='set limit.home.pos 0', device=2, axis=1),
+    ZaberGenericCommand(command='set limit.away.pos 150000', device=2, axis=1),
+]
+
 
 rig = BciNoMovementRig(
     schema_version="0.0.1",
@@ -32,7 +44,12 @@ rig = BciNoMovementRig(
         maxSpeed=12,
         acceleration=1299.63,
         spoutAxis=Axis.Z,
-        genericCommands=[],
+        genericCommands=zaberCommands,
+        zaberAxisLookUpTable={
+            Axis.X: ZaberAxis(deviceIndex=0, axisIndex=0),
+            Axis.Y: ZaberAxis(deviceIndex=0, axisIndex=1),
+            Axis.Z: ZaberAxis(deviceIndex=1, axisIndex=1),
+        }
     ),
     networking=Networking(
         zmqPublisher=ZmqConnection(
@@ -58,13 +75,13 @@ task_logic_settings = BciNoMovementTaskLogic(
     rewardConsumeTime=2,
     valveOpenTime=0.1,
     waitForLick=True,
-    farPositionOffset=80000,
-    manipulatorResetPosition=Point3d(x=100000, y=100000, z=200000),
+    farPositionOffset=30000,
+    manipulatorResetPosition=Point3d(x=0, y=0, z=0),
     waitMicroscopeTime=0.5,
     noMovementControl=Control(
-        gain=1, baselineThreshold=20000, lowPassCutOff=50, highPassCutOff=0.001
+        gain=20, baselineThreshold=20000, lowPassCutOff=50, highPassCutOff=0.001
     ),
-    bciControl=Control(gain=1, baselineThreshold=1.5),
+    bciControl=Control(gain=10, baselineThreshold=1.5),
     skip2pHandshake=True,
     punishOnMovementDuration=0.1,
 )

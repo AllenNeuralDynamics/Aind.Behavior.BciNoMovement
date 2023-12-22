@@ -158,6 +158,29 @@
          "title": "SpinnakerCamera",
          "type": "object"
       },
+      "ZaberAxis": {
+         "additionalProperties": false,
+         "properties": {
+            "deviceIndex": {
+               "description": "Device number.",
+               "minimum": 0,
+               "title": "Deviceindex",
+               "type": "integer"
+            },
+            "axisIndex": {
+               "description": "Motor to send the instruction to.",
+               "minimum": 0,
+               "title": "Axisindex",
+               "type": "integer"
+            }
+         },
+         "required": [
+            "deviceIndex",
+            "axisIndex"
+         ],
+         "title": "ZaberAxis",
+         "type": "object"
+      },
       "ZaberGenericCommand": {
          "additionalProperties": false,
          "properties": {
@@ -166,13 +189,10 @@
                "type": "string"
             },
             "axis": {
-               "allOf": [
-                  {
-                     "$ref": "#/definitions/Axis"
-                  }
-               ],
                "default": 0,
-               "description": "Axis to move."
+               "description": "Motor to send the instruction to.",
+               "title": "Axis",
+               "type": "integer"
             },
             "device": {
                "default": null,
@@ -228,6 +248,15 @@
                "minimum": 0.0,
                "title": "Acceleration",
                "type": "number"
+            },
+            "zaberAxisLookUpTable": {
+               "additionalProperties": {
+                  "$ref": "#/definitions/ZaberAxis"
+               },
+               "default": {},
+               "description": "Manipulator axis mapping.",
+               "title": "Zaberaxislookuptable",
+               "type": "object"
             }
          },
          "title": "ZaberManipulator",

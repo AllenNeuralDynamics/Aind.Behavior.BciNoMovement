@@ -358,12 +358,69 @@ namespace BciNoMovementDataSchema.Rig
 
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class ZaberAxis
+    {
+    
+        private int _deviceIndex;
+    
+        private int _axisIndex;
+    
+        /// <summary>
+        /// Device number.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("deviceIndex", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="deviceIndex")]
+        [System.ComponentModel.DescriptionAttribute("Device number.")]
+        public int DeviceIndex
+        {
+            get
+            {
+                return _deviceIndex;
+            }
+            set
+            {
+                _deviceIndex = value;
+            }
+        }
+    
+        /// <summary>
+        /// Motor to send the instruction to.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("axisIndex", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="axisIndex")]
+        [System.ComponentModel.DescriptionAttribute("Motor to send the instruction to.")]
+        public int AxisIndex
+        {
+            get
+            {
+                return _axisIndex;
+            }
+            set
+            {
+                _axisIndex = value;
+            }
+        }
+    
+        public System.IObservable<ZaberAxis> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
+                new ZaberAxis
+                {
+                    DeviceIndex = _deviceIndex,
+                    AxisIndex = _axisIndex
+                }));
+        }
+    }
+
+
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
     public partial class ZaberGenericCommand
     {
     
         private string _command;
     
-        private Axis _axis = BciNoMovementDataSchema.Rig.Axis._0;
+        private int _axis = 0;
     
         private int _device;
     
@@ -382,13 +439,12 @@ namespace BciNoMovementDataSchema.Rig
         }
     
         /// <summary>
-        /// Axis to move.
+        /// Motor to send the instruction to.
         /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("axis")]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="axis")]
-        [System.ComponentModel.DescriptionAttribute("Axis to move.")]
-        public Axis Axis
+        [System.ComponentModel.DescriptionAttribute("Motor to send the instruction to.")]
+        public int Axis
         {
             get
             {
@@ -445,6 +501,8 @@ namespace BciNoMovementDataSchema.Rig
         private double _maxSpeed = 10D;
     
         private double _acceleration = 1299.63D;
+    
+        private System.Collections.Generic.IDictionary<string, ZaberAxis> _zaberAxisLookUpTable;
     
         /// <summary>
         /// COM port of the manipulator.
@@ -538,6 +596,25 @@ namespace BciNoMovementDataSchema.Rig
             }
         }
     
+        /// <summary>
+        /// Manipulator axis mapping.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("zaberAxisLookUpTable")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="zaberAxisLookUpTable")]
+        [System.ComponentModel.DescriptionAttribute("Manipulator axis mapping.")]
+        public System.Collections.Generic.IDictionary<string, ZaberAxis> ZaberAxisLookUpTable
+        {
+            get
+            {
+                return _zaberAxisLookUpTable;
+            }
+            set
+            {
+                _zaberAxisLookUpTable = value;
+            }
+        }
+    
         public System.IObservable<ZaberManipulator> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(
@@ -547,7 +624,8 @@ namespace BciNoMovementDataSchema.Rig
                     GenericCommands = _genericCommands,
                     SpoutAxis = _spoutAxis,
                     MaxSpeed = _maxSpeed,
-                    Acceleration = _acceleration
+                    Acceleration = _acceleration,
+                    ZaberAxisLookUpTable = _zaberAxisLookUpTable
                 }));
         }
     }
@@ -833,6 +911,11 @@ namespace BciNoMovementDataSchema.Rig
             return Process<SpinnakerCamera>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<ZaberAxis> source)
+        {
+            return Process<ZaberAxis>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<ZaberGenericCommand> source)
         {
             return Process<ZaberGenericCommand>(source);
@@ -864,6 +947,7 @@ namespace BciNoMovementDataSchema.Rig
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Networking>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Operation>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZaberAxis>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZaberGenericCommand>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZaberManipulator>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZmqConnection>))]
@@ -935,6 +1019,11 @@ namespace BciNoMovementDataSchema.Rig
             return Process<SpinnakerCamera>(source);
         }
 
+        public System.IObservable<string> Process(System.IObservable<ZaberAxis> source)
+        {
+            return Process<ZaberAxis>(source);
+        }
+
         public System.IObservable<string> Process(System.IObservable<ZaberGenericCommand> source)
         {
             return Process<ZaberGenericCommand>(source);
@@ -966,6 +1055,7 @@ namespace BciNoMovementDataSchema.Rig
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Networking>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Operation>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SpinnakerCamera>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZaberAxis>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZaberGenericCommand>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZaberManipulator>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<ZmqConnection>))]

@@ -2172,8 +2172,8 @@
                                 <Selector>Axis</Selector>
                               </Expression>
                               <Expression xsi:type="Equal">
-                                <Operand xsi:type="WorkflowProperty" TypeArguments="p3:Axis">
-                                  <Value>_0</Value>
+                                <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Byte">
+                                  <Value>0</Value>
                                 </Operand>
                               </Expression>
                               <Expression xsi:type="WorkflowOutput" />
@@ -2207,8 +2207,8 @@
                                 <Selector>Axis</Selector>
                               </Expression>
                               <Expression xsi:type="Equal">
-                                <Operand xsi:type="WorkflowProperty" TypeArguments="p3:Axis">
-                                  <Value>_0</Value>
+                                <Operand xsi:type="IntProperty">
+                                  <Value>0</Value>
                                 </Operand>
                               </Expression>
                               <Expression xsi:type="BitwiseNot" />
@@ -2239,8 +2239,8 @@
                                 <Selector>Axis</Selector>
                               </Expression>
                               <Expression xsi:type="Equal">
-                                <Operand xsi:type="WorkflowProperty" TypeArguments="p3:Axis">
-                                  <Value>_0</Value>
+                                <Operand xsi:type="IntProperty">
+                                  <Value>0</Value>
                                 </Operand>
                               </Expression>
                               <Expression xsi:type="BitwiseNot" />
@@ -2256,16 +2256,6 @@
                         </Expression>
                         <Expression xsi:type="MemberSelector">
                           <Selector>Axis</Selector>
-                        </Expression>
-                        <Expression xsi:type="InputMapping">
-                          <PropertyMappings>
-                            <Property Name="Value" Selector="value__" />
-                          </PropertyMappings>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="IntProperty">
-                            <Value>1</Value>
-                          </Combinator>
                         </Expression>
                         <Expression xsi:type="PropertyMapping">
                           <PropertyMappings>
@@ -2289,18 +2279,16 @@
                         <Edge From="3" To="4" Label="Source1" />
                         <Edge From="4" To="5" Label="Source1" />
                         <Edge From="5" To="6" Label="Source1" />
-                        <Edge From="6" To="17" Label="Source1" />
+                        <Edge From="6" To="15" Label="Source1" />
                         <Edge From="7" To="8" Label="Source1" />
                         <Edge From="8" To="9" Label="Source1" />
-                        <Edge From="9" To="16" Label="Source1" />
+                        <Edge From="9" To="14" Label="Source1" />
                         <Edge From="10" To="11" Label="Source1" />
                         <Edge From="11" To="12" Label="Source1" />
                         <Edge From="12" To="13" Label="Source1" />
-                        <Edge From="13" To="14" Label="Source1" />
-                        <Edge From="14" To="15" Label="Source1" />
-                        <Edge From="15" To="16" Label="Source2" />
-                        <Edge From="16" To="17" Label="Source2" />
-                        <Edge From="17" To="18" Label="Source1" />
+                        <Edge From="13" To="14" Label="Source2" />
+                        <Edge From="14" To="15" Label="Source2" />
+                        <Edge From="15" To="16" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -2411,6 +2399,7 @@
                       <p12:Axis>1</p12:Axis>
                       <p12:Velocity xsi:nil="true" />
                       <p12:Acceleration xsi:nil="true" />
+                      <p12:Units>Native</p12:Units>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
@@ -2422,6 +2411,7 @@
                       <p12:Axis>2</p12:Axis>
                       <p12:Velocity xsi:nil="true" />
                       <p12:Acceleration xsi:nil="true" />
+                      <p12:Units>Native</p12:Units>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
@@ -2433,6 +2423,7 @@
                       <p12:Axis>3</p12:Axis>
                       <p12:Velocity xsi:nil="true" />
                       <p12:Acceleration xsi:nil="true" />
+                      <p12:Units>Native</p12:Units>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -2455,6 +2446,7 @@
                       <p12:Axis>1</p12:Axis>
                       <p12:Velocity xsi:nil="true" />
                       <p12:Acceleration xsi:nil="true" />
+                      <p12:Units>Native</p12:Units>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="rx:PublishSubject">
