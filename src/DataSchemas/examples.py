@@ -15,8 +15,7 @@ from pyd_rig import (
 from pyd_session import BciNoMovementSession, BciNoMovementTaskLogic, Point3d, Control
 
 
-zaberCommands = [
-]
+zaberCommands = []
 
 
 rig = BciNoMovementRig(
@@ -68,7 +67,7 @@ task_logic_settings = BciNoMovementTaskLogic(
     valveOpenTime=0.1,
     waitForLick=True,
     farPositionOffset=30,
-    manipulatorResetPosition=Point3d(x=0, y=0, z=0),
+    manipulatorResetPosition=Point3d(x=43, y=-2, z=0.26),
     waitMicroscopeTime=0.5,
     noMovementControl=Control(
         gain=0.002, baselineThreshold=5000, lowPassCutOff=50, highPassCutOff=0.001
@@ -86,7 +85,7 @@ session_info = BciNoMovementSession(
     notes="Test session",
     rootPath="C:/Data/",
     remoteDataPath="C:/DataRemote/",
-    subject="test-subject",
+    subject="test-subject_number_2",
     version="0.0.1",
 )
 
