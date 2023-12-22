@@ -655,89 +655,6 @@
                 <p1:Message>Camera1 Fps and Exposure not compatible.</p1:Message>
               </Combinator>
             </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>RigSchema</Name>
-            </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>ZaberManipulator.GenericCommands</Selector>
-            </Expression>
-            <Expression xsi:type="rx:Condition">
-              <Workflow>
-                <Nodes>
-                  <Expression xsi:type="WorkflowInput">
-                    <Name>Source1</Name>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Count</Selector>
-                  </Expression>
-                  <Expression xsi:type="GreaterThan">
-                    <Operand xsi:type="IntProperty">
-                      <Value>0</Value>
-                    </Operand>
-                  </Expression>
-                  <Expression xsi:type="WorkflowOutput" />
-                </Nodes>
-                <Edges>
-                  <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="2" Label="Source1" />
-                  <Edge From="2" To="3" Label="Source1" />
-                </Edges>
-              </Workflow>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:Merge" />
-            </Expression>
-            <Expression xsi:type="rx:Condition">
-              <Workflow>
-                <Nodes>
-                  <Expression xsi:type="WorkflowInput">
-                    <Name>Source1</Name>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Device</Selector>
-                  </Expression>
-                  <Expression xsi:type="scr:ExpressionTransform">
-                    <scr:Name>IsNull</scr:Name>
-                    <scr:Expression>it == null</scr:Expression>
-                  </Expression>
-                  <Expression xsi:type="BitwiseNot" />
-                  <Expression xsi:type="WorkflowOutput" />
-                </Nodes>
-                <Edges>
-                  <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="2" Label="Source1" />
-                  <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="3" To="4" Label="Source1" />
-                </Edges>
-              </Workflow>
-            </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>Device</Selector>
-            </Expression>
-            <Expression xsi:type="Equal">
-              <Operand xsi:type="DoubleProperty">
-                <Value>1</Value>
-              </Operand>
-            </Expression>
-            <Expression xsi:type="BitwiseNot" />
-            <Expression xsi:type="rx:Condition">
-              <Workflow>
-                <Nodes>
-                  <Expression xsi:type="WorkflowInput">
-                    <Name>Source1</Name>
-                  </Expression>
-                  <Expression xsi:type="WorkflowOutput" />
-                </Nodes>
-                <Edges>
-                  <Edge From="0" To="1" Label="Source1" />
-                </Edges>
-              </Workflow>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="p1:ThrowException">
-                <p1:Message>Only Zaber device index 1 is allowed for messages</p1:Message>
-              </Combinator>
-            </Expression>
           </Nodes>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
@@ -769,15 +686,6 @@
             <Edge From="29" To="30" Label="Source1" />
             <Edge From="30" To="31" Label="Source1" />
             <Edge From="31" To="32" Label="Source1" />
-            <Edge From="33" To="34" Label="Source1" />
-            <Edge From="34" To="35" Label="Source1" />
-            <Edge From="35" To="36" Label="Source1" />
-            <Edge From="36" To="37" Label="Source1" />
-            <Edge From="37" To="38" Label="Source1" />
-            <Edge From="38" To="39" Label="Source1" />
-            <Edge From="39" To="40" Label="Source1" />
-            <Edge From="40" To="41" Label="Source1" />
-            <Edge From="41" To="42" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -2267,7 +2175,7 @@
                           <Combinator xsi:type="p12:GenericCommand">
                             <p12:PortName>ZaberMotor</p12:PortName>
                             <p12:Device>0</p12:Device>
-                            <p12:Axis>2</p12:Axis>
+                            <p12:Axis>1</p12:Axis>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="Combinator">
@@ -2309,8 +2217,29 @@
                     <Name>HomingRoutine</Name>
                     <Workflow>
                       <Nodes>
-                        <Expression xsi:type="WorkflowInput">
-                          <Name>Source1</Name>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="IntProperty">
+                            <Value>0</Value>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="p12:Home">
+                            <p12:PortName>ZaberMotor</p12:PortName>
+                            <p12:Device>0</p12:Device>
+                            <p12:Axis xsi:nil="true" />
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="p12:WaitUntilIdle">
+                            <p12:PortName>ZaberMotor</p12:PortName>
+                            <p12:Device>0</p12:Device>
+                            <p12:Axis xsi:nil="true" />
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="IntProperty">
+                            <Value>0</Value>
+                          </Combinator>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="p12:Home">
@@ -2323,36 +2252,28 @@
                           <Combinator xsi:type="p12:WaitUntilIdle">
                             <p12:PortName>ZaberMotor</p12:PortName>
                             <p12:Device>1</p12:Device>
-                            <p12:Axis xsi:nil="true" />
-                          </Combinator>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p12:Home">
-                            <p12:PortName>ZaberMotor</p12:PortName>
-                            <p12:Device>2</p12:Device>
-                            <p12:Axis xsi:nil="true" />
-                          </Combinator>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p12:WaitUntilIdle">
-                            <p12:PortName>ZaberMotor</p12:PortName>
-                            <p12:Device>2</p12:Device>
                             <p12:Axis xsi:nil="true" />
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:Zip" />
                         </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Take">
+                            <rx:Count>1</rx:Count>
+                          </Combinator>
+                        </Expression>
                         <Expression xsi:type="WorkflowOutput" />
                       </Nodes>
                       <Edges>
                         <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="0" To="3" Label="Source1" />
                         <Edge From="1" To="2" Label="Source1" />
-                        <Edge From="2" To="5" Label="Source1" />
+                        <Edge From="2" To="6" Label="Source1" />
                         <Edge From="3" To="4" Label="Source1" />
-                        <Edge From="4" To="5" Label="Source2" />
-                        <Edge From="5" To="6" Label="Source1" />
+                        <Edge From="4" To="5" Label="Source1" />
+                        <Edge From="5" To="6" Label="Source2" />
+                        <Edge From="6" To="7" Label="Source1" />
+                        <Edge From="7" To="8" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -2423,71 +2344,6 @@
                                 <Name>RigSchema</Name>
                               </Expression>
                               <Expression xsi:type="MemberSelector">
-                                <Selector>ZaberManipulator.ZAxis</Selector>
-                              </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="rx:WithLatestFrom" />
-                              </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>Item2</Selector>
-                              </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="StringProperty">
-                                  <Value>Z</Value>
-                                </Combinator>
-                              </Expression>
-                              <Expression xsi:type="Combinator">
-                                <Combinator xsi:type="rx:Zip" />
-                              </Expression>
-                              <Expression xsi:type="WorkflowOutput" />
-                            </Nodes>
-                            <Edges>
-                              <Edge From="0" To="3" Label="Source1" />
-                              <Edge From="1" To="2" Label="Source1" />
-                              <Edge From="2" To="3" Label="Source2" />
-                              <Edge From="3" To="4" Label="Source1" />
-                              <Edge From="4" To="5" Label="Source1" />
-                              <Edge From="4" To="6" Label="Source2" />
-                              <Edge From="5" To="6" Label="Source1" />
-                              <Edge From="6" To="7" Label="Source1" />
-                            </Edges>
-                          </Workflow>
-                        </Expression>
-                        <Expression xsi:type="rx:Condition">
-                          <Name>YAxis</Name>
-                          <Workflow>
-                            <Nodes>
-                              <Expression xsi:type="WorkflowInput">
-                                <Name>Source1</Name>
-                              </Expression>
-                              <Expression xsi:type="ExternalizedMapping">
-                                <Property Name="Value" />
-                              </Expression>
-                              <Expression xsi:type="Equal">
-                                <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Byte">
-                                  <Value>1</Value>
-                                </Operand>
-                              </Expression>
-                              <Expression xsi:type="WorkflowOutput" />
-                            </Nodes>
-                            <Edges>
-                              <Edge From="0" To="2" Label="Source1" />
-                              <Edge From="1" To="2" Label="Source2" />
-                              <Edge From="2" To="3" Label="Source1" />
-                            </Edges>
-                          </Workflow>
-                        </Expression>
-                        <Expression xsi:type="GroupWorkflow">
-                          <Name>GetY</Name>
-                          <Workflow>
-                            <Nodes>
-                              <Expression xsi:type="WorkflowInput">
-                                <Name>Source1</Name>
-                              </Expression>
-                              <Expression xsi:type="SubscribeSubject">
-                                <Name>RigSchema</Name>
-                              </Expression>
-                              <Expression xsi:type="MemberSelector">
                                 <Selector>ZaberManipulator.XAxis</Selector>
                               </Expression>
                               <Expression xsi:type="Combinator">
@@ -2519,6 +2375,71 @@
                           </Workflow>
                         </Expression>
                         <Expression xsi:type="rx:Condition">
+                          <Name>YAxis</Name>
+                          <Workflow>
+                            <Nodes>
+                              <Expression xsi:type="WorkflowInput">
+                                <Name>Source1</Name>
+                              </Expression>
+                              <Expression xsi:type="ExternalizedMapping">
+                                <Property Name="Value" />
+                              </Expression>
+                              <Expression xsi:type="Equal">
+                                <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Byte">
+                                  <Value>2</Value>
+                                </Operand>
+                              </Expression>
+                              <Expression xsi:type="WorkflowOutput" />
+                            </Nodes>
+                            <Edges>
+                              <Edge From="0" To="2" Label="Source1" />
+                              <Edge From="1" To="2" Label="Source2" />
+                              <Edge From="2" To="3" Label="Source1" />
+                            </Edges>
+                          </Workflow>
+                        </Expression>
+                        <Expression xsi:type="GroupWorkflow">
+                          <Name>GetY</Name>
+                          <Workflow>
+                            <Nodes>
+                              <Expression xsi:type="WorkflowInput">
+                                <Name>Source1</Name>
+                              </Expression>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>RigSchema</Name>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>ZaberManipulator.YAxis</Selector>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:WithLatestFrom" />
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>Item2</Selector>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="StringProperty">
+                                  <Value>Y</Value>
+                                </Combinator>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:Zip" />
+                              </Expression>
+                              <Expression xsi:type="WorkflowOutput" />
+                            </Nodes>
+                            <Edges>
+                              <Edge From="0" To="3" Label="Source1" />
+                              <Edge From="1" To="2" Label="Source1" />
+                              <Edge From="2" To="3" Label="Source2" />
+                              <Edge From="3" To="4" Label="Source1" />
+                              <Edge From="4" To="5" Label="Source1" />
+                              <Edge From="4" To="6" Label="Source2" />
+                              <Edge From="5" To="6" Label="Source1" />
+                              <Edge From="6" To="7" Label="Source1" />
+                            </Edges>
+                          </Workflow>
+                        </Expression>
+                        <Expression xsi:type="rx:Condition">
                           <Name>ZAxis</Name>
                           <Workflow>
                             <Nodes>
@@ -2530,7 +2451,7 @@
                               </Expression>
                               <Expression xsi:type="Equal">
                                 <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Byte">
-                                  <Value>1</Value>
+                                  <Value>3</Value>
                                 </Operand>
                               </Expression>
                               <Expression xsi:type="WorkflowOutput" />
@@ -2553,7 +2474,7 @@
                                 <Name>RigSchema</Name>
                               </Expression>
                               <Expression xsi:type="MemberSelector">
-                                <Selector>ZaberManipulator.YAxis</Selector>
+                                <Selector>ZaberManipulator.ZAxis</Selector>
                               </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="rx:WithLatestFrom" />
@@ -2712,8 +2633,8 @@
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="p12:MoveAbsolute">
                             <p12:PortName>ZaberMotor</p12:PortName>
-                            <p12:Device>0</p12:Device>
-                            <p12:Axis>3</p12:Axis>
+                            <p12:Device>1</p12:Device>
+                            <p12:Axis>1</p12:Axis>
                             <p12:Velocity xsi:nil="true" />
                             <p12:Acceleration xsi:nil="true" />
                             <p12:Units>Length_Millimetres</p12:Units>
@@ -2764,32 +2685,10 @@
                       <Property Name="Device" Selector="DeviceIndex" />
                     </PropertyMappings>
                   </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>RigSchema</Name>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>ZaberManipulator.Acceleration</Selector>
-                  </Expression>
-                  <Expression xsi:type="PropertyMapping">
-                    <PropertyMappings>
-                      <Property Name="Acceleration" />
-                    </PropertyMappings>
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>RigSchema</Name>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>ZaberManipulator.Velocity</Selector>
-                  </Expression>
-                  <Expression xsi:type="PropertyMapping">
-                    <PropertyMappings>
-                      <Property Name="Velocity" />
-                    </PropertyMappings>
-                  </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p12:MoveAbsolute">
                       <p12:PortName>ZaberMotor</p12:PortName>
-                      <p12:Device>0</p12:Device>
+                      <p12:Device>1</p12:Device>
                       <p12:Axis>1</p12:Axis>
                       <p12:Velocity xsi:nil="true" />
                       <p12:Acceleration xsi:nil="true" />
@@ -2824,17 +2723,11 @@
                   <Edge From="21" To="23" Label="Source1" />
                   <Edge From="22" To="24" Label="Source1" />
                   <Edge From="23" To="24" Label="Source2" />
-                  <Edge From="26" To="36" Label="Source1" />
+                  <Edge From="26" To="30" Label="Source1" />
                   <Edge From="27" To="28" Label="Source1" />
                   <Edge From="28" To="29" Label="Source1" />
-                  <Edge From="29" To="36" Label="Source2" />
+                  <Edge From="29" To="30" Label="Source2" />
                   <Edge From="30" To="31" Label="Source1" />
-                  <Edge From="31" To="32" Label="Source1" />
-                  <Edge From="32" To="36" Label="Source3" />
-                  <Edge From="33" To="34" Label="Source1" />
-                  <Edge From="34" To="35" Label="Source1" />
-                  <Edge From="35" To="36" Label="Source4" />
-                  <Edge From="36" To="37" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>

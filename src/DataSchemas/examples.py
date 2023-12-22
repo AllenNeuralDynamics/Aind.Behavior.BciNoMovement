@@ -16,12 +16,6 @@ from pyd_session import BciNoMovementSession, BciNoMovementTaskLogic, Point3d, C
 
 
 zaberCommands = [
-    ZaberGenericCommand(command='set limit.home.pos 0', device=1, axis=1),
-    ZaberGenericCommand(command='set limit.away.pos 1100000', device=1, axis=1),
-    ZaberGenericCommand(command='set limit.home.pos 0', device=1, axis=2),
-    ZaberGenericCommand(command='set limit.away.pos 1100000', device=1, axis=2),
-    ZaberGenericCommand(command='set limit.home.pos 0', device=2, axis=1),
-    ZaberGenericCommand(command='set limit.away.pos 150000', device=2, axis=1),
 ]
 
 
@@ -41,12 +35,12 @@ rig = BciNoMovementRig(
     ),
     zaberManipulator=ZaberManipulator(
         comPort="COM10",
-        velocity=12,
-        acceleration=1299.63,
-        spoutAxis=Axis.Z,
+        velocity=9999999,
+        acceleration=9999999,
+        spoutAxis=Axis.X,
         genericCommands=zaberCommands,
-        xAxis=ZaberAxis(deviceIndex=0, axisIndex=0),
-        yAxis=ZaberAxis(deviceIndex=0, axisIndex=1),
+        xAxis=ZaberAxis(deviceIndex=0, axisIndex=1),
+        yAxis=ZaberAxis(deviceIndex=0, axisIndex=2),
         zAxis=ZaberAxis(deviceIndex=1, axisIndex=1),
     ),
     networking=Networking(
@@ -73,13 +67,13 @@ task_logic_settings = BciNoMovementTaskLogic(
     rewardConsumeTime=2,
     valveOpenTime=0.1,
     waitForLick=True,
-    farPositionOffset=30000,
+    farPositionOffset=30,
     manipulatorResetPosition=Point3d(x=0, y=0, z=0),
     waitMicroscopeTime=0.5,
     noMovementControl=Control(
-        gain=20, baselineThreshold=20000, lowPassCutOff=50, highPassCutOff=0.001
+        gain=0.002, baselineThreshold=5000, lowPassCutOff=50, highPassCutOff=0.001
     ),
-    bciControl=Control(gain=10, baselineThreshold=1.5),
+    bciControl=Control(gain=0.001, baselineThreshold=1.5),
     skip2pHandshake=True,
     punishOnMovementDuration=0.1,
 )
