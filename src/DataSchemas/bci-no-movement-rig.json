@@ -235,11 +235,11 @@
                "default": 1,
                "description": "Axis of the spout."
             },
-            "maxSpeed": {
+            "velocity": {
                "default": 10,
                "description": "Maximum speed of the manipulator.",
                "minimum": 0.0,
-               "title": "Maxspeed",
+               "title": "Velocity",
                "type": "number"
             },
             "acceleration": {
@@ -249,16 +249,36 @@
                "title": "Acceleration",
                "type": "number"
             },
-            "zaberAxisLookUpTable": {
-               "additionalProperties": {
-                  "$ref": "#/definitions/ZaberAxis"
-               },
-               "default": {},
-               "description": "Manipulator axis mapping.",
-               "title": "Zaberaxislookuptable",
-               "type": "object"
+            "xAxis": {
+               "allOf": [
+                  {
+                     "$ref": "#/definitions/ZaberAxis"
+                  }
+               ],
+               "description": "X-axis mapping."
+            },
+            "yAxis": {
+               "allOf": [
+                  {
+                     "$ref": "#/definitions/ZaberAxis"
+                  }
+               ],
+               "description": "Y-axis mapping."
+            },
+            "zAxis": {
+               "allOf": [
+                  {
+                     "$ref": "#/definitions/ZaberAxis"
+                  }
+               ],
+               "description": "Z-axis mapping."
             }
          },
+         "required": [
+            "xAxis",
+            "yAxis",
+            "zAxis"
+         ],
          "title": "ZaberManipulator",
          "type": "object"
       },

@@ -41,15 +41,13 @@ rig = BciNoMovementRig(
     ),
     zaberManipulator=ZaberManipulator(
         comPort="COM10",
-        maxSpeed=12,
+        velocity=12,
         acceleration=1299.63,
         spoutAxis=Axis.Z,
         genericCommands=zaberCommands,
-        zaberAxisLookUpTable={
-            Axis.X: ZaberAxis(deviceIndex=0, axisIndex=0),
-            Axis.Y: ZaberAxis(deviceIndex=0, axisIndex=1),
-            Axis.Z: ZaberAxis(deviceIndex=1, axisIndex=1),
-        }
+        xAxis=ZaberAxis(deviceIndex=0, axisIndex=0),
+        yAxis=ZaberAxis(deviceIndex=0, axisIndex=1),
+        zAxis=ZaberAxis(deviceIndex=1, axisIndex=1),
     ),
     networking=Networking(
         zmqPublisher=ZmqConnection(

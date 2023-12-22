@@ -60,13 +60,15 @@ class ZaberManipulator(AindModel):
         [], description="List of generic commands to send to the manipulator."
     )
     spoutAxis: Axis = Field(default=Axis.X, description="Axis of the spout.")
-    maxSpeed: float = Field(
+    velocity: float = Field(
         default=10, ge=0, description="Maximum speed of the manipulator."
     )
     acceleration: float = Field(
         default=1299.63, ge=0, description="Acceleration of the manipulator."
     )
-    zaberAxisLookUpTable: dict[Axis, ZaberAxis] = Field(default={}, description="Manipulator axis mapping.")
+    xAxis: ZaberAxis = Field(description="X-axis mapping.")
+    yAxis: ZaberAxis = Field(description="Y-axis mapping.")
+    zAxis: ZaberAxis = Field(description="Z-axis mapping.")
 
 
 class ZmqConnection(AindModel):

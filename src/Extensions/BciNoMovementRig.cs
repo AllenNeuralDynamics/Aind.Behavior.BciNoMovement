@@ -498,11 +498,15 @@ namespace BciNoMovementDataSchema.Rig
     
         private Axis _spoutAxis = BciNoMovementDataSchema.Rig.Axis._1;
     
-        private double _maxSpeed = 10D;
+        private double _velocity = 10D;
     
         private double _acceleration = 1299.63D;
     
-        private System.Collections.Generic.IDictionary<string, ZaberAxis> _zaberAxisLookUpTable;
+        private ZaberAxis _xAxis = new ZaberAxis();
+    
+        private ZaberAxis _yAxis = new ZaberAxis();
+    
+        private ZaberAxis _zAxis = new ZaberAxis();
     
         /// <summary>
         /// COM port of the manipulator.
@@ -563,18 +567,18 @@ namespace BciNoMovementDataSchema.Rig
         /// <summary>
         /// Maximum speed of the manipulator.
         /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("maxSpeed")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="maxSpeed")]
+        [Newtonsoft.Json.JsonPropertyAttribute("velocity")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="velocity")]
         [System.ComponentModel.DescriptionAttribute("Maximum speed of the manipulator.")]
-        public double MaxSpeed
+        public double Velocity
         {
             get
             {
-                return _maxSpeed;
+                return _velocity;
             }
             set
             {
-                _maxSpeed = value;
+                _velocity = value;
             }
         }
     
@@ -597,21 +601,59 @@ namespace BciNoMovementDataSchema.Rig
         }
     
         /// <summary>
-        /// Manipulator axis mapping.
+        /// X-axis mapping.
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("zaberAxisLookUpTable")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="zaberAxisLookUpTable")]
-        [System.ComponentModel.DescriptionAttribute("Manipulator axis mapping.")]
-        public System.Collections.Generic.IDictionary<string, ZaberAxis> ZaberAxisLookUpTable
+        [Newtonsoft.Json.JsonPropertyAttribute("xAxis", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="xAxis")]
+        [System.ComponentModel.DescriptionAttribute("X-axis mapping.")]
+        public ZaberAxis XAxis
         {
             get
             {
-                return _zaberAxisLookUpTable;
+                return _xAxis;
             }
             set
             {
-                _zaberAxisLookUpTable = value;
+                _xAxis = value;
+            }
+        }
+    
+        /// <summary>
+        /// Y-axis mapping.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("yAxis", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="yAxis")]
+        [System.ComponentModel.DescriptionAttribute("Y-axis mapping.")]
+        public ZaberAxis YAxis
+        {
+            get
+            {
+                return _yAxis;
+            }
+            set
+            {
+                _yAxis = value;
+            }
+        }
+    
+        /// <summary>
+        /// Z-axis mapping.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("zAxis", Required=Newtonsoft.Json.Required.Always)]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="zAxis")]
+        [System.ComponentModel.DescriptionAttribute("Z-axis mapping.")]
+        public ZaberAxis ZAxis
+        {
+            get
+            {
+                return _zAxis;
+            }
+            set
+            {
+                _zAxis = value;
             }
         }
     
@@ -623,9 +665,11 @@ namespace BciNoMovementDataSchema.Rig
                     ComPort = _comPort,
                     GenericCommands = _genericCommands,
                     SpoutAxis = _spoutAxis,
-                    MaxSpeed = _maxSpeed,
+                    Velocity = _velocity,
                     Acceleration = _acceleration,
-                    ZaberAxisLookUpTable = _zaberAxisLookUpTable
+                    XAxis = _xAxis,
+                    YAxis = _yAxis,
+                    ZAxis = _zAxis
                 }));
         }
     }
