@@ -57,11 +57,6 @@ class BciNoMovementTaskLogic(AindCoreModel):
         ge=0,
         description="Interval (s) after the animal successfully exists the quiescence period.",
     )
-    lowActivityTime: float = Field(
-        default=1,
-        ge=0,
-        description="Duration (s) BCI activity must stay low before starting a new trial.",
-    )
     lickResponseTime: float = Field(
         default=2,
         ge=0,
