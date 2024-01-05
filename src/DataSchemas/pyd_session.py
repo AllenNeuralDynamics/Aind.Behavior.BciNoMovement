@@ -91,9 +91,14 @@ class BciNoMovementTaskLogic(AindCoreModel):
     manipulatorResetPosition: Point3d = Field(
         default=Point3d(), description="Position (mm) to reset the manipulator to."
     )
-    bciControl: Control = Field(default=Control(), description="BCI control parameters")
-    noMovementControl: Control = Field(
-        default=Control(), description="No movement control parameters"
+    bciActiveControl: Control = Field(
+        default=Control(), description="BCI mode active component control parameters (Displacement = gain * Volt * Seconds)"
+    )
+    bciPassiveControl: Control = Field(
+        default=Control(), description="BCI mode passive component control parameters (Displacement = gain * Seconds)"
+    )
+    noMovementPassiveControl: Control = Field(
+        default=Control(), description="No movement mode passive control parameters (Displacement = gain * Seconds)"
     )
     skip2pHandshake: bool = Field(default=False, description="Skip 2p handshake")
     punishOnMovementDuration: float = Field(

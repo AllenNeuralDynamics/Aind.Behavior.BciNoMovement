@@ -60,7 +60,6 @@ task_logic_settings = BciNoMovementTaskLogic(
     enableSoundOnRewardZoneEntry=True,
     interTrialInterval=0.5,
     lickResponseTime=2,
-    lowActivityTime=1,
     maxTrialDuration=20,
     noMovementTimeBeforeTrial=0.5,
     rewardConsumeTime=2,
@@ -69,10 +68,12 @@ task_logic_settings = BciNoMovementTaskLogic(
     farPositionOffset=30,
     manipulatorResetPosition=Point3d(x=43, y=-2, z=0.26),
     waitMicroscopeTime=0.5,
-    noMovementControl=Control(
+    bciPassiveControl=Control(
+        gain=0.002, baselineThreshold=5000),
+    noMovementPassiveControl=Control(
         gain=0.002, baselineThreshold=5000, lowPassCutOff=50, highPassCutOff=0.001
     ),
-    bciControl=Control(gain=0.001, baselineThreshold=1.5),
+    bciActiveControl=Control(gain=0.001, baselineThreshold=1.5),
     skip2pHandshake=True,
     punishOnMovementDuration=0.1,
 )
