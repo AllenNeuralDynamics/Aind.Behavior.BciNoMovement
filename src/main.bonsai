@@ -6162,6 +6162,16 @@ Item2 as ManipulatorSpoutAxis)</scr:Expression>
               <Name>BciModeEnabled</Name>
             </Expression>
             <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p17:ToggleButton">
+                <p17:CheckedLabel>SkipImagingMode</p17:CheckedLabel>
+                <p17:UncheckedLabel>ImagingMode</p17:UncheckedLabel>
+                <p17:IsInitiallyChecked>true</p17:IsInitiallyChecked>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="MulticastSubject">
+              <Name>Skip2pHandshake</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
               <Combinator xsi:type="p17:PushButton">
                 <p17:Label>Water</p17:Label>
               </Combinator>
@@ -6178,10 +6188,13 @@ Item2 as ManipulatorSpoutAxis)</scr:Expression>
             <Expression xsi:type="VisualizerMapping">
               <VisualizerType xsi:type="TypeMapping" TypeArguments="p17:PushButtonVisualizer" />
             </Expression>
+            <Expression xsi:type="VisualizerMapping">
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="p17:ToggleButtonVisualizer" />
+            </Expression>
             <Expression xsi:type="viz:TableLayoutPanelBuilder">
               <viz:Name>SessionControl</viz:Name>
-              <viz:ColumnCount>3</viz:ColumnCount>
-              <viz:RowCount>1</viz:RowCount>
+              <viz:ColumnCount>2</viz:ColumnCount>
+              <viz:RowCount>2</viz:RowCount>
               <viz:ColumnStyles />
               <viz:RowStyles />
               <viz:CellSpans />
@@ -6190,15 +6203,18 @@ Item2 as ManipulatorSpoutAxis)</scr:Expression>
           </Nodes>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
-            <Edge From="0" To="6" Label="Source1" />
+            <Edge From="0" To="8" Label="Source1" />
             <Edge From="2" To="3" Label="Source1" />
-            <Edge From="2" To="7" Label="Source1" />
+            <Edge From="2" To="9" Label="Source1" />
             <Edge From="4" To="5" Label="Source1" />
-            <Edge From="4" To="8" Label="Source1" />
-            <Edge From="6" To="9" Label="Source1" />
-            <Edge From="7" To="9" Label="Source2" />
-            <Edge From="8" To="9" Label="Source3" />
-            <Edge From="9" To="10" Label="Source1" />
+            <Edge From="4" To="11" Label="Source1" />
+            <Edge From="6" To="7" Label="Source1" />
+            <Edge From="6" To="10" Label="Source1" />
+            <Edge From="8" To="12" Label="Source1" />
+            <Edge From="9" To="12" Label="Source2" />
+            <Edge From="10" To="12" Label="Source3" />
+            <Edge From="11" To="12" Label="Source4" />
+            <Edge From="12" To="13" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
