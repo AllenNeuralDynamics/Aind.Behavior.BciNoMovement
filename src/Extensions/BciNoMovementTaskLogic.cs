@@ -199,8 +199,6 @@ namespace BciNoMovementDataSchema.TaskLogic
     
         private double _waitMicroscopeTime = 0D;
     
-        private double _lowActivityTime = 1D;
-    
         private double _lickResponseTime = 2D;
     
         private bool _waitForLick = true;
@@ -219,9 +217,11 @@ namespace BciNoMovementDataSchema.TaskLogic
     
         private Point3d _manipulatorResetPosition;
     
-        private Control _bciControl;
+        private Control _bciActiveControl;
     
-        private Control _noMovementControl;
+        private Control _bciPassiveControl;
+    
+        private Control _noMovementPassiveControl;
     
         private bool _skip2pHandshake = false;
     
@@ -292,24 +292,6 @@ namespace BciNoMovementDataSchema.TaskLogic
             set
             {
                 _waitMicroscopeTime = value;
-            }
-        }
-    
-        /// <summary>
-        /// Duration (s) BCI activity must stay low before starting a new trial.
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("lowActivityTime")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="lowActivityTime")]
-        [System.ComponentModel.DescriptionAttribute("Duration (s) BCI activity must stay low before starting a new trial.")]
-        public double LowActivityTime
-        {
-            get
-            {
-                return _lowActivityTime;
-            }
-            set
-            {
-                _lowActivityTime = value;
             }
         }
     
@@ -479,40 +461,60 @@ namespace BciNoMovementDataSchema.TaskLogic
         }
     
         /// <summary>
-        /// BCI control parameters
+        /// BCI mode active component control parameters (Displacement = gain * Volt * Seconds)
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("bciControl")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="bciControl")]
-        [System.ComponentModel.DescriptionAttribute("BCI control parameters")]
-        public Control BciControl
+        [Newtonsoft.Json.JsonPropertyAttribute("bciActiveControl")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="bciActiveControl")]
+        [System.ComponentModel.DescriptionAttribute("BCI mode active component control parameters (Displacement = gain * Volt * Second" +
+            "s)")]
+        public Control BciActiveControl
         {
             get
             {
-                return _bciControl;
+                return _bciActiveControl;
             }
             set
             {
-                _bciControl = value;
+                _bciActiveControl = value;
             }
         }
     
         /// <summary>
-        /// No movement control parameters
+        /// BCI mode passive component control parameters (Displacement = gain * Seconds)
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("noMovementControl")]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="noMovementControl")]
-        [System.ComponentModel.DescriptionAttribute("No movement control parameters")]
-        public Control NoMovementControl
+        [Newtonsoft.Json.JsonPropertyAttribute("bciPassiveControl")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="bciPassiveControl")]
+        [System.ComponentModel.DescriptionAttribute("BCI mode passive component control parameters (Displacement = gain * Seconds)")]
+        public Control BciPassiveControl
         {
             get
             {
-                return _noMovementControl;
+                return _bciPassiveControl;
             }
             set
             {
-                _noMovementControl = value;
+                _bciPassiveControl = value;
+            }
+        }
+    
+        /// <summary>
+        /// No movement mode passive control parameters (Displacement = gain * Seconds)
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("noMovementPassiveControl")]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="noMovementPassiveControl")]
+        [System.ComponentModel.DescriptionAttribute("No movement mode passive control parameters (Displacement = gain * Seconds)")]
+        public Control NoMovementPassiveControl
+        {
+            get
+            {
+                return _noMovementPassiveControl;
+            }
+            set
+            {
+                _noMovementPassiveControl = value;
             }
         }
     
@@ -562,7 +564,6 @@ namespace BciNoMovementDataSchema.TaskLogic
                     Schema_version = _schema_version,
                     ValveOpenTime = _valveOpenTime,
                     WaitMicroscopeTime = _waitMicroscopeTime,
-                    LowActivityTime = _lowActivityTime,
                     LickResponseTime = _lickResponseTime,
                     WaitForLick = _waitForLick,
                     EnableSoundOnRewardZoneEntry = _enableSoundOnRewardZoneEntry,
@@ -572,8 +573,9 @@ namespace BciNoMovementDataSchema.TaskLogic
                     MaxTrialDuration = _maxTrialDuration,
                     FarPositionOffset = _farPositionOffset,
                     ManipulatorResetPosition = _manipulatorResetPosition,
-                    BciControl = _bciControl,
-                    NoMovementControl = _noMovementControl,
+                    BciActiveControl = _bciActiveControl,
+                    BciPassiveControl = _bciPassiveControl,
+                    NoMovementPassiveControl = _noMovementPassiveControl,
                     Skip2pHandshake = _skip2pHandshake,
                     PunishOnMovementDuration = _punishOnMovementDuration
                 }));

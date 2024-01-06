@@ -57,11 +57,6 @@ class BciNoMovementTaskLogic(AindCoreModel):
         ge=0,
         description="Interval (s) after the animal successfully exists the quiescence period.",
     )
-    lowActivityTime: float = Field(
-        default=1,
-        ge=0,
-        description="Duration (s) BCI activity must stay low before starting a new trial.",
-    )
     lickResponseTime: float = Field(
         default=2,
         ge=0,
@@ -96,9 +91,14 @@ class BciNoMovementTaskLogic(AindCoreModel):
     manipulatorResetPosition: Point3d = Field(
         default=Point3d(), description="Position (mm) to reset the manipulator to."
     )
-    bciControl: Control = Field(default=Control(), description="BCI control parameters")
-    noMovementControl: Control = Field(
-        default=Control(), description="No movement control parameters"
+    bciActiveControl: Control = Field(
+        default=Control(), description="BCI mode active component control parameters (Displacement = gain * Volt * Seconds)"
+    )
+    bciPassiveControl: Control = Field(
+        default=Control(), description="BCI mode passive component control parameters (Displacement = gain * Seconds)"
+    )
+    noMovementPassiveControl: Control = Field(
+        default=Control(), description="No movement mode passive control parameters (Displacement = gain * Seconds)"
     )
     skip2pHandshake: bool = Field(default=False, description="Skip 2p handshake")
     punishOnMovementDuration: float = Field(

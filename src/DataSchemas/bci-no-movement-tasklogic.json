@@ -84,13 +84,6 @@
          "title": "Waitmicroscopetime",
          "type": "number"
       },
-      "lowActivityTime": {
-         "default": 1,
-         "description": "Duration (s) BCI activity must stay low before starting a new trial.",
-         "minimum": 0.0,
-         "title": "Lowactivitytime",
-         "type": "number"
-      },
       "lickResponseTime": {
          "default": 2,
          "description": "Interval (s) for the animal to collect reward. Only applies if waitForLick is true.",
@@ -158,7 +151,7 @@
          },
          "description": "Position (mm) to reset the manipulator to."
       },
-      "bciControl": {
+      "bciActiveControl": {
          "allOf": [
             {
                "$ref": "#/definitions/Control"
@@ -170,9 +163,9 @@
             "lowPassCutOff": -1.0,
             "highPassCutOff": -1.0
          },
-         "description": "BCI control parameters"
+         "description": "BCI mode active component control parameters (Displacement = gain * Volt * Seconds)"
       },
-      "noMovementControl": {
+      "bciPassiveControl": {
          "allOf": [
             {
                "$ref": "#/definitions/Control"
@@ -184,7 +177,21 @@
             "lowPassCutOff": -1.0,
             "highPassCutOff": -1.0
          },
-         "description": "No movement control parameters"
+         "description": "BCI mode passive component control parameters (Displacement = gain * Seconds)"
+      },
+      "noMovementPassiveControl": {
+         "allOf": [
+            {
+               "$ref": "#/definitions/Control"
+            }
+         ],
+         "default": {
+            "baselineThreshold": 0.0,
+            "gain": 1.0,
+            "lowPassCutOff": -1.0,
+            "highPassCutOff": -1.0
+         },
+         "description": "No movement mode passive control parameters (Displacement = gain * Seconds)"
       },
       "skip2pHandshake": {
          "default": false,
