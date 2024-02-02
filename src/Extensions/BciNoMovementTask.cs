@@ -5,7 +5,7 @@
 //----------------------
 
 
-namespace BciNoMovementDataSchema.AindBciNoMovementTask
+namespace BciNoMovementDataSchema.BciNoMovementTask
 {
     #pragma warning disable // Disable all warnings
 
