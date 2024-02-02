@@ -4,9 +4,9 @@
                  xmlns:p1="clr-namespace:AllenNeuralDynamics.Core;assembly=AllenNeuralDynamics.Core"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
-                 xmlns:p2="clr-namespace:BciNoMovementDataSchema.Session;assembly=Extensions"
-                 xmlns:p3="clr-namespace:BciNoMovementDataSchema.Rig;assembly=Extensions"
-                 xmlns:p4="clr-namespace:BciNoMovementDataSchema.TaskLogic;assembly=Extensions"
+                 xmlns:p2="clr-namespace:BciNoMovementDataSchema.BciNoMovementSession;assembly=Extensions"
+                 xmlns:p3="clr-namespace:BciNoMovementDataSchema.BciNoMovementRig;assembly=Extensions"
+                 xmlns:p4="clr-namespace:BciNoMovementDataSchema.BciNoMovementTask;assembly=Extensions"
                  xmlns:p5="clr-namespace:AllenNeuralDynamics.Core.Logging;assembly=AllenNeuralDynamics.Core"
                  xmlns:num="clr-namespace:Bonsai.Numerics;assembly=Bonsai.Numerics"
                  xmlns:p6="clr-namespace:Bonsai.Numerics.Distributions;assembly=Bonsai.Numerics"
@@ -509,7 +509,7 @@
               <Name>SubjectSchema</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>AllowDirty</Selector>
+              <Selector>AllowDirtyRepo</Selector>
             </Expression>
             <Expression xsi:type="BitwiseNot" />
             <Expression xsi:type="Combinator">
@@ -778,7 +778,7 @@
                           <Name>RigSchema</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
-                          <Selector>HarpBehaviorBoard.PortName</Selector>
+                          <Selector>HarpBehavior.PortName</Selector>
                         </Expression>
                         <Expression xsi:type="PropertyMapping">
                           <PropertyMappings>
@@ -1419,7 +1419,7 @@
                           <Name>RigSchema</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
-                          <Selector>HarpLoadCellsBoard.PortName</Selector>
+                          <Selector>HarpLoadCell.PortName</Selector>
                         </Expression>
                         <Expression xsi:type="PropertyMapping">
                           <PropertyMappings>
@@ -1726,7 +1726,7 @@
                           <Name>RigSchema</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
-                          <Selector>HarpTimestampGeneratorGen3.PortName</Selector>
+                          <Selector>HarpClock.PortName</Selector>
                         </Expression>
                         <Expression xsi:type="PropertyMapping">
                           <PropertyMappings>
@@ -5476,7 +5476,7 @@ Item2 as ManipulatorSpoutAxis)</scr:Expression>
               <Name>SubjectSchema</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>RemoteDataPath</Selector>
+              <Selector>RemotePath</Selector>
             </Expression>
             <Expression xsi:type="rx:Condition">
               <Name>NotNull</Name>
@@ -5533,7 +5533,7 @@ Item2 as ManipulatorSpoutAxis)</scr:Expression>
               <Name>SubjectSchema</Name>
             </Expression>
             <Expression xsi:type="MemberSelector">
-              <Selector>RemoteDataPath</Selector>
+              <Selector>RemotePath</Selector>
             </Expression>
             <Expression xsi:type="rx:Condition">
               <Name>NotNull</Name>
@@ -5599,6 +5599,7 @@ Item2 as ManipulatorSpoutAxis)</scr:Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p17:PushButton">
                 <p17:Label>ClosePosition</p17:Label>
+                <p17:Enabled>true</p17:Enabled>
               </Combinator>
             </Expression>
             <Expression xsi:type="GroupWorkflow">
@@ -5686,6 +5687,7 @@ Item2 as ManipulatorSpoutAxis)</scr:Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p17:PushButton">
                 <p17:Label>FarPosition</p17:Label>
+                <p17:Enabled>true</p17:Enabled>
               </Combinator>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
@@ -5709,6 +5711,7 @@ Item2 as ManipulatorSpoutAxis)</scr:Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p17:PushButton">
                 <p17:Label>Home</p17:Label>
+                <p17:Enabled>true</p17:Enabled>
               </Combinator>
             </Expression>
             <Expression xsi:type="VisualizerMapping" />
@@ -5723,36 +5726,42 @@ Item2 as ManipulatorSpoutAxis)</scr:Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p17:PushButton">
                 <p17:Label>-X</p17:Label>
+                <p17:Enabled>true</p17:Enabled>
               </Combinator>
             </Expression>
             <Expression xsi:type="VisualizerMapping" />
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p17:PushButton">
                 <p17:Label>+X</p17:Label>
+                <p17:Enabled>true</p17:Enabled>
               </Combinator>
             </Expression>
             <Expression xsi:type="VisualizerMapping" />
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p17:PushButton">
                 <p17:Label>-Y</p17:Label>
+                <p17:Enabled>true</p17:Enabled>
               </Combinator>
             </Expression>
             <Expression xsi:type="VisualizerMapping" />
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p17:PushButton">
                 <p17:Label>+Y</p17:Label>
+                <p17:Enabled>true</p17:Enabled>
               </Combinator>
             </Expression>
             <Expression xsi:type="VisualizerMapping" />
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p17:PushButton">
                 <p17:Label>-Z</p17:Label>
+                <p17:Enabled>true</p17:Enabled>
               </Combinator>
             </Expression>
             <Expression xsi:type="VisualizerMapping" />
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p17:PushButton">
                 <p17:Label>+Z</p17:Label>
+                <p17:Enabled>true</p17:Enabled>
               </Combinator>
             </Expression>
             <Expression xsi:type="VisualizerMapping" />
@@ -5767,12 +5776,15 @@ Item2 as ManipulatorSpoutAxis)</scr:Expression>
               <VisualizerType xsi:type="TypeMapping" TypeArguments="viz:TableLayoutPanelVisualizer" />
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="p17:PropertyGridSource" />
+              <Combinator xsi:type="p17:PropertyGridSource">
+                <p17:Enabled>true</p17:Enabled>
+              </Combinator>
             </Expression>
             <Expression xsi:type="VisualizerMapping" />
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p17:PushButton">
                 <p17:Label>SaveNewClosePosition</p17:Label>
+                <p17:Enabled>true</p17:Enabled>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -6143,9 +6155,10 @@ Item2 as ManipulatorSpoutAxis)</scr:Expression>
           <Nodes>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p17:ToggleButton">
+                <p17:Enabled>true</p17:Enabled>
+                <p17:IsInitiallyChecked>false</p17:IsInitiallyChecked>
                 <p17:CheckedLabel>Stop Session!</p17:CheckedLabel>
                 <p17:UncheckedLabel>Start Session!</p17:UncheckedLabel>
-                <p17:IsInitiallyChecked>false</p17:IsInitiallyChecked>
               </Combinator>
             </Expression>
             <Expression xsi:type="MulticastSubject">
@@ -6153,9 +6166,10 @@ Item2 as ManipulatorSpoutAxis)</scr:Expression>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p17:ToggleButton">
+                <p17:Enabled>true</p17:Enabled>
+                <p17:IsInitiallyChecked>true</p17:IsInitiallyChecked>
                 <p17:CheckedLabel>Bci Mode Enabled</p17:CheckedLabel>
                 <p17:UncheckedLabel>Movement Mode Enabled</p17:UncheckedLabel>
-                <p17:IsInitiallyChecked>true</p17:IsInitiallyChecked>
               </Combinator>
             </Expression>
             <Expression xsi:type="MulticastSubject">
@@ -6163,9 +6177,10 @@ Item2 as ManipulatorSpoutAxis)</scr:Expression>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p17:ToggleButton">
+                <p17:Enabled>true</p17:Enabled>
+                <p17:IsInitiallyChecked>true</p17:IsInitiallyChecked>
                 <p17:CheckedLabel>SkipImagingMode</p17:CheckedLabel>
                 <p17:UncheckedLabel>ImagingMode</p17:UncheckedLabel>
-                <p17:IsInitiallyChecked>true</p17:IsInitiallyChecked>
               </Combinator>
             </Expression>
             <Expression xsi:type="MulticastSubject">
@@ -6174,6 +6189,7 @@ Item2 as ManipulatorSpoutAxis)</scr:Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p17:PushButton">
                 <p17:Label>Water</p17:Label>
+                <p17:Enabled>true</p17:Enabled>
               </Combinator>
             </Expression>
             <Expression xsi:type="MulticastSubject">
