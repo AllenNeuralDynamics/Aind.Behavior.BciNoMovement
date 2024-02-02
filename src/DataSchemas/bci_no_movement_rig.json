@@ -2,13 +2,13 @@
   "definitions": {
     "Axis": {
       "enum": [
-        "1",
-        "2",
-        "3",
-        "0"
+        1,
+        2,
+        3,
+        0
       ],
       "title": "Axis",
-      "type": "string"
+      "type": "integer"
     },
     "HarpBehavior": {
       "additionalProperties": false,
@@ -358,7 +358,7 @@
               "$ref": "#/definitions/Axis"
             }
           ],
-          "default": "1",
+          "default": 1,
           "description": "Axis of the spout."
         },
         "velocity": {

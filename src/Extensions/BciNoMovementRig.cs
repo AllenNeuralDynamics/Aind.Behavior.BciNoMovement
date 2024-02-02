@@ -10,21 +10,20 @@ namespace BciNoMovementDataSchema.BciNoMovementRig
     #pragma warning disable // Disable all warnings
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum Axis
     {
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="1")]
-        _1 = 0,
+        _1 = 1,
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="2")]
-        _2 = 1,
+        _2 = 2,
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="3")]
-        _3 = 2,
+        _3 = 3,
     
         [System.Runtime.Serialization.EnumMemberAttribute(Value="0")]
-        _0 = 3,
+        _0 = 0,
     }
 
 

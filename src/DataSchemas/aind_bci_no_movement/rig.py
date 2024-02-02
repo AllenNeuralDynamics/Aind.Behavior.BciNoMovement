@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import IntEnum
 from typing import List, Optional
 
 import aind_behavior_services.rig as rig
@@ -7,7 +7,7 @@ from aind_data_schema.base import AindModel
 from pydantic import BaseModel, Field
 
 
-class Axis(str, Enum):
+class Axis(IntEnum):
     X = 1
     Y = 2
     Z = 3
