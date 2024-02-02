@@ -1,0 +1,553 @@
+{
+  "definitions": {
+    "Axis": {
+      "enum": [
+        "1",
+        "2",
+        "3",
+        "0"
+      ],
+      "title": "Axis",
+      "type": "string"
+    },
+    "HarpBehavior": {
+      "additionalProperties": false,
+      "properties": {
+        "who_am_i": {
+          "const": 1216,
+          "default": 1216,
+          "title": "Who Am I",
+          "type": "integer"
+        },
+        "device_type": {
+          "const": "behavior",
+          "default": "behavior",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "serial_number": {
+          "default": null,
+          "description": "Device serial number",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Serial Number"
+        },
+        "port_name": {
+          "description": "Device port name",
+          "title": "Port Name",
+          "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {},
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Additional Settings"
+        }
+      },
+      "required": [
+        "port_name"
+      ],
+      "title": "HarpBehavior",
+      "type": "object"
+    },
+    "HarpClockSynchronizer": {
+      "additionalProperties": false,
+      "properties": {
+        "who_am_i": {
+          "const": 1152,
+          "default": 1152,
+          "title": "Who Am I",
+          "type": "integer"
+        },
+        "device_type": {
+          "const": "clocksynchronizer",
+          "default": "clocksynchronizer",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "serial_number": {
+          "default": null,
+          "description": "Device serial number",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Serial Number"
+        },
+        "port_name": {
+          "description": "Device port name",
+          "title": "Port Name",
+          "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {},
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Additional Settings"
+        }
+      },
+      "required": [
+        "port_name"
+      ],
+      "title": "HarpClockSynchronizer",
+      "type": "object"
+    },
+    "HarpLoadCells": {
+      "additionalProperties": false,
+      "properties": {
+        "who_am_i": {
+          "const": 1232,
+          "default": 1232,
+          "title": "Who Am I",
+          "type": "integer"
+        },
+        "device_type": {
+          "const": "loadcells",
+          "default": "loadcells",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "serial_number": {
+          "default": null,
+          "description": "Device serial number",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Serial Number"
+        },
+        "port_name": {
+          "description": "Device port name",
+          "title": "Port Name",
+          "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {},
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Additional Settings"
+        }
+      },
+      "required": [
+        "port_name"
+      ],
+      "title": "HarpLoadCells",
+      "type": "object"
+    },
+    "Networking": {
+      "additionalProperties": false,
+      "properties": {
+        "zmq_publisher": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZmqConnection"
+            }
+          ],
+          "default": {
+            "connection_string": "@tcp://localhost:5556",
+            "topic": "bci-no-movement"
+          }
+        },
+        "zmq_subscriber": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZmqConnection"
+            }
+          ],
+          "default": {
+            "connection_string": "@tcp://localhost:5557",
+            "topic": "bci-no-movement"
+          }
+        }
+      },
+      "title": "Networking",
+      "type": "object"
+    },
+    "Operation": {
+      "additionalProperties": false,
+      "properties": {
+        "load_cell_offset": {
+          "default": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "description": "Bias offset of a specific loadcell channel.",
+          "items": {
+            "type": "integer"
+          },
+          "maxItems": 8,
+          "minItems": 8,
+          "title": "Load Cell Offset",
+          "type": "array"
+        },
+        "load_cell_index": {
+          "default": 0,
+          "description": "Index of the loadcell channel to use.",
+          "maximum": 7,
+          "minimum": 0,
+          "title": "Load Cell Index",
+          "type": "integer"
+        }
+      },
+      "title": "Operation",
+      "type": "object"
+    },
+    "SpinnakerCamera": {
+      "additionalProperties": false,
+      "properties": {
+        "serial_number": {
+          "description": "Camera serial number",
+          "title": "Serial Number",
+          "type": "string"
+        },
+        "binning": {
+          "default": 1,
+          "description": "Binning",
+          "minimum": 1,
+          "title": "Binning",
+          "type": "integer"
+        },
+        "color_processing": {
+          "default": "Default",
+          "description": "Color processing",
+          "enum": [
+            "Default",
+            "NoColorProcessing"
+          ],
+          "title": "Color Processing",
+          "type": "string"
+        },
+        "exposure": {
+          "default": 1000,
+          "description": "Exposure time",
+          "minimum": 100,
+          "title": "Exposure",
+          "type": "integer",
+          "units": "us"
+        },
+        "frame_rate": {
+          "default": 30,
+          "description": "Frame rate",
+          "maximum": 350,
+          "minimum": 1,
+          "title": "Frame Rate",
+          "type": "integer",
+          "units": "Hz"
+        },
+        "gain": {
+          "default": 0,
+          "description": "Gain",
+          "minimum": 0.0,
+          "title": "Gain",
+          "type": "number",
+          "units": "dB"
+        }
+      },
+      "required": [
+        "serial_number"
+      ],
+      "title": "SpinnakerCamera",
+      "type": "object"
+    },
+    "ZaberAxis": {
+      "additionalProperties": false,
+      "properties": {
+        "device_index": {
+          "description": "Device number.",
+          "minimum": 0,
+          "title": "Device Index",
+          "type": "integer"
+        },
+        "axis_index": {
+          "description": "Motor to send the instruction to.",
+          "minimum": 0,
+          "title": "Axis Index",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "device_index",
+        "axis_index"
+      ],
+      "title": "ZaberAxis",
+      "type": "object"
+    },
+    "ZaberGenericCommand": {
+      "additionalProperties": false,
+      "properties": {
+        "command": {
+          "title": "Command",
+          "type": "string"
+        },
+        "axis": {
+          "default": 0,
+          "description": "Motor to send the instruction to.",
+          "title": "Axis",
+          "type": "integer"
+        },
+        "device": {
+          "default": null,
+          "description": "Device number.",
+          "minimum": 0,
+          "title": "Device",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "command"
+      ],
+      "title": "ZaberGenericCommand",
+      "type": "object"
+    },
+    "ZaberManipulator": {
+      "additionalProperties": false,
+      "properties": {
+        "com_port": {
+          "default": "COM1",
+          "description": "COM port of the manipulator.",
+          "title": "Com Port",
+          "type": "string"
+        },
+        "generic_commands": {
+          "default": [],
+          "description": "List of generic commands to send to the manipulator.",
+          "items": {
+            "$ref": "#/definitions/ZaberGenericCommand"
+          },
+          "title": "Generic Commands",
+          "type": "array"
+        },
+        "spout_axis": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/Axis"
+            }
+          ],
+          "default": "1",
+          "description": "Axis of the spout."
+        },
+        "velocity": {
+          "default": 10,
+          "description": "Maximum speed of the manipulator.",
+          "minimum": 0.0,
+          "title": "Velocity",
+          "type": "number"
+        },
+        "acceleration": {
+          "default": 1299.63,
+          "description": "Acceleration of the manipulator.",
+          "minimum": 0.0,
+          "title": "Acceleration",
+          "type": "number"
+        },
+        "x_axis": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZaberAxis"
+            }
+          ],
+          "description": "X-axis mapping."
+        },
+        "y_axis": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZaberAxis"
+            }
+          ],
+          "description": "Y-axis mapping."
+        },
+        "z_axis": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZaberAxis"
+            }
+          ],
+          "description": "Z-axis mapping."
+        }
+      },
+      "required": [
+        "x_axis",
+        "y_axis",
+        "z_axis"
+      ],
+      "title": "ZaberManipulator",
+      "type": "object"
+    },
+    "ZmqConnection": {
+      "additionalProperties": false,
+      "properties": {
+        "connection_string": {
+          "default": "@tcp://localhost:5556",
+          "title": "Connection String",
+          "type": "string"
+        },
+        "topic": {
+          "default": "",
+          "title": "Topic",
+          "type": "string"
+        }
+      },
+      "title": "ZmqConnection",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "describedBy": {
+      "title": "Describedby",
+      "type": "string"
+    },
+    "schema_version": {
+      "description": "schema version",
+      "pattern": "^\\d+.\\d+.\\d+$",
+      "title": "Version",
+      "type": "string"
+    },
+    "computer_name": {
+      "description": "Computer name",
+      "title": "Computer Name",
+      "type": "string"
+    },
+    "rig_name": {
+      "description": "Rig name",
+      "title": "Rig Name",
+      "type": "string"
+    },
+    "harp_behavior": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/HarpBehavior"
+        }
+      ],
+      "description": "Harp behavior"
+    },
+    "harp_load_cell": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/HarpLoadCells"
+        }
+      ],
+      "description": "Harp load cells"
+    },
+    "harp_clock": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/HarpClockSynchronizer"
+        }
+      ],
+      "description": "Harp clock synchronizer"
+    },
+    "camera_0": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/SpinnakerCamera"
+        }
+      ],
+      "description": "Required spinnaker camera"
+    },
+    "camera_1": {
+      "default": null,
+      "description": "Optional spinnaker camera",
+      "oneOf": [
+        {
+          "$ref": "#/definitions/SpinnakerCamera"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "zaber_manipulator": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZaberManipulator"
+        }
+      ],
+      "description": "Zaber manipulator"
+    },
+    "networking": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Networking"
+        }
+      ],
+      "default": {
+        "zmq_publisher": {
+          "connection_string": "@tcp://localhost:5556",
+          "topic": "bci-no-movement"
+        },
+        "zmq_subscriber": {
+          "connection_string": "@tcp://localhost:5557",
+          "topic": "bci-no-movement"
+        }
+      }
+    },
+    "operation": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Operation"
+        }
+      ],
+      "default": {
+        "load_cell_offset": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "load_cell_index": 0
+      }
+    }
+  },
+  "required": [
+    "describedBy",
+    "schema_version",
+    "rig_name",
+    "harp_behavior",
+    "harp_load_cell",
+    "harp_clock",
+    "camera_0",
+    "zaber_manipulator"
+  ],
+  "title": "BciNoMovementRig",
+  "type": "object"
+}

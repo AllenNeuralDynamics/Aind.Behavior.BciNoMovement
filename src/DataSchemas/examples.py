@@ -1,19 +1,19 @@
 import json
-from pyd_rig import (
-    BciNoMovementRig,
-    HarpBoard,
-    SpinnakerCamera,
-    ZaberManipulator,
-    ZaberGenericCommand,
-    ZaberAxis,
-    Axis,
-    ColorProcessing,
-    Networking,
-    ZmqConnection,
-    Operation,
-)
-from pyd_session import BciNoMovementSession, BciNoMovementTaskLogic, Point3d, Control
 
+from pyd_rig import (
+    Axis,
+    BciNoMovementRig,
+    ColorProcessing,
+    HarpBoard,
+    Networking,
+    Operation,
+    SpinnakerCamera,
+    ZaberAxis,
+    ZaberGenericCommand,
+    ZaberManipulator,
+    ZmqConnection,
+)
+from pyd_session import BciNoMovementSession, BciNoMovementTaskLogic, Control, Point3d
 
 zaberCommands = []
 
@@ -43,12 +43,8 @@ rig = BciNoMovementRig(
         zAxis=ZaberAxis(deviceIndex=1, axisIndex=1),
     ),
     networking=Networking(
-        zmqPublisher=ZmqConnection(
-            connectionString="@tcp://localhost:5556", topic="bci-no-movement"
-        ),
-        zmqSubscriber=ZmqConnection(
-            connectionString="@tcp://localhost:5557", topic="bci-no-movement"
-        ),
+        zmqPublisher=ZmqConnection(connectionString="@tcp://localhost:5556", topic="bci-no-movement"),
+        zmqSubscriber=ZmqConnection(connectionString="@tcp://localhost:5557", topic="bci-no-movement"),
     ),
     operation=Operation(loadCellOffset=[0, 0, 0, 0, 0, 0, 0, 0], loadCellIndex=0),
 )
@@ -68,11 +64,8 @@ task_logic_settings = BciNoMovementTaskLogic(
     farPositionOffset=30,
     manipulatorResetPosition=Point3d(x=43, y=-2, z=0.26),
     waitMicroscopeTime=0.5,
-    bciPassiveControl=Control(
-        gain=0.002, baselineThreshold=5000),
-    noMovementPassiveControl=Control(
-        gain=0.002, baselineThreshold=5000, lowPassCutOff=50, highPassCutOff=0.001
-    ),
+    bciPassiveControl=Control(gain=0.002, baselineThreshold=5000),
+    noMovementPassiveControl=Control(gain=0.002, baselineThreshold=5000, lowPassCutOff=50, highPassCutOff=0.001),
     bciActiveControl=Control(gain=0.001, baselineThreshold=1.5),
     skip2pHandshake=True,
     punishOnMovementDuration=0.1,
