@@ -280,9 +280,11 @@ namespace BciNoMovementDataSchema.BciNoMovementTask
     
         private Point3d _manipulatorResetPosition;
     
-        private Control _bciControl;
+        private Control _bciPassiveControl;
     
-        private Control _noMovementControl;
+        private Control _noMovementPassiveControl;
+    
+        private Control _bciActiveControl;
     
         private bool _skip2pHandshake = false;
     
@@ -308,8 +310,9 @@ namespace BciNoMovementDataSchema.BciNoMovementTask
             _maxTrialDuration = other._maxTrialDuration;
             _farPositionOffset = other._farPositionOffset;
             _manipulatorResetPosition = other._manipulatorResetPosition;
-            _bciControl = other._bciControl;
-            _noMovementControl = other._noMovementControl;
+            _bciPassiveControl = other._bciPassiveControl;
+            _noMovementPassiveControl = other._noMovementPassiveControl;
+            _bciActiveControl = other._bciActiveControl;
             _skip2pHandshake = other._skip2pHandshake;
             _punishOnMovementDuration = other._punishOnMovementDuration;
         }
@@ -555,17 +558,17 @@ namespace BciNoMovementDataSchema.BciNoMovementTask
         /// BCI control parameters
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("bci_control")]
+        [Newtonsoft.Json.JsonPropertyAttribute("bci_passive_control")]
         [System.ComponentModel.DescriptionAttribute("BCI control parameters")]
-        public Control BciControl
+        public Control BciPassiveControl
         {
             get
             {
-                return _bciControl;
+                return _bciPassiveControl;
             }
             set
             {
-                _bciControl = value;
+                _bciPassiveControl = value;
             }
         }
     
@@ -573,17 +576,35 @@ namespace BciNoMovementDataSchema.BciNoMovementTask
         /// No movement control parameters
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("no_movement_control")]
+        [Newtonsoft.Json.JsonPropertyAttribute("no_movement_passive_control")]
         [System.ComponentModel.DescriptionAttribute("No movement control parameters")]
-        public Control NoMovementControl
+        public Control NoMovementPassiveControl
         {
             get
             {
-                return _noMovementControl;
+                return _noMovementPassiveControl;
             }
             set
             {
-                _noMovementControl = value;
+                _noMovementPassiveControl = value;
+            }
+        }
+    
+        /// <summary>
+        /// BCI active control parameters
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("bci_active_control")]
+        [System.ComponentModel.DescriptionAttribute("BCI active control parameters")]
+        public Control BciActiveControl
+        {
+            get
+            {
+                return _bciActiveControl;
+            }
+            set
+            {
+                _bciActiveControl = value;
             }
         }
     
@@ -648,8 +669,9 @@ namespace BciNoMovementDataSchema.BciNoMovementTask
             stringBuilder.Append("max_trial_duration = " + _maxTrialDuration + ", ");
             stringBuilder.Append("far_position_offset = " + _farPositionOffset + ", ");
             stringBuilder.Append("manipulator_reset_position = " + _manipulatorResetPosition + ", ");
-            stringBuilder.Append("bci_control = " + _bciControl + ", ");
-            stringBuilder.Append("no_movement_control = " + _noMovementControl + ", ");
+            stringBuilder.Append("bci_passive_control = " + _bciPassiveControl + ", ");
+            stringBuilder.Append("no_movement_passive_control = " + _noMovementPassiveControl + ", ");
+            stringBuilder.Append("bci_active_control = " + _bciActiveControl + ", ");
             stringBuilder.Append("skip_2p_handshake = " + _skip2pHandshake + ", ");
             stringBuilder.Append("punish_on_movement_duration = " + _punishOnMovementDuration);
             return true;

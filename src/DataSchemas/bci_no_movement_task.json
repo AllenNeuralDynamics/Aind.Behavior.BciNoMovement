@@ -172,7 +172,7 @@
       },
       "description": "Position (mm) to reset the manipulator to."
     },
-    "bci_control": {
+    "bci_passive_control": {
       "allOf": [
         {
           "$ref": "#/definitions/Control"
@@ -186,7 +186,7 @@
       },
       "description": "BCI control parameters"
     },
-    "no_movement_control": {
+    "no_movement_passive_control": {
       "allOf": [
         {
           "$ref": "#/definitions/Control"
@@ -199,6 +199,20 @@
         "high_pass_cut_off": null
       },
       "description": "No movement control parameters"
+    },
+    "bci_active_control": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Control"
+        }
+      ],
+      "default": {
+        "baseline_threshold": 0.0,
+        "gain": 1.0,
+        "low_pass_cut_off": null,
+        "high_pass_cut_off": null
+      },
+      "description": "BCI active control parameters"
     },
     "skip_2p_handshake": {
       "default": false,
