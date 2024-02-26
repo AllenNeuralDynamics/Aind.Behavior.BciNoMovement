@@ -2342,14 +2342,14 @@
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p12:Park">
                       <p12:PortName>ZaberMotor</p12:PortName>
-                      <p12:Device>1</p12:Device>
+                      <p12:Device>0</p12:Device>
                       <p12:Axis xsi:nil="true" />
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p12:Park">
                       <p12:PortName>ZaberMotor</p12:PortName>
-                      <p12:Device>2</p12:Device>
+                      <p12:Device>1</p12:Device>
                       <p12:Axis xsi:nil="true" />
                     </Combinator>
                   </Expression>
@@ -2603,14 +2603,14 @@
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p12:Stop">
                       <p12:PortName>ZaberMotor</p12:PortName>
-                      <p12:Device>1</p12:Device>
+                      <p12:Device>0</p12:Device>
                       <p12:Axis xsi:nil="true" />
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p12:Stop">
                       <p12:PortName>ZaberMotor</p12:PortName>
-                      <p12:Device>2</p12:Device>
+                      <p12:Device>1</p12:Device>
                       <p12:Axis xsi:nil="true" />
                     </Combinator>
                   </Expression>
@@ -5784,11 +5784,11 @@ Item2 as ManipulatorSpoutAxis)</scr:Expression>
               <Name>ParkState</Name>
             </Expression>
             <Expression xsi:type="VisualizerMapping">
-              <VisualizerType xsi:type="TypeMapping" TypeArguments="p17:PushButtonVisualizer" />
+              <VisualizerType xsi:type="TypeMapping" TypeArguments="p17:ToggleButtonVisualizer" />
             </Expression>
             <Expression xsi:type="viz:TableLayoutPanelBuilder">
-              <viz:ColumnCount>2</viz:ColumnCount>
-              <viz:RowCount>2</viz:RowCount>
+              <viz:ColumnCount>4</viz:ColumnCount>
+              <viz:RowCount>1</viz:RowCount>
               <viz:ColumnStyles />
               <viz:RowStyles />
               <viz:CellSpans />
