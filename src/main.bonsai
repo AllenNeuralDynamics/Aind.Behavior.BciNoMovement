@@ -39,7 +39,7 @@
         <Combinator xsi:type="p1:EnumerateDataSchemaInputs">
           <p1:FileFilter>JSON</p1:FileFilter>
           <p1:Directory>..\local\Subjects</p1:Directory>
-          <p1:DataSchema>bci_no_movement_session.json</p1:DataSchema>
+          <p1:DataSchema>aind_behavior_session_model.json</p1:DataSchema>
         </Combinator>
       </Expression>
       <Expression xsi:type="rx:AsyncSubject">
@@ -49,7 +49,7 @@
         <Combinator xsi:type="p1:EnumerateDataSchemaInputs">
           <p1:FileFilter>JSON</p1:FileFilter>
           <p1:Directory>..\local\Rigs</p1:Directory>
-          <p1:DataSchema>bci_no_movement_rig.json</p1:DataSchema>
+          <p1:DataSchema>aind_behavior_rig_model.json</p1:DataSchema>
         </Combinator>
       </Expression>
       <Expression xsi:type="rx:AsyncSubject">
@@ -59,7 +59,7 @@
         <Combinator xsi:type="p1:EnumerateDataSchemaInputs">
           <p1:FileFilter>JSON</p1:FileFilter>
           <p1:Directory>..\local\TaskLogic</p1:Directory>
-          <p1:DataSchema>bci_no_movement_task_logic.json</p1:DataSchema>
+          <p1:DataSchema>aind_behavior_task_logic_model.json</p1:DataSchema>
         </Combinator>
       </Expression>
       <Expression xsi:type="rx:AsyncSubject">
