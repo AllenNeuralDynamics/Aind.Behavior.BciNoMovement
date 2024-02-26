@@ -6332,8 +6332,8 @@ Item2 as ManipulatorSpoutAxis)</scr:Expression>
             <Expression xsi:type="VisualizerMapping" />
             <Expression xsi:type="viz:TableLayoutPanelBuilder">
               <viz:Name>Mode</viz:Name>
-              <viz:ColumnCount>2</viz:ColumnCount>
-              <viz:RowCount>2</viz:RowCount>
+              <viz:ColumnCount>3</viz:ColumnCount>
+              <viz:RowCount>1</viz:RowCount>
               <viz:ColumnStyles />
               <viz:RowStyles />
               <viz:CellSpans />
