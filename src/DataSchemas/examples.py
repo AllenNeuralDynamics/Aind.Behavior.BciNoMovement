@@ -65,6 +65,7 @@ task_logic_settings = task_logic.BciNoMovementTaskLogic(
     bci_active_control=task_logic.Control(gain=0.001, baseline_threshold=1.5),
     skip_2p_handshake=True,
     punish_on_movement_duration=0.1,
+    delay_after_handshake=0.5,
 )
 
 session_info = session.BciNoMovementSession(

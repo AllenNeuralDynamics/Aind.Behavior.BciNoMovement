@@ -288,6 +288,8 @@ namespace BciNoMovementDataSchema.BciNoMovementTask
     
         private bool _skip2pHandshake = false;
     
+        private double _delayAfterHandshake = 0.5D;
+    
         private double _punishOnMovementDuration = 0D;
     
         public BciNoMovementTaskLogic()
@@ -314,6 +316,7 @@ namespace BciNoMovementDataSchema.BciNoMovementTask
             _noMovementPassiveControl = other._noMovementPassiveControl;
             _bciActiveControl = other._bciActiveControl;
             _skip2pHandshake = other._skip2pHandshake;
+            _delayAfterHandshake = other._delayAfterHandshake;
             _punishOnMovementDuration = other._punishOnMovementDuration;
         }
     
@@ -626,6 +629,23 @@ namespace BciNoMovementDataSchema.BciNoMovementTask
         }
     
         /// <summary>
+        /// Delay after handshake (s). It will still be used if skip_2p_handshake is False.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("delay_after_handshake")]
+        [System.ComponentModel.DescriptionAttribute("Delay after handshake (s). It will still be used if skip_2p_handshake is False.")]
+        public double DelayAfterHandshake
+        {
+            get
+            {
+                return _delayAfterHandshake;
+            }
+            set
+            {
+                _delayAfterHandshake = value;
+            }
+        }
+    
+        /// <summary>
         /// The duration (s) that the spout will stop updating if the animal moves during the trial.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("punish_on_movement_duration")]
@@ -673,6 +693,7 @@ namespace BciNoMovementDataSchema.BciNoMovementTask
             stringBuilder.Append("no_movement_passive_control = " + _noMovementPassiveControl + ", ");
             stringBuilder.Append("bci_active_control = " + _bciActiveControl + ", ");
             stringBuilder.Append("skip_2p_handshake = " + _skip2pHandshake + ", ");
+            stringBuilder.Append("delay_after_handshake = " + _delayAfterHandshake + ", ");
             stringBuilder.Append("punish_on_movement_duration = " + _punishOnMovementDuration);
             return true;
         }

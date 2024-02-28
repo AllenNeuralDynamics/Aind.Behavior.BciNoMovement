@@ -220,6 +220,13 @@
       "title": "Skip 2P Handshake",
       "type": "boolean"
     },
+    "delay_after_handshake": {
+      "default": 0.5,
+      "description": "Delay after handshake (s). It will still be used if skip_2p_handshake is False.",
+      "minimum": 0.0,
+      "title": "Delay After Handshake",
+      "type": "number"
+    },
     "punish_on_movement_duration": {
       "default": 0,
       "description": "The duration (s) that the spout will stop updating if the animal moves during the trial.",

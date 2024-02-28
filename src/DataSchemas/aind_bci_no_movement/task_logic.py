@@ -70,6 +70,7 @@ class BciNoMovementTaskLogic(AindBehaviorTaskLogicModel):
         default=Control(), description="BCI active control parameters", validate_default=True
     )
     skip_2p_handshake: bool = Field(default=False, description="Skip 2p handshake")
+    delay_after_handshake: float = Field(default=0.5, ge=0, description="Delay after handshake (s). It will still be used if skip_2p_handshake is False.")
     punish_on_movement_duration: float = Field(
         default=0,
         ge=0,
