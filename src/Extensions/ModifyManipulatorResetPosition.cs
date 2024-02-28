@@ -3,15 +3,14 @@ using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
-using BciNoMovementDataSchema.TaskLogic;
-using OpenCV.Net;
+using BciNoMovementDataSchema.BciNoMovementTask;
 
 [Combinator]
 [Description("")]
 [WorkflowElementCategory(ElementCategory.Transform)]
 public class ModifyManipulatorResetPosition
 {
-    public IObservable<BciNoMovementTaskLogic> Process(IObservable<Tuple<BciNoMovementTaskLogic, BciNoMovementDataSchema.TaskLogic.Point3d>> source)
+    public IObservable<BciNoMovementTaskLogic> Process(IObservable<Tuple<BciNoMovementTaskLogic, Point3d>> source)
     {
         return source.Select(value => {
             var taskLogic = value.Item1;
@@ -26,7 +25,7 @@ public class ModifyManipulatorResetPosition
         return source.Select(value => {
             var taskLogic = value.Item1;
             var point = value.Item2;
-            BciNoMovementDataSchema.TaskLogic.Point3d point3d = new BciNoMovementDataSchema.TaskLogic.Point3d{
+            Point3d point3d = new Point3d{
                 X = point.X,
                 Y = point.Y,
                 Z = point.Z
