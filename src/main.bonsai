@@ -4149,10 +4149,11 @@ Item2 as ManipulatorSpoutAxis)</scr:Expression>
                       <rx:Count>1</rx:Count>
                     </Combinator>
                   </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
                   <Expression xsi:type="Unit" />
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p5:CreateSoftwareEvent">
-                      <p5:EventName>WaitMicroscope</p5:EventName>
+                      <p5:EventName>DelayStart</p5:EventName>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -4163,7 +4164,6 @@ Item2 as ManipulatorSpoutAxis)</scr:Expression>
                   <Expression xsi:type="MulticastSubject">
                     <Name>SoftwareEvent</Name>
                   </Expression>
-                  <Expression xsi:type="WorkflowOutput" />
                 </Nodes>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
@@ -4178,7 +4178,6 @@ Item2 as ManipulatorSpoutAxis)</scr:Expression>
                   <Edge From="9" To="10" Label="Source1" />
                   <Edge From="10" To="11" Label="Source1" />
                   <Edge From="11" To="12" Label="Source1" />
-                  <Edge From="12" To="13" Label="Source1" />
                   <Edge From="13" To="14" Label="Source1" />
                   <Edge From="14" To="15" Label="Source1" />
                   <Edge From="15" To="16" Label="Source1" />
