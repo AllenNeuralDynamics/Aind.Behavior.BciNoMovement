@@ -1030,7 +1030,7 @@
                               <Expression xsi:type="beh:CreateMessage">
                                 <harp:MessageType>Write</harp:MessageType>
                                 <harp:Payload xsi:type="beh:CreateOutputPulseEnablePayload">
-                                  <beh:OutputPulseEnable>SupplyPort0 SupplyPort1 DO1 DO2 DO3</beh:OutputPulseEnable>
+                                  <beh:OutputPulseEnable>DOPort0 SupplyPort0 SupplyPort1 DO1 DO2</beh:OutputPulseEnable>
                                 </harp:Payload>
                               </Expression>
                               <Expression xsi:type="Combinator">
@@ -1310,7 +1310,7 @@
                               </Expression>
                               <Expression xsi:type="beh:Format">
                                 <harp:MessageType>Write</harp:MessageType>
-                                <harp:Register xsi:type="beh:PulseDO3" />
+                                <harp:Register xsi:type="beh:PulseDOPort0" />
                               </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="rx:Merge" />
