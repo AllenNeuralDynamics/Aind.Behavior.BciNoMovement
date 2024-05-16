@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WorkflowBuilder Version="2.8.1"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
+                 xmlns:p1="clr-namespace:BciNoMovementDataSchema.BciNoMovementTask;assembly=Extensions"
+                 xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
+                 xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
+                 xmlns:p2="clr-namespace:Harp.LoadCells;assembly=Harp.LoadCells"
+                 xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
+                 xmlns:dsp="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp"
+                 xmlns="https://bonsai-rx.org/2018/workflow">
+  <Workflow>
+    <Nodes>
+      <Expression xsi:type="ExternalizedMapping">
+        <Property Name="Path" />
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="io:ReadAllText">
+          <io:Path>C:\Users\bruno.cruz\Downloads\task_bci,json.txt</io:Path>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="p1:DeserializeFromJson">
+        <p1:Type xsi:type="TypeMapping" TypeArguments="p1:BciNoMovementTaskLogic" />
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:Take">
+          <rx:Count>1</rx:Count>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="rx:BehaviorSubject">
+        <Name>TaskLogicSchema</Name>
+      </Expression>
+      <Expression xsi:type="ExternalizedMapping">
+        <Property Name="FileName" />
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="harp:FileDevice">
+          <harp:FileName>C:\Users\bruno.cruz\Downloads\Register__LoadCellData.bin</harp:FileName>
+          <harp:IgnoreErrors>false</harp:IgnoreErrors>
+          <harp:PlaybackRate>1</harp:PlaybackRate>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="p2:Parse">
+        <harp:Register xsi:type="p2:TimestampedLoadCellData" />
+      </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>Value.Channel0,Seconds</Selector>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="harp:CreateTimestamped" />
+      </Expression>
+      <Expression xsi:type="rx:PublishSubject">
+        <Name>LoadCellData</Name>
+      </Expression>
+      <Expression xsi:type="SubscribeSubject">
+        <Name>LoadCellData</Name>
+      </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>Value</Selector>
+      </Expression>
+      <Expression xsi:type="scr:ExpressionTransform">
+        <scr:Name>ToDouble</scr:Name>
+        <scr:Expression>double(it)</scr:Expression>
+      </Expression>
+      <Expression xsi:type="SubscribeSubject">
+        <Name>TaskLogicSchema</Name>
+      </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>NoMovementPassiveControl</Selector>
+      </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>LowPassCutOff</Selector>
+      </Expression>
+      <Expression xsi:type="PropertyMapping">
+        <PropertyMappings>
+          <Property Name="Cutoff1" />
+        </PropertyMappings>
+      </Expression>
+      <Expression xsi:type="SubscribeSubject">
+        <Name>TaskLogicSchema</Name>
+      </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>NoMovementPassiveControl</Selector>
+      </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>HighPassCutOff</Selector>
+      </Expression>
+      <Expression xsi:type="PropertyMapping">
+        <PropertyMappings>
+          <Property Name="Cutoff2" />
+        </PropertyMappings>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="dsp:FrequencyFilter">
+          <dsp:SampleRate>1000</dsp:SampleRate>
+          <dsp:Cutoff1>50</dsp:Cutoff1>
+          <dsp:Cutoff2>0.001</dsp:Cutoff2>
+          <dsp:KernelLength>60</dsp:KernelLength>
+          <dsp:FilterType>BandPass</dsp:FilterType>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="dsp:Abs" />
+      </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>Seconds</Selector>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:WithLatestFrom" />
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="harp:CreateTimestamped" />
+      </Expression>
+      <Expression xsi:type="rx:PublishSubject">
+        <Name>MovementSignal</Name>
+      </Expression>
+      <Expression xsi:type="SubscribeSubject">
+        <Name>MovementSignal</Name>
+      </Expression>
+      <Expression xsi:type="io:CsvWriter">
+        <io:FileName>filtered.csv</io:FileName>
+        <io:Append>false</io:Append>
+        <io:Overwrite>false</io:Overwrite>
+        <io:Suffix>None</io:Suffix>
+        <io:IncludeHeader>true</io:IncludeHeader>
+      </Expression>
+    </Nodes>
+    <Edges>
+      <Edge From="0" To="1" Label="Source1" />
+      <Edge From="1" To="2" Label="Source1" />
+      <Edge From="2" To="3" Label="Source1" />
+      <Edge From="3" To="4" Label="Source1" />
+      <Edge From="5" To="6" Label="Source1" />
+      <Edge From="6" To="7" Label="Source1" />
+      <Edge From="7" To="8" Label="Source1" />
+      <Edge From="8" To="9" Label="Source1" />
+      <Edge From="9" To="10" Label="Source1" />
+      <Edge From="11" To="12" Label="Source1" />
+      <Edge From="11" To="24" Label="Source1" />
+      <Edge From="12" To="13" Label="Source1" />
+      <Edge From="13" To="22" Label="Source1" />
+      <Edge From="14" To="15" Label="Source1" />
+      <Edge From="15" To="16" Label="Source1" />
+      <Edge From="16" To="17" Label="Source1" />
+      <Edge From="17" To="22" Label="Source2" />
+      <Edge From="18" To="19" Label="Source1" />
+      <Edge From="19" To="20" Label="Source1" />
+      <Edge From="20" To="21" Label="Source1" />
+      <Edge From="21" To="22" Label="Source3" />
+      <Edge From="22" To="23" Label="Source1" />
+      <Edge From="23" To="25" Label="Source1" />
+      <Edge From="24" To="25" Label="Source2" />
+      <Edge From="25" To="26" Label="Source1" />
+      <Edge From="26" To="27" Label="Source1" />
+      <Edge From="28" To="29" Label="Source1" />
+    </Edges>
+  </Workflow>
+</WorkflowBuilder>
