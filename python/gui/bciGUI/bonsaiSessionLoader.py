@@ -22,9 +22,6 @@ from aind_bci_no_movement.task_logic import BciNoMovementTaskLogic
 today = str(date.today())
 print('Running Bonsai on:', today)
 
-repoUpdateScriptPath = 'C:/git/AllenNeuralDynamics/aind-bci-no-movement/src/DataSchemas'
-currentDir = 'C:/Users/svc_ncbehavior/bonsaiSubscription'
-
 bonsaiPath = 'C:/git/AllenNeuralDynamics/aind-bci-no-movement/bonsai/bonsai.exe'
 bonsaiScript = 'C:/git/AllenNeuralDynamics/aind-bci-no-movement/src/main_test.bonsai' #make this defined by sys.argv so can run as bat file
 
@@ -32,9 +29,7 @@ bonsaiScript = 'C:/git/AllenNeuralDynamics/aind-bci-no-movement/src/main_test.bo
 class WorkerThread(QThread):
     result_ready = pyqtSignal(str)
     def run(self):
-        process = subprocess.Popen([bonsaiPath, bonsaiScript])#, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-
-
+        process = subprocess.Popen([bonsaiPath, bonsaiScript])
 
 def bonsaiSubscriptionService(stopEvent, msgQue):
     context = zmq.Context()
@@ -57,7 +52,7 @@ def bonsaiSubscriptionService(stopEvent, msgQue):
                 #successful baseline --> response outcome = reaction time
                 now = datetime.now()
                 messageDict['SoftwareTime'] = now.strftime("%H:%M:%S") + f':{now.microsecond // 1000:03d}'
-                msgQue.put(messageDict) #we just care about returning this for this function... timestamped software events
+                msgQue.put(messageDict) 
         except zmq.Again:
             pass
     socket.close()
@@ -69,8 +64,7 @@ msgQue = queue.Queue()
 class sessionLoader(QWidget):
     def __init__(self):
         super().__init__()
-        # self.setWindowTitle('BCI Session Loader')
-        # self.setGeometry(100,100,280,80)
+
         self.subscriberThread = None
         self.bonsaiThread = None
         self.stopEvent = threading.Event()
@@ -86,7 +80,7 @@ class sessionLoader(QWidget):
         self.timer.timeout.connect(self.processMessages)
         self.timer.start(100) #100 ms
         self.trialCounter = 1
-        self.pathToJsonSave = 'C:/Users/svc_ncbehavior/bonsaiSubscription/savedMice'
+        self.pathToJsonSave = 'C:/git/AllenNeuralDynamics/aind-bci-no-movement/python/gui/bciGUI/savedMice'
         self.dataToSave = {
             'RXNTimes': [],
             'Outcomes': []
@@ -155,9 +149,7 @@ class sessionLoader(QWidget):
         self.subjectID.setValidator(QIntValidator())
         self.subjectID.setMaxLength(6)
         self.subjectID.setFixedHeight(h)
-        
-        #just remember to convert everything to floats (where necessary) when grabbing the text
-        
+
         #ITI Entry
         self.itiLabel = QGroupBox('ITI')
         self.textEdit1.setPlainText(str(self.iti))
@@ -313,7 +305,6 @@ class sessionLoader(QWidget):
         
         #live feed of experiment to verify zmq comms are working
         layout.addWidget(self.label)
-
         self.setLayout(layout)
         self.setWindowTitle('Bonsai Session Loader')
         self.show()
@@ -362,7 +353,6 @@ class sessionLoader(QWidget):
             print(str(self.subjectIDentry), ' had no saved info yet')
             
     def updateSettings(self):
-        #Update App Attributes (should also save these attributes to text file in case of accidental closing or crashes)
         self.iti = float(self.textEdit1.toPlainText())
         self.lickResponseTime = float(self.textEdit2.toPlainText())
         self.responsePeriod = float(self.textEdit3.toPlainText())
@@ -374,7 +364,6 @@ class sessionLoader(QWidget):
         self.bciPassiveGain = float(self.textEdit9.toPlainText())
         self.bciThreshold = float(self.textEdit10.toPlainText())
         self.punishmentDuration = float(self.textEdit11.toPlainText())
-        
         self.subjectWRID = self.subjectName.toPlainText()
         self.subjectIDentry = str(self.subjectID.toPlainText())
         
@@ -582,7 +571,7 @@ class sessionLoader(QWidget):
                     pid = parts[-1]
                     killcmdlet = f'taskkill /PID {pid} /F'
                     os.system(killcmdlet)
-                    print('I KILLED THE SOCKET! I KILLED IT IN COLD BLOOD! HOW DO I TELL MY FAMILY WHAT IVE DONE!?')
+                    print('Killed open socket')
                     return
         print(f'Nothing to kill.... Socket {port} is not open')
 
@@ -590,7 +579,6 @@ class sessionLoader(QWidget):
     def runBonsai(self):
         if self.bonsaiThread is None or not self.bonsaiThread.isAlive():
             self.bonsaiEvent.clear()
-            # self.bonsaiThread = threading.Thread(target= openCloseBonsai, args=(self.bonsaiEvent, self.openMsg))
             self.bonsaiThread = WorkerThread()
             self.bonsaiThread.finished.connect(self.resetBonsaiThread)
             self.bonsaiThread.start()
@@ -603,13 +591,13 @@ class sessionLoader(QWidget):
             self.stopEvent.clear()
             self.subscriberThread = threading.Thread(target=bonsaiSubscriptionService, args=(self.stopEvent, msgQue))
             self.subscriberThread.start()
-            print("Starting Amazon-Bonsai-Prime for $2000/month...")
+            print("Starting Bonsai Subscription")
 
     def stopBonsaiSubscription(self):
         if self.subscriberThread is not None and self.subscriberThread.is_alive():
             self.stopEvent.set()
             self.subscriberThread.join()
-            print("Stopping Amazon-Bonsai-Prime Subscription because Im too poor to afford that...")
+            print("Stopping Bonsai Subscription.")
 
     def processMessages(self):
         while not msgQue.empty():
@@ -621,12 +609,11 @@ class sessionLoader(QWidget):
                 absTime = self.convertToAbsTime(message['SoftwareTime'])
                 if self.trialCounter == 1:
                     self.sessionStartTime = absTime
-                    absTime = 0 #every trial is going to be relative time
+                    absTime = 0 
                 else:
                     absTime = absTime - self.sessionStartTime
                 self.trialStarting = True
                 self.startTime = absTime
-                # print('Time:', absTime, 'DataType:', type(absTime))
             if message['name'] == '"ResponseOutcome"':
                 if message['data'] == 'true':
                     self.outcomeArr.append(1)
@@ -640,7 +627,6 @@ class sessionLoader(QWidget):
                 self.trialStarting = False
                 deltaT = absTime - self.startTime
                 self.data.append(deltaT)
-                # print('Time series:',self.data, 'DataType:', type(self.data))
             if self.trialStarting == False:
                 self.updatePlot()
                 self.updateTrialLabel
@@ -652,10 +638,8 @@ class sessionLoader(QWidget):
 
     def updatePlot(self):
         self.ax.clear()
-        #turn it to dataframe to make sns scatterplot look good
         dataArr = np.array(self.data)
         dataDF = pd.DataFrame(dataArr)
-        # Only one plot has a legend, thats the first entry 
         if len(self.calculatePerformance) > 1 and self.trialCounter == 1:
             self.ax = plt.scatter(dataDF.index, dataDF.values, label='RXN Time', color='lightblue')
             self.ax = plt.plot(self.performanceDF.values, color='black', label='Performance')
