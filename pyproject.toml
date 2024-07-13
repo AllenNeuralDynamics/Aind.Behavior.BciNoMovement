@@ -14,8 +14,7 @@ readme = "README.md"
 dynamic = ["version"]
 
 dependencies = [
-  "aind_behavior_services@git+https://github.com/AllenNeuralDynamics/Aind.Behavior.Services@main",
-  "gitpython"
+  "aind_behavior_services@git+https://github.com/AllenNeuralDynamics/Aind.Behavior.Services@0.7.14",
 ]
 
 [project.optional-dependencies]
@@ -29,6 +28,14 @@ linters = [
     'isort'
 ]
 
+docs = [
+    'Sphinx<7.3',
+    'furo',
+    'sphinx-jinja',
+    'autodoc_pydantic[erdantic]',
+    'myst_parser',
+    'sphinx-jsonschema'
+]
 
 [tool.setuptools.packages.find]
 where = ["src/DataSchemas"]
