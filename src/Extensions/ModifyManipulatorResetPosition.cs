@@ -3,7 +3,7 @@ using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Reactive.Linq;
-using BciNoMovementDataSchema.BciNoMovementTask;
+using BciNoMovementDataSchema.TaskLogic;
 
 [Combinator]
 [Description("")]
@@ -15,7 +15,7 @@ public class ModifyManipulatorResetPosition
         return source.Select(value => {
             var taskLogic = value.Item1;
             var point = value.Item2;
-            taskLogic.ManipulatorResetPosition = point;
+            taskLogic.TaskParameters.ManipulatorResetPosition = point;
             return taskLogic;
         });
     }
@@ -30,7 +30,7 @@ public class ModifyManipulatorResetPosition
                 Y = point.Y,
                 Z = point.Z
             };
-            taskLogic.ManipulatorResetPosition = point3d;
+            taskLogic.TaskParameters.ManipulatorResetPosition = point3d;
             return taskLogic;
         });
     }
