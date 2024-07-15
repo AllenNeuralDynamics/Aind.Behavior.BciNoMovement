@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Generic, List, Optional, TypeVar, Union
 
 from aind_bci_no_movement.rig import BciNoMovementRig
-from aind_bci_no_movement.task_logic import AindBehaviorTaskLogicModel
+from aind_bci_no_movement.task_logic import BciNoMovementTaskLogic
 from aind_behavior_services.session import AindBehaviorSessionModel
 from aind_behavior_services.utils import run_bonsai_process
 from pydantic import ValidationError
@@ -14,7 +14,7 @@ sys.path.append(".")
 from examples import examples  # noqa: E402 # isort:skip # pylint: disable=wrong-import-position
 from tests import JSON_ROOT  # noqa: E402 # isort:skip # pylint: disable=wrong-import-position
 
-TModel = TypeVar("TModel", bound=Union[BciNoMovementRig, AindBehaviorTaskLogicModel, AindBehaviorSessionModel])
+TModel = TypeVar("TModel", bound=Union[BciNoMovementRig, BciNoMovementTaskLogic, AindBehaviorSessionModel])
 
 
 class BonsaiTests(unittest.TestCase):
@@ -25,7 +25,7 @@ class BonsaiTests(unittest.TestCase):
         models_to_test = [
             TestModel(bonsai_property="SessionPath", json_root=JSON_ROOT, model=AindBehaviorSessionModel),
             TestModel(bonsai_property="RigPath", json_root=JSON_ROOT, model=BciNoMovementRig),
-            TestModel(bonsai_property="TaskLogicPath", json_root=JSON_ROOT, model=AindBehaviorTaskLogicModel),
+            TestModel(bonsai_property="TaskLogicPath", json_root=JSON_ROOT, model=BciNoMovementTaskLogic),
         ]
 
         workflow_props = {
