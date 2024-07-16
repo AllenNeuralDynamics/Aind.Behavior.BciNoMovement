@@ -5,21 +5,21 @@
 //----------------------
 
 
-namespace BciNoMovementDataSchema.BciNoMovementSession
+namespace BciNoMovementDataSchema.Session
 {
     #pragma warning disable // Disable all warnings
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class BciNoMovementSession
+    public partial class AindBehaviorSessionModel
     {
     
-        private string _describedBy = "";
-    
-        private string _schemaVersion = "0.1.0";
+        private string _version = "0.2.0";
     
         private string _experiment;
+    
+        private System.Collections.Generic.List<string> _experimenter = new System.Collections.Generic.List<string>();
     
         private System.DateTimeOffset _date;
     
@@ -31,8 +31,6 @@ namespace BciNoMovementDataSchema.BciNoMovementSession
     
         private string _experimentVersion;
     
-        private double? _rngSeed;
-    
         private string _notes;
     
         private string _commitHash;
@@ -41,50 +39,36 @@ namespace BciNoMovementDataSchema.BciNoMovementSession
     
         private bool _skipHardwareValidation = false;
     
-        public BciNoMovementSession()
+        public AindBehaviorSessionModel()
         {
         }
     
-        protected BciNoMovementSession(BciNoMovementSession other)
+        protected AindBehaviorSessionModel(AindBehaviorSessionModel other)
         {
-            _describedBy = other._describedBy;
-            _schemaVersion = other._schemaVersion;
+            _version = other._version;
             _experiment = other._experiment;
+            _experimenter = other._experimenter;
             _date = other._date;
             _rootPath = other._rootPath;
             _remotePath = other._remotePath;
             _subject = other._subject;
             _experimentVersion = other._experimentVersion;
-            _rngSeed = other._rngSeed;
             _notes = other._notes;
             _commitHash = other._commitHash;
             _allowDirtyRepo = other._allowDirtyRepo;
             _skipHardwareValidation = other._skipHardwareValidation;
         }
     
-        [Newtonsoft.Json.JsonPropertyAttribute("describedBy")]
-        public string DescribedBy
+        [Newtonsoft.Json.JsonPropertyAttribute("version")]
+        public string Version
         {
             get
             {
-                return _describedBy;
+                return _version;
             }
             set
             {
-                _describedBy = value;
-            }
-        }
-    
-        [Newtonsoft.Json.JsonPropertyAttribute("schema_version")]
-        public string SchemaVersion
-        {
-            get
-            {
-                return _schemaVersion;
-            }
-            set
-            {
-                _schemaVersion = value;
+                _version = value;
             }
         }
     
@@ -102,6 +86,24 @@ namespace BciNoMovementDataSchema.BciNoMovementSession
             set
             {
                 _experiment = value;
+            }
+        }
+    
+        /// <summary>
+        /// Name of the experimenter
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("experimenter")]
+        [System.ComponentModel.DescriptionAttribute("Name of the experimenter")]
+        public System.Collections.Generic.List<string> Experimenter
+        {
+            get
+            {
+                return _experimenter;
+            }
+            set
+            {
+                _experimenter = value;
             }
         }
     
@@ -193,24 +195,6 @@ namespace BciNoMovementDataSchema.BciNoMovementSession
         }
     
         /// <summary>
-        /// Seed of the random number generator
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("rng_seed")]
-        [System.ComponentModel.DescriptionAttribute("Seed of the random number generator")]
-        public double? RngSeed
-        {
-            get
-            {
-                return _rngSeed;
-            }
-            set
-            {
-                _rngSeed = value;
-            }
-        }
-    
-        /// <summary>
         /// Notes about the experiment
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("notes")]
@@ -278,27 +262,26 @@ namespace BciNoMovementDataSchema.BciNoMovementSession
             }
         }
     
-        public System.IObservable<BciNoMovementSession> Process()
+        public System.IObservable<AindBehaviorSessionModel> Process()
         {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new BciNoMovementSession(this)));
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new AindBehaviorSessionModel(this)));
         }
     
-        public System.IObservable<BciNoMovementSession> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<AindBehaviorSessionModel> Process<TSource>(System.IObservable<TSource> source)
         {
-            return System.Reactive.Linq.Observable.Select(source, _ => new BciNoMovementSession(this));
+            return System.Reactive.Linq.Observable.Select(source, _ => new AindBehaviorSessionModel(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("describedBy = " + _describedBy + ", ");
-            stringBuilder.Append("schema_version = " + _schemaVersion + ", ");
+            stringBuilder.Append("version = " + _version + ", ");
             stringBuilder.Append("experiment = " + _experiment + ", ");
+            stringBuilder.Append("experimenter = " + _experimenter + ", ");
             stringBuilder.Append("date = " + _date + ", ");
             stringBuilder.Append("root_path = " + _rootPath + ", ");
             stringBuilder.Append("remote_path = " + _remotePath + ", ");
             stringBuilder.Append("subject = " + _subject + ", ");
             stringBuilder.Append("experiment_version = " + _experimentVersion + ", ");
-            stringBuilder.Append("rng_seed = " + _rngSeed + ", ");
             stringBuilder.Append("notes = " + _notes + ", ");
             stringBuilder.Append("commit_hash = " + _commitHash + ", ");
             stringBuilder.Append("allow_dirty_repo = " + _allowDirtyRepo + ", ");
@@ -336,9 +319,9 @@ namespace BciNoMovementDataSchema.BciNoMovementSession
             return System.Reactive.Linq.Observable.Select(source, value => Newtonsoft.Json.JsonConvert.SerializeObject(value));
         }
 
-        public System.IObservable<string> Process(System.IObservable<BciNoMovementSession> source)
+        public System.IObservable<string> Process(System.IObservable<AindBehaviorSessionModel> source)
         {
-            return Process<BciNoMovementSession>(source);
+            return Process<AindBehaviorSessionModel>(source);
         }
     }
 
@@ -350,13 +333,13 @@ namespace BciNoMovementDataSchema.BciNoMovementSession
     [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of JSON strings into data model objects.")]
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BciNoMovementSession>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<AindBehaviorSessionModel>))]
     public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {
     
         public DeserializeFromJson()
         {
-            Type = new Bonsai.Expressions.TypeMapping<BciNoMovementSession>();
+            Type = new Bonsai.Expressions.TypeMapping<AindBehaviorSessionModel>();
         }
 
         public Bonsai.Expressions.TypeMapping Type { get; set; }
