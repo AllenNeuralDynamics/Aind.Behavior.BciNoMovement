@@ -50,7 +50,7 @@ def mock_rig() -> BciNoMovementRig:
         ),
         harp_behavior=rig.HarpBehavior(port_name="COM8"),
         harp_load_cell=LoadCells(port_name="COM7", calibration=load_cell_calibration),
-        harp_clock_generator=rig.HarpClockSynchronizer(port_name="COM9"),
+        harp_clock_generator=rig.HarpClockGenerator(port_name="COM9"),
         operation=Operation(load_cell_index=0),
         manipulator=ZaberManipulator(
             com_port="COM10",
