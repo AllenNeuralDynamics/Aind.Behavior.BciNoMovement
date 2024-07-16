@@ -206,11 +206,11 @@
       "title": "HarpBehavior",
       "type": "object"
     },
-    "HarpClockSynchronizer": {
+    "HarpClockGenerator": {
       "properties": {
         "device_type": {
-          "const": "clocksynchronizer",
-          "default": "clocksynchronizer",
+          "const": "clockgenerator",
+          "default": "clockgenerator",
           "title": "Device Type",
           "type": "string"
         },
@@ -239,8 +239,8 @@
           ]
         },
         "who_am_i": {
-          "const": 1152,
-          "default": 1152,
+          "const": 1158,
+          "default": 1158,
           "title": "Who Am I",
           "type": "integer"
         },
@@ -266,7 +266,7 @@
       "required": [
         "port_name"
       ],
-      "title": "HarpClockSynchronizer",
+      "title": "HarpClockGenerator",
       "type": "object"
     },
     "LoadCellCalibration": {
@@ -958,10 +958,10 @@
     "harp_clock_generator": {
       "allOf": [
         {
-          "$ref": "#/definitions/HarpClockSynchronizer"
+          "$ref": "#/definitions/HarpClockGenerator"
         }
       ],
-      "description": "Harp clock synchronizer"
+      "description": "Harp clock timestamp generator gen 3"
     },
     "triggered_camera_controller": {
       "allOf": [

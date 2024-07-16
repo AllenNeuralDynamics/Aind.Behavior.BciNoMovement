@@ -536,26 +536,26 @@ namespace BciNoMovementDataSchema.Rig
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class HarpClockSynchronizer
+    public partial class HarpClockGenerator
     {
     
-        private string _deviceType = "clocksynchronizer";
+        private string _deviceType = "clockgenerator";
     
         private BaseModel _additionalSettings;
     
         private BaseModel _calibration;
     
-        private int _whoAmI = 1152;
+        private int _whoAmI = 1158;
     
         private string _serialNumber;
     
         private string _portName;
     
-        public HarpClockSynchronizer()
+        public HarpClockGenerator()
         {
         }
     
-        protected HarpClockSynchronizer(HarpClockSynchronizer other)
+        protected HarpClockGenerator(HarpClockGenerator other)
         {
             _deviceType = other._deviceType;
             _additionalSettings = other._additionalSettings;
@@ -661,14 +661,14 @@ namespace BciNoMovementDataSchema.Rig
             }
         }
     
-        public System.IObservable<HarpClockSynchronizer> Process()
+        public System.IObservable<HarpClockGenerator> Process()
         {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new HarpClockSynchronizer(this)));
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new HarpClockGenerator(this)));
         }
     
-        public System.IObservable<HarpClockSynchronizer> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<HarpClockGenerator> Process<TSource>(System.IObservable<TSource> source)
         {
-            return System.Reactive.Linq.Observable.Select(source, _ => new HarpClockSynchronizer(this));
+            return System.Reactive.Linq.Observable.Select(source, _ => new HarpClockGenerator(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
@@ -2553,7 +2553,7 @@ namespace BciNoMovementDataSchema.Rig
     
         private LoadCells _harpLoadCell = new LoadCells();
     
-        private HarpClockSynchronizer _harpClockGenerator = new HarpClockSynchronizer();
+        private HarpClockGenerator _harpClockGenerator = new HarpClockGenerator();
     
         private CameraControllerSpinnakerCamera _triggeredCameraController = new CameraControllerSpinnakerCamera();
     
@@ -2668,12 +2668,12 @@ namespace BciNoMovementDataSchema.Rig
         }
     
         /// <summary>
-        /// Harp clock synchronizer
+        /// Harp clock timestamp generator gen 3
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("harp_clock_generator", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("Harp clock synchronizer")]
-        public HarpClockSynchronizer HarpClockGenerator
+        [System.ComponentModel.DescriptionAttribute("Harp clock timestamp generator gen 3")]
+        public HarpClockGenerator HarpClockGenerator
         {
             get
             {
@@ -3034,9 +3034,9 @@ namespace BciNoMovementDataSchema.Rig
             return Process<HarpBehavior>(source);
         }
 
-        public System.IObservable<string> Process(System.IObservable<HarpClockSynchronizer> source)
+        public System.IObservable<string> Process(System.IObservable<HarpClockGenerator> source)
         {
-            return Process<HarpClockSynchronizer>(source);
+            return Process<HarpClockGenerator>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<LoadCellCalibration> source)
@@ -3137,7 +3137,7 @@ namespace BciNoMovementDataSchema.Rig
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraControllerSpinnakerCamera>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<CameraControllerWebCamera>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpBehavior>))]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpClockSynchronizer>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<HarpClockGenerator>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LoadCellCalibration>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LoadCells>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<LoadCellsCalibration>))]

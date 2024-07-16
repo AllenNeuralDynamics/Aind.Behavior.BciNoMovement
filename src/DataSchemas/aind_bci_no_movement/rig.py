@@ -76,7 +76,7 @@ class BciNoMovementRig(rig.AindBehaviorRigModel):
     version: Literal[__version__] = __version__
     harp_behavior: rig.HarpBehavior = Field(..., description="Harp behavior")
     harp_load_cell: LoadCells = Field(..., description="Harp load cells")
-    harp_clock_generator: rig.HarpClockSynchronizer = Field(..., description="Harp clock synchronizer")
+    harp_clock_generator: rig.HarpClockGenerator = Field(..., description="Harp clock timestamp generator gen 3")
     triggered_camera_controller: rig.CameraController[rig.SpinnakerCamera] = Field(
         ..., description="Required camera controller to triggered cameras."
     )
