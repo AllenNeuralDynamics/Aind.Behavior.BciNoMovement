@@ -21,11 +21,11 @@ namespace BciNoMovementDataSchema.TaskLogic
             {
                 switch (axis)
                 {
-                    case 0:
-                        return X;
                     case 1:
-                        return Y;
+                        return X;
                     case 2:
+                        return Y;
+                    case 3:
                         return Z;
                     default:
                         throw new IndexOutOfRangeException("Axis is out of bounds.");
