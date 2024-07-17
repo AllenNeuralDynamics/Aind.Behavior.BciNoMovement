@@ -2047,6 +2047,14 @@ namespace BciNoMovementDataSchema.Rig
     
         private int _axisIndex;
     
+        private double? _acceleration;
+    
+        private double? _velocity;
+    
+        private double? _lowerLimit;
+    
+        private double? _upperLimit;
+    
         public ZaberAxis()
         {
         }
@@ -2055,6 +2063,10 @@ namespace BciNoMovementDataSchema.Rig
         {
             _deviceIndex = other._deviceIndex;
             _axisIndex = other._axisIndex;
+            _acceleration = other._acceleration;
+            _velocity = other._velocity;
+            _lowerLimit = other._lowerLimit;
+            _upperLimit = other._upperLimit;
         }
     
         /// <summary>
@@ -2091,6 +2103,78 @@ namespace BciNoMovementDataSchema.Rig
             }
         }
     
+        /// <summary>
+        /// Acceleration of the manipulator.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("acceleration")]
+        [System.ComponentModel.DescriptionAttribute("Acceleration of the manipulator.")]
+        public double? Acceleration
+        {
+            get
+            {
+                return _acceleration;
+            }
+            set
+            {
+                _acceleration = value;
+            }
+        }
+    
+        /// <summary>
+        /// Maximum speed of the manipulator.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("velocity")]
+        [System.ComponentModel.DescriptionAttribute("Maximum speed of the manipulator.")]
+        public double? Velocity
+        {
+            get
+            {
+                return _velocity;
+            }
+            set
+            {
+                _velocity = value;
+            }
+        }
+    
+        /// <summary>
+        /// Lower limit of the manipulator.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("lower_limit")]
+        [System.ComponentModel.DescriptionAttribute("Lower limit of the manipulator.")]
+        public double? LowerLimit
+        {
+            get
+            {
+                return _lowerLimit;
+            }
+            set
+            {
+                _lowerLimit = value;
+            }
+        }
+    
+        /// <summary>
+        /// Upper limit of the manipulator.
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("upper_limit")]
+        [System.ComponentModel.DescriptionAttribute("Upper limit of the manipulator.")]
+        public double? UpperLimit
+        {
+            get
+            {
+                return _upperLimit;
+            }
+            set
+            {
+                _upperLimit = value;
+            }
+        }
+    
         public System.IObservable<ZaberAxis> Process()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new ZaberAxis(this)));
@@ -2104,7 +2188,11 @@ namespace BciNoMovementDataSchema.Rig
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("device_index = " + _deviceIndex + ", ");
-            stringBuilder.Append("axis_index = " + _axisIndex);
+            stringBuilder.Append("axis_index = " + _axisIndex + ", ");
+            stringBuilder.Append("acceleration = " + _acceleration + ", ");
+            stringBuilder.Append("velocity = " + _velocity + ", ");
+            stringBuilder.Append("lower_limit = " + _lowerLimit + ", ");
+            stringBuilder.Append("upper_limit = " + _upperLimit);
             return true;
         }
     
@@ -2244,10 +2332,6 @@ namespace BciNoMovementDataSchema.Rig
     
         private Axis _spoutAxis = BciNoMovementDataSchema.Rig.Axis.X;
     
-        private double _velocity = 10D;
-    
-        private double _acceleration = 1299.63D;
-    
         private ZaberAxis _xAxis = new ZaberAxis();
     
         private ZaberAxis _yAxis = new ZaberAxis();
@@ -2263,8 +2347,6 @@ namespace BciNoMovementDataSchema.Rig
             _comPort = other._comPort;
             _genericCommands = other._genericCommands;
             _spoutAxis = other._spoutAxis;
-            _velocity = other._velocity;
-            _acceleration = other._acceleration;
             _xAxis = other._xAxis;
             _yAxis = other._yAxis;
             _zAxis = other._zAxis;
@@ -2320,42 +2402,6 @@ namespace BciNoMovementDataSchema.Rig
             set
             {
                 _spoutAxis = value;
-            }
-        }
-    
-        /// <summary>
-        /// Maximum speed of the manipulator. These will be defined via the Generic Commands.
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("velocity")]
-        [System.ComponentModel.DescriptionAttribute("Maximum speed of the manipulator. These will be defined via the Generic Commands." +
-            "")]
-        public double Velocity
-        {
-            get
-            {
-                return _velocity;
-            }
-            set
-            {
-                _velocity = value;
-            }
-        }
-    
-        /// <summary>
-        /// Acceleration of the manipulator.  These will be defined via the Generic Commands.
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("acceleration")]
-        [System.ComponentModel.DescriptionAttribute("Acceleration of the manipulator.  These will be defined via the Generic Commands." +
-            "")]
-        public double Acceleration
-        {
-            get
-            {
-                return _acceleration;
-            }
-            set
-            {
-                _acceleration = value;
             }
         }
     
@@ -2428,8 +2474,6 @@ namespace BciNoMovementDataSchema.Rig
             stringBuilder.Append("com_port = " + _comPort + ", ");
             stringBuilder.Append("generic_commands = " + _genericCommands + ", ");
             stringBuilder.Append("spout_axis = " + _spoutAxis + ", ");
-            stringBuilder.Append("velocity = " + _velocity + ", ");
-            stringBuilder.Append("acceleration = " + _acceleration + ", ");
             stringBuilder.Append("x_axis = " + _xAxis + ", ");
             stringBuilder.Append("y_axis = " + _yAxis + ", ");
             stringBuilder.Append("z_axis = " + _zAxis);
