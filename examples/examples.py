@@ -44,7 +44,7 @@ def mock_rig() -> BciNoMovementRig:
             frame_rate=120,
             cameras={
                 "Camera0": rig.SpinnakerCamera(
-                    serial_number="SerialNumber", binning=1, exposure=5000, gain=0, video_writer=video_writer
+                    serial_number="23381093", binning=1, exposure=5000, gain=0, video_writer=video_writer
                 ),
             },
         ),
@@ -54,11 +54,9 @@ def mock_rig() -> BciNoMovementRig:
         operation=Operation(load_cell_index=0),
         manipulator=ZaberManipulator(
             com_port="COM10",
-            velocity=9999999,
-            acceleration=9999999,
             spout_axis=Axis.X,
             generic_commands=zaber_commands,
-            x_axis=ZaberAxis(device_index=0, axis_index=1),
+            x_axis=ZaberAxis(device_index=0, axis_index=1, upper_limit=100, lower_limit=0),
             y_axis=ZaberAxis(device_index=0, axis_index=2),
             z_axis=ZaberAxis(device_index=1, axis_index=1),
         ),
@@ -103,8 +101,8 @@ def mock_session() -> AindBehaviorSessionModel:
     return AindBehaviorSessionModel(
         date=datetime.datetime.now(tz=datetime.timezone.utc),
         experiment="BciNoMovement",
-        root_path="c://",
-        remote_path="c://remote",
+        root_path="c://data",
+        remote_path=None,
         subject="Mouse007",
         notes="test session",
         experiment_version="",
@@ -117,8 +115,8 @@ def mock_session() -> AindBehaviorSessionModel:
 def mock_subject_database() -> db.SubjectDataBase:
     """Generates a mock database object"""
     database = db.SubjectDataBase()
-    database.add_subject("test", db.SubjectEntry(task_logic_target="preward_intercept_stageA"))
-    database.add_subject("test2", db.SubjectEntry(task_logic_target="does_notexist"))
+    database.add_subject("test", db.SubjectEntry(task_logic_target="stageA"))
+    database.add_subject("test2", db.SubjectEntry(task_logic_target="does_not_exist"))
     return database
 
 
