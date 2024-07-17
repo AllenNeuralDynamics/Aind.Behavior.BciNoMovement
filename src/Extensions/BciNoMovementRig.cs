@@ -2104,11 +2104,11 @@ namespace BciNoMovementDataSchema.Rig
         }
     
         /// <summary>
-        /// Acceleration of the manipulator.
+        /// Acceleration of the manipulator (mm/s2).
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("acceleration")]
-        [System.ComponentModel.DescriptionAttribute("Acceleration of the manipulator.")]
+        [System.ComponentModel.DescriptionAttribute("Acceleration of the manipulator (mm/s2).")]
         public double? Acceleration
         {
             get
@@ -2122,11 +2122,11 @@ namespace BciNoMovementDataSchema.Rig
         }
     
         /// <summary>
-        /// Maximum speed of the manipulator.
+        /// Maximum speed of the manipulator (mm/s).
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("velocity")]
-        [System.ComponentModel.DescriptionAttribute("Maximum speed of the manipulator.")]
+        [System.ComponentModel.DescriptionAttribute("Maximum speed of the manipulator (mm/s).")]
         public double? Velocity
         {
             get
@@ -2140,11 +2140,11 @@ namespace BciNoMovementDataSchema.Rig
         }
     
         /// <summary>
-        /// Lower limit of the manipulator.
+        /// Lower limit of the manipulator (mm).
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("lower_limit")]
-        [System.ComponentModel.DescriptionAttribute("Lower limit of the manipulator.")]
+        [System.ComponentModel.DescriptionAttribute("Lower limit of the manipulator (mm).")]
         public double? LowerLimit
         {
             get
@@ -2158,11 +2158,11 @@ namespace BciNoMovementDataSchema.Rig
         }
     
         /// <summary>
-        /// Upper limit of the manipulator.
+        /// Upper limit of the manipulator (mm).
         /// </summary>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("upper_limit")]
-        [System.ComponentModel.DescriptionAttribute("Upper limit of the manipulator.")]
+        [System.ComponentModel.DescriptionAttribute("Upper limit of the manipulator (mm).")]
         public double? UpperLimit
         {
             get

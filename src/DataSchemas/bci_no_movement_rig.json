@@ -782,7 +782,7 @@
         },
         "acceleration": {
           "default": null,
-          "description": "Acceleration of the manipulator.",
+          "description": "Acceleration of the manipulator (mm/s2).",
           "oneOf": [
             {
               "minimum": 0.0,
@@ -796,7 +796,7 @@
         },
         "velocity": {
           "default": null,
-          "description": "Maximum speed of the manipulator.",
+          "description": "Maximum speed of the manipulator (mm/s).",
           "oneOf": [
             {
               "minimum": 0.0,
@@ -810,7 +810,7 @@
         },
         "lower_limit": {
           "default": null,
-          "description": "Lower limit of the manipulator.",
+          "description": "Lower limit of the manipulator (mm).",
           "oneOf": [
             {
               "type": "number"
@@ -823,7 +823,7 @@
         },
         "upper_limit": {
           "default": null,
-          "description": "Upper limit of the manipulator.",
+          "description": "Upper limit of the manipulator (mm).",
           "oneOf": [
             {
               "type": "number"

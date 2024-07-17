@@ -24,10 +24,10 @@ class ZaberGenericCommand(BaseModel):
 class ZaberAxis(BaseModel):
     device_index: int = Field(..., ge=0, description="Device number.")
     axis_index: int = Field(..., ge=0, description="Motor to send the instruction to.")
-    acceleration: Optional[float] = Field(default=None, ge=0, description="Acceleration of the manipulator.")
-    velocity: Optional[float] = Field(default=None, ge=0, description="Maximum speed of the manipulator.")
-    lower_limit: Optional[float] = Field(default=None, description="Lower limit of the manipulator.")
-    upper_limit: Optional[float] = Field(default=None, description="Upper limit of the manipulator.")
+    acceleration: Optional[float] = Field(default=None, ge=0, description="Acceleration of the manipulator (mm/s2).")
+    velocity: Optional[float] = Field(default=None, ge=0, description="Maximum speed of the manipulator (mm/s).")
+    lower_limit: Optional[float] = Field(default=None, description="Lower limit of the manipulator (mm).")
+    upper_limit: Optional[float] = Field(default=None, description="Upper limit of the manipulator (mm).")
 
 
 class ZaberManipulator(BaseModel):
