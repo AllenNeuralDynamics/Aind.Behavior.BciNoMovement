@@ -779,6 +779,60 @@
           "minimum": 0,
           "title": "Axis Index",
           "type": "integer"
+        },
+        "acceleration": {
+          "default": null,
+          "description": "Acceleration of the manipulator (mm/s2).",
+          "oneOf": [
+            {
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Acceleration"
+        },
+        "velocity": {
+          "default": null,
+          "description": "Maximum speed of the manipulator (mm/s).",
+          "oneOf": [
+            {
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Velocity"
+        },
+        "lower_limit": {
+          "default": null,
+          "description": "Lower limit of the manipulator (mm).",
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Lower Limit"
+        },
+        "upper_limit": {
+          "default": null,
+          "description": "Upper limit of the manipulator (mm).",
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Upper Limit"
         }
       },
       "required": [
@@ -854,20 +908,6 @@
           ],
           "default": 1,
           "description": "Axis of the spout."
-        },
-        "velocity": {
-          "default": 10,
-          "description": "Maximum speed of the manipulator. These will be defined via the Generic Commands.",
-          "minimum": 0.0,
-          "title": "Velocity",
-          "type": "number"
-        },
-        "acceleration": {
-          "default": 1299.63,
-          "description": "Acceleration of the manipulator.  These will be defined via the Generic Commands.",
-          "minimum": 0.0,
-          "title": "Acceleration",
-          "type": "number"
         },
         "x_axis": {
           "allOf": [
