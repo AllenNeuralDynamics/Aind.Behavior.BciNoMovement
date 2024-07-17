@@ -19,7 +19,7 @@ SOURCE_ROOT = "https://github.com/AllenNeuralDynamics/Aind.Behavior.BciNoMovemen
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = "AIND VR Foraging"
+project = "AIND Bci No Movement"
 copyright = "2024, Allen Institute for Neural Dynamics"
 author = "Bruno Cruz"
 release = aind_bci_no_movement.__version__
@@ -53,7 +53,7 @@ autodoc_pydantic_settings_show_json = False
 
 html_theme = "furo"
 html_static_path = ["_static"]
-html_title = "Aind VR Bci No Movement"
+html_title = "Aind Bci No Movement"
 html_favicon = "_static/favicon.ico"
 html_theme_options = {
     "light_logo": "light-logo.svg",

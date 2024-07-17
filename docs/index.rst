@@ -1,4 +1,4 @@
-Welcome to the AIND VR Foraging project documentation!
+Welcome to the AIND BciNoMovement project documentation!
 =========================================================
 
 .. include:: ../README.md
@@ -8,8 +8,10 @@ Welcome to the AIND VR Foraging project documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   self
    api
    json-schemas
+   GitHub Source Code <https://github.com/AllenNeuralDynamics/Aind.Behavior.BciNoMovement>
 
 Indices and tables
 ==================
