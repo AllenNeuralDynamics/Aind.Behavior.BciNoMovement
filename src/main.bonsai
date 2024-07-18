@@ -5510,8 +5510,10 @@
                               <Expression xsi:type="SubscribeSubject">
                                 <Name>Repository</Name>
                               </Expression>
-                              <Expression xsi:type="MemberSelector">
-                                <Selector>Head</Selector>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="p5:IsRepositoryClean">
+                                  <p5:IgnoreUntracked>false</p5:IgnoreUntracked>
+                                </Combinator>
                               </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="p8:CreateSoftwareEvent">
