@@ -7521,12 +7521,16 @@ Value as Image)
                             <cv:Z>0</cv:Z>
                           </Combinator>
                         </Expression>
+                        <Expression xsi:type="MulticastSubject">
+                          <Name>IncrementPositionBy</Name>
+                        </Expression>
                         <Expression xsi:type="WorkflowOutput" />
                       </Nodes>
                       <Edges>
                         <Edge From="0" To="2" Label="Source1" />
                         <Edge From="1" To="2" Label="Source2" />
                         <Edge From="2" To="3" Label="Source1" />
+                        <Edge From="3" To="4" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -7554,12 +7558,16 @@ Value as Image)
                             <cv:Z>0</cv:Z>
                           </Combinator>
                         </Expression>
+                        <Expression xsi:type="MulticastSubject">
+                          <Name>IncrementPositionBy</Name>
+                        </Expression>
                         <Expression xsi:type="WorkflowOutput" />
                       </Nodes>
                       <Edges>
                         <Edge From="0" To="2" Label="Source1" />
                         <Edge From="1" To="2" Label="Source2" />
                         <Edge From="2" To="3" Label="Source1" />
+                        <Edge From="3" To="4" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -7587,12 +7595,16 @@ Value as Image)
                             <cv:Z>0</cv:Z>
                           </Combinator>
                         </Expression>
+                        <Expression xsi:type="MulticastSubject">
+                          <Name>IncrementPositionBy</Name>
+                        </Expression>
                         <Expression xsi:type="WorkflowOutput" />
                       </Nodes>
                       <Edges>
                         <Edge From="0" To="2" Label="Source1" />
                         <Edge From="1" To="2" Label="Source2" />
                         <Edge From="2" To="3" Label="Source1" />
+                        <Edge From="3" To="4" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -7620,12 +7632,16 @@ Value as Image)
                             <cv:Z>0</cv:Z>
                           </Combinator>
                         </Expression>
+                        <Expression xsi:type="MulticastSubject">
+                          <Name>IncrementPositionBy</Name>
+                        </Expression>
                         <Expression xsi:type="WorkflowOutput" />
                       </Nodes>
                       <Edges>
                         <Edge From="0" To="2" Label="Source1" />
                         <Edge From="1" To="2" Label="Source2" />
                         <Edge From="2" To="3" Label="Source1" />
+                        <Edge From="3" To="4" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -7653,12 +7669,16 @@ Value as Image)
                             <cv:Z>-1</cv:Z>
                           </Combinator>
                         </Expression>
+                        <Expression xsi:type="MulticastSubject">
+                          <Name>IncrementPositionBy</Name>
+                        </Expression>
                         <Expression xsi:type="WorkflowOutput" />
                       </Nodes>
                       <Edges>
                         <Edge From="0" To="2" Label="Source1" />
                         <Edge From="1" To="2" Label="Source2" />
                         <Edge From="2" To="3" Label="Source1" />
+                        <Edge From="3" To="4" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -7686,12 +7706,16 @@ Value as Image)
                             <cv:Z>-1</cv:Z>
                           </Combinator>
                         </Expression>
+                        <Expression xsi:type="MulticastSubject">
+                          <Name>IncrementPositionBy</Name>
+                        </Expression>
                         <Expression xsi:type="WorkflowOutput" />
                       </Nodes>
                       <Edges>
                         <Edge From="0" To="2" Label="Source1" />
                         <Edge From="1" To="2" Label="Source2" />
                         <Edge From="2" To="3" Label="Source1" />
+                        <Edge From="3" To="4" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
@@ -7709,7 +7733,7 @@ Value as Image)
                     <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:TableLayoutPanelVisualizer" />
                   </Expression>
                   <Expression xsi:type="gui:PropertyGridBuilder">
-                    <gui:Enabled>false</gui:Enabled>
+                    <gui:Enabled>true</gui:Enabled>
                     <gui:Visible>true</gui:Visible>
                     <gui:HelpVisible>false</gui:HelpVisible>
                     <gui:ToolbarVisible>false</gui:ToolbarVisible>
