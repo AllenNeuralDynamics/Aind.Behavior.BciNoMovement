@@ -7716,6 +7716,7 @@ Value as Image)
                     <VisualizerType xsi:type="TypeMapping" TypeArguments="gui:ButtonVisualizer" />
                   </Expression>
                   <Expression xsi:type="gui:TableLayoutPanelBuilder">
+                    <gui:Name>ManipulatorPositionControl</gui:Name>
                     <gui:Enabled>true</gui:Enabled>
                     <gui:Visible>true</gui:Visible>
                     <gui:ColumnCount>2</gui:ColumnCount>
@@ -7729,14 +7730,10 @@ Value as Image)
                     </gui:CellSpans>
                   </Expression>
                   <Expression xsi:type="VisualizerMapping" />
-                  <Expression xsi:type="gui:TableLayoutPanelBuilder">
+                  <Expression xsi:type="gui:TabControlBuilder">
+                    <gui:Name>Manipulator</gui:Name>
                     <gui:Enabled>true</gui:Enabled>
                     <gui:Visible>true</gui:Visible>
-                    <gui:ColumnCount>1</gui:ColumnCount>
-                    <gui:RowCount>1</gui:RowCount>
-                    <gui:ColumnStyles />
-                    <gui:RowStyles />
-                    <gui:CellSpans />
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
                   <Expression xsi:type="ExternalizedMapping">
