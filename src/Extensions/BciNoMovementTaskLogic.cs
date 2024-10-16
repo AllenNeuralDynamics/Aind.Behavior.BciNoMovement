@@ -17,6 +17,8 @@ namespace BciNoMovementDataSchema.TaskLogic
     
         private double? _rngSeed;
     
+        private string _aindBehaviorServicesPkgVersion = "0.8.1";
+    
         private double _valveOpenTime = 0.01D;
     
         private double _waitMicroscopeTime = 0D;
@@ -60,6 +62,7 @@ namespace BciNoMovementDataSchema.TaskLogic
         protected BciNoMovementTaskParameters(BciNoMovementTaskParameters other)
         {
             _rngSeed = other._rngSeed;
+            _aindBehaviorServicesPkgVersion = other._aindBehaviorServicesPkgVersion;
             _valveOpenTime = other._valveOpenTime;
             _waitMicroscopeTime = other._waitMicroscopeTime;
             _lowActivityTime = other._lowActivityTime;
@@ -95,6 +98,19 @@ namespace BciNoMovementDataSchema.TaskLogic
             set
             {
                 _rngSeed = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("aind_behavior_services_pkg_version")]
+        public string AindBehaviorServicesPkgVersion
+        {
+            get
+            {
+                return _aindBehaviorServicesPkgVersion;
+            }
+            set
+            {
+                _aindBehaviorServicesPkgVersion = value;
             }
         }
     
@@ -424,6 +440,7 @@ namespace BciNoMovementDataSchema.TaskLogic
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("rng_seed = " + _rngSeed + ", ");
+            stringBuilder.Append("aind_behavior_services_pkg_version = " + _aindBehaviorServicesPkgVersion + ", ");
             stringBuilder.Append("valve_open_time = " + _valveOpenTime + ", ");
             stringBuilder.Append("wait_microscope_time = " + _waitMicroscopeTime + ", ");
             stringBuilder.Append("low_activity_time = " + _lowActivityTime + ", ");
