@@ -55,10 +55,6 @@ class Networking(BaseModel):
     )
 
 
-class LoadCells(rig.HarpLoadCells):
-    calibration: lc.LoadCellsCalibration = Field(..., description="Load cells calibration data.")
-
-
 class Operation(BaseModel):
     load_cell_index: lc.LoadCellChannel = Field(
         default=0,
@@ -69,7 +65,7 @@ class Operation(BaseModel):
 class BciNoMovementRig(rig.AindBehaviorRigModel):
     version: Literal[__version__] = __version__
     harp_behavior: rig.HarpBehavior = Field(..., description="Harp behavior")
-    harp_load_cell: LoadCells = Field(..., description="Harp load cells")
+    harp_load_cells: lc.LoadCells = Field(..., description="Harp load cells")
     harp_clock_generator: rig.HarpClockGenerator = Field(..., description="Harp clock timestamp generator gen 3")
     triggered_camera_controller: rig.CameraController[rig.SpinnakerCamera] = Field(
         ..., description="Required camera controller to triggered cameras."
