@@ -1,0 +1,296 @@
+{
+  "definitions": {
+    "BciNoMovementTaskParameters": {
+      "additionalProperties": true,
+      "properties": {
+        "rng_seed": {
+          "default": null,
+          "description": "Seed of the random number generator",
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Rng Seed"
+        },
+        "aind_behavior_services_pkg_version": {
+          "default": "0.8.1",
+          "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
+          "title": "aind_behavior_services package version",
+          "type": "string"
+        },
+        "valve_open_time": {
+          "default": 0.01,
+          "description": "Time valve remains open (s)",
+          "minimum": 0.0,
+          "title": "Valve Open Time",
+          "type": "number"
+        },
+        "wait_microscope_time": {
+          "default": 0,
+          "description": "Interval (s) after the animal successfully exists the quiescence period.",
+          "minimum": 0.0,
+          "title": "Wait Microscope Time",
+          "type": "number"
+        },
+        "low_activity_time": {
+          "default": 1,
+          "description": "Duration (s) BCI activity must stay low before starting a new trial.",
+          "minimum": 0.0,
+          "title": "Low Activity Time",
+          "type": "number"
+        },
+        "lick_response_time": {
+          "default": 2,
+          "description": "Interval (s) for the animal to collect reward. Only applies if waitForLick is true.",
+          "minimum": 0.0,
+          "title": "Lick Response Time",
+          "type": "number"
+        },
+        "wait_for_lick": {
+          "default": true,
+          "description": "Determines whether the animal must lick to trigger reward delivery.             If false, reward is immediately delivered.",
+          "title": "Wait For Lick",
+          "type": "boolean"
+        },
+        "enable_sound_on_reward_zone_entry": {
+          "default": true,
+          "description": "Enables audio feedback on reward zone entry.",
+          "title": "Enable Sound On Reward Zone Entry",
+          "type": "boolean"
+        },
+        "no_movement_time_before_trial": {
+          "default": 0,
+          "description": "Interval (s) subjects must not move for to start a new trial.",
+          "minimum": 0.0,
+          "title": "No Movement Time Before Trial",
+          "type": "number"
+        },
+        "inter_trial_interval": {
+          "default": 0,
+          "description": "Interval (s) between trials.",
+          "minimum": 0.0,
+          "title": "Inter Trial Interval",
+          "type": "number"
+        },
+        "reward_consume_time": {
+          "default": 2,
+          "description": "Duration (s) for the animal to consume reward.",
+          "minimum": 0.0,
+          "title": "Reward Consume Time",
+          "type": "number"
+        },
+        "max_trial_duration": {
+          "default": 20,
+          "description": "Maximum duration (s) of a trial.",
+          "minimum": 0.0,
+          "title": "Max Trial Duration",
+          "type": "number"
+        },
+        "far_position_offset": {
+          "default": 8,
+          "description": "Offset (mm) from the close position to the far position.",
+          "minimum": 0.0,
+          "title": "Far Position Offset",
+          "type": "number"
+        },
+        "manipulator_reset_position": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/Point3d"
+            }
+          ],
+          "default": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "description": "Position (mm) to reset the manipulator to."
+        },
+        "bci_passive_control": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/SignalProcessing"
+            }
+          ],
+          "default": {
+            "baseline_threshold": 0.0,
+            "gain": 1.0,
+            "low_pass_cut_off": null,
+            "high_pass_cut_off": null
+          },
+          "description": "BCI control parameters"
+        },
+        "no_movement_passive_control": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/SignalProcessing"
+            }
+          ],
+          "default": {
+            "baseline_threshold": 0.0,
+            "gain": 1.0,
+            "low_pass_cut_off": null,
+            "high_pass_cut_off": null
+          },
+          "description": "No movement control parameters"
+        },
+        "bci_active_control": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/SignalProcessing"
+            }
+          ],
+          "default": {
+            "baseline_threshold": 0.0,
+            "gain": 1.0,
+            "low_pass_cut_off": null,
+            "high_pass_cut_off": null
+          },
+          "description": "BCI active control parameters"
+        },
+        "skip_2p_handshake": {
+          "default": false,
+          "description": "Skip 2p handshake",
+          "title": "Skip 2P Handshake",
+          "type": "boolean"
+        },
+        "delay_after_handshake": {
+          "default": 0.5,
+          "description": "Delay after handshake (s). It will still be used if skip_2p_handshake is False.",
+          "minimum": 0.0,
+          "title": "Delay After Handshake",
+          "type": "number"
+        },
+        "punish_on_movement_duration": {
+          "default": 0,
+          "description": "The duration (s) that the spout will stop updating if the animal moves during the trial.",
+          "minimum": 0.0,
+          "title": "Punish On Movement Duration",
+          "type": "number"
+        }
+      },
+      "title": "BciNoMovementTaskParameters",
+      "type": "object"
+    },
+    "Point3d": {
+      "properties": {
+        "x": {
+          "default": 0,
+          "description": "X coordinate",
+          "title": "X",
+          "type": "number"
+        },
+        "y": {
+          "default": 0,
+          "description": "Y coordinate",
+          "title": "Y",
+          "type": "number"
+        },
+        "z": {
+          "default": 0,
+          "description": "Z coordinate",
+          "title": "Z",
+          "type": "number"
+        }
+      },
+      "title": "Point3d",
+      "type": "object"
+    },
+    "SignalProcessing": {
+      "properties": {
+        "baseline_threshold": {
+          "default": 0,
+          "description": "The threshold to be applied to the signal to define baseline",
+          "minimum": 0.0,
+          "title": "Baseline Threshold",
+          "type": "number"
+        },
+        "gain": {
+          "default": 1,
+          "description": "The gain to be applied to the signal",
+          "title": "Gain",
+          "type": "number"
+        },
+        "low_pass_cut_off": {
+          "default": null,
+          "description": "Low pass cut off frequency(Hz)",
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Low Pass Cut Off"
+        },
+        "high_pass_cut_off": {
+          "default": null,
+          "description": "High pass cut off frequency(Hz)",
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "High Pass Cut Off"
+        }
+      },
+      "title": "SignalProcessing",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "default": "bci-no-movement",
+      "description": "Task name",
+      "title": "Name",
+      "type": "string"
+    },
+    "description": {
+      "default": "",
+      "description": "Description of the task.",
+      "title": "Description",
+      "type": "string"
+    },
+    "task_parameters": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/BciNoMovementTaskParameters"
+        }
+      ],
+      "description": "Parameters of the task logic"
+    },
+    "version": {
+      "const": "0.0.1",
+      "default": "0.0.1",
+      "title": "Version",
+      "type": "string"
+    },
+    "stage_name": {
+      "default": null,
+      "description": "Optional stage name the `Task` object instance represents.",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Stage Name"
+    }
+  },
+  "required": [
+    "task_parameters"
+  ],
+  "title": "BciNoMovementTaskLogic",
+  "type": "object"
+}

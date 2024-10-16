@@ -5,256 +5,19 @@
 //----------------------
 
 
-namespace BciNoMovementDataSchema.BciNoMovementTask
+namespace BciNoMovementDataSchema.TaskLogic
 {
     #pragma warning disable // Disable all warnings
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
     [Bonsai.CombinatorAttribute()]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Control
+    public partial class BciNoMovementTaskParameters
     {
     
-        private double _baselineThreshold = 0D;
+        private double? _rngSeed;
     
-        private double _gain = 1D;
-    
-        private double? _lowPassCutOff;
-    
-        private double? _highPassCutOff;
-    
-        public Control()
-        {
-        }
-    
-        protected Control(Control other)
-        {
-            _baselineThreshold = other._baselineThreshold;
-            _gain = other._gain;
-            _lowPassCutOff = other._lowPassCutOff;
-            _highPassCutOff = other._highPassCutOff;
-        }
-    
-        /// <summary>
-        /// The threshold to be applied to the signal to define baseline
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("baseline_threshold")]
-        [System.ComponentModel.DescriptionAttribute("The threshold to be applied to the signal to define baseline")]
-        public double BaselineThreshold
-        {
-            get
-            {
-                return _baselineThreshold;
-            }
-            set
-            {
-                _baselineThreshold = value;
-            }
-        }
-    
-        /// <summary>
-        /// The gain to be applied to the signal
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("gain")]
-        [System.ComponentModel.DescriptionAttribute("The gain to be applied to the signal")]
-        public double Gain
-        {
-            get
-            {
-                return _gain;
-            }
-            set
-            {
-                _gain = value;
-            }
-        }
-    
-        /// <summary>
-        /// Low pass cut off frequency(Hz)
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("low_pass_cut_off")]
-        [System.ComponentModel.DescriptionAttribute("Low pass cut off frequency(Hz)")]
-        public double? LowPassCutOff
-        {
-            get
-            {
-                return _lowPassCutOff;
-            }
-            set
-            {
-                _lowPassCutOff = value;
-            }
-        }
-    
-        /// <summary>
-        /// High pass cut off frequency(Hz)
-        /// </summary>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [Newtonsoft.Json.JsonPropertyAttribute("high_pass_cut_off")]
-        [System.ComponentModel.DescriptionAttribute("High pass cut off frequency(Hz)")]
-        public double? HighPassCutOff
-        {
-            get
-            {
-                return _highPassCutOff;
-            }
-            set
-            {
-                _highPassCutOff = value;
-            }
-        }
-    
-        public System.IObservable<Control> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Control(this)));
-        }
-    
-        public System.IObservable<Control> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Control(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("baseline_threshold = " + _baselineThreshold + ", ");
-            stringBuilder.Append("gain = " + _gain + ", ");
-            stringBuilder.Append("low_pass_cut_off = " + _lowPassCutOff + ", ");
-            stringBuilder.Append("high_pass_cut_off = " + _highPassCutOff);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class Point3d
-    {
-    
-        private double _x = 0D;
-    
-        private double _y = 0D;
-    
-        private double _z = 0D;
-    
-        public Point3d()
-        {
-        }
-    
-        protected Point3d(Point3d other)
-        {
-            _x = other._x;
-            _y = other._y;
-            _z = other._z;
-        }
-    
-        /// <summary>
-        /// X coordinate
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("x")]
-        [System.ComponentModel.DescriptionAttribute("X coordinate")]
-        public double X
-        {
-            get
-            {
-                return _x;
-            }
-            set
-            {
-                _x = value;
-            }
-        }
-    
-        /// <summary>
-        /// Y coordinate
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("y")]
-        [System.ComponentModel.DescriptionAttribute("Y coordinate")]
-        public double Y
-        {
-            get
-            {
-                return _y;
-            }
-            set
-            {
-                _y = value;
-            }
-        }
-    
-        /// <summary>
-        /// Z coordinate
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("z")]
-        [System.ComponentModel.DescriptionAttribute("Z coordinate")]
-        public double Z
-        {
-            get
-            {
-                return _z;
-            }
-            set
-            {
-                _z = value;
-            }
-        }
-    
-        public System.IObservable<Point3d> Process()
-        {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Point3d(this)));
-        }
-    
-        public System.IObservable<Point3d> Process<TSource>(System.IObservable<TSource> source)
-        {
-            return System.Reactive.Linq.Observable.Select(source, _ => new Point3d(this));
-        }
-    
-        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
-        {
-            stringBuilder.Append("x = " + _x + ", ");
-            stringBuilder.Append("y = " + _y + ", ");
-            stringBuilder.Append("z = " + _z);
-            return true;
-        }
-    
-        public override string ToString()
-        {
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
-            stringBuilder.Append(GetType().Name);
-            stringBuilder.Append(" { ");
-            if (PrintMembers(stringBuilder))
-            {
-                stringBuilder.Append(" ");
-            }
-            stringBuilder.Append("}");
-            return stringBuilder.ToString();
-        }
-    }
-
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
-    [Bonsai.CombinatorAttribute()]
-    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
-    public partial class BciNoMovementTaskLogic
-    {
-    
-        private string _describedBy;
-    
-        private string _schemaVersion;
+        private string _aindBehaviorServicesPkgVersion = "0.8.1";
     
         private double _valveOpenTime = 0.01D;
     
@@ -280,11 +43,11 @@ namespace BciNoMovementDataSchema.BciNoMovementTask
     
         private Point3d _manipulatorResetPosition;
     
-        private Control _bciPassiveControl;
+        private SignalProcessing _bciPassiveControl;
     
-        private Control _noMovementPassiveControl;
+        private SignalProcessing _noMovementPassiveControl;
     
-        private Control _bciActiveControl;
+        private SignalProcessing _bciActiveControl;
     
         private bool _skip2pHandshake = false;
     
@@ -292,14 +55,14 @@ namespace BciNoMovementDataSchema.BciNoMovementTask
     
         private double _punishOnMovementDuration = 0D;
     
-        public BciNoMovementTaskLogic()
+        public BciNoMovementTaskParameters()
         {
         }
     
-        protected BciNoMovementTaskLogic(BciNoMovementTaskLogic other)
+        protected BciNoMovementTaskParameters(BciNoMovementTaskParameters other)
         {
-            _describedBy = other._describedBy;
-            _schemaVersion = other._schemaVersion;
+            _rngSeed = other._rngSeed;
+            _aindBehaviorServicesPkgVersion = other._aindBehaviorServicesPkgVersion;
             _valveOpenTime = other._valveOpenTime;
             _waitMicroscopeTime = other._waitMicroscopeTime;
             _lowActivityTime = other._lowActivityTime;
@@ -320,33 +83,34 @@ namespace BciNoMovementDataSchema.BciNoMovementTask
             _punishOnMovementDuration = other._punishOnMovementDuration;
         }
     
-        [Newtonsoft.Json.JsonPropertyAttribute("describedBy", Required=Newtonsoft.Json.Required.Always)]
-        public string DescribedBy
+        /// <summary>
+        /// Seed of the random number generator
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("rng_seed")]
+        [System.ComponentModel.DescriptionAttribute("Seed of the random number generator")]
+        public double? RngSeed
         {
             get
             {
-                return _describedBy;
+                return _rngSeed;
             }
             set
             {
-                _describedBy = value;
+                _rngSeed = value;
             }
         }
     
-        /// <summary>
-        /// schema version
-        /// </summary>
-        [Newtonsoft.Json.JsonPropertyAttribute("schema_version", Required=Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DescriptionAttribute("schema version")]
-        public string SchemaVersion
+        [Newtonsoft.Json.JsonPropertyAttribute("aind_behavior_services_pkg_version")]
+        public string AindBehaviorServicesPkgVersion
         {
             get
             {
-                return _schemaVersion;
+                return _aindBehaviorServicesPkgVersion;
             }
             set
             {
-                _schemaVersion = value;
+                _aindBehaviorServicesPkgVersion = value;
             }
         }
     
@@ -420,11 +184,11 @@ namespace BciNoMovementDataSchema.BciNoMovementTask
         }
     
         /// <summary>
-        /// Determines whether the animal must lick to trigger reward delivery. If false, reward is immediately delivered.
+        /// Determines whether the animal must lick to trigger reward delivery.             If false, reward is immediately delivered.
         /// </summary>
         [Newtonsoft.Json.JsonPropertyAttribute("wait_for_lick")]
-        [System.ComponentModel.DescriptionAttribute("Determines whether the animal must lick to trigger reward delivery. If false, rew" +
-            "ard is immediately delivered.")]
+        [System.ComponentModel.DescriptionAttribute("Determines whether the animal must lick to trigger reward delivery.             I" +
+            "f false, reward is immediately delivered.")]
         public bool WaitForLick
         {
             get
@@ -563,7 +327,7 @@ namespace BciNoMovementDataSchema.BciNoMovementTask
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("bci_passive_control")]
         [System.ComponentModel.DescriptionAttribute("BCI control parameters")]
-        public Control BciPassiveControl
+        public SignalProcessing BciPassiveControl
         {
             get
             {
@@ -581,7 +345,7 @@ namespace BciNoMovementDataSchema.BciNoMovementTask
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("no_movement_passive_control")]
         [System.ComponentModel.DescriptionAttribute("No movement control parameters")]
-        public Control NoMovementPassiveControl
+        public SignalProcessing NoMovementPassiveControl
         {
             get
             {
@@ -599,7 +363,7 @@ namespace BciNoMovementDataSchema.BciNoMovementTask
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [Newtonsoft.Json.JsonPropertyAttribute("bci_active_control")]
         [System.ComponentModel.DescriptionAttribute("BCI active control parameters")]
-        public Control BciActiveControl
+        public SignalProcessing BciActiveControl
         {
             get
             {
@@ -663,20 +427,20 @@ namespace BciNoMovementDataSchema.BciNoMovementTask
             }
         }
     
-        public System.IObservable<BciNoMovementTaskLogic> Process()
+        public System.IObservable<BciNoMovementTaskParameters> Process()
         {
-            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new BciNoMovementTaskLogic(this)));
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new BciNoMovementTaskParameters(this)));
         }
     
-        public System.IObservable<BciNoMovementTaskLogic> Process<TSource>(System.IObservable<TSource> source)
+        public System.IObservable<BciNoMovementTaskParameters> Process<TSource>(System.IObservable<TSource> source)
         {
-            return System.Reactive.Linq.Observable.Select(source, _ => new BciNoMovementTaskLogic(this));
+            return System.Reactive.Linq.Observable.Select(source, _ => new BciNoMovementTaskParameters(this));
         }
     
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
-            stringBuilder.Append("describedBy = " + _describedBy + ", ");
-            stringBuilder.Append("schema_version = " + _schemaVersion + ", ");
+            stringBuilder.Append("rng_seed = " + _rngSeed + ", ");
+            stringBuilder.Append("aind_behavior_services_pkg_version = " + _aindBehaviorServicesPkgVersion + ", ");
             stringBuilder.Append("valve_open_time = " + _valveOpenTime + ", ");
             stringBuilder.Append("wait_microscope_time = " + _waitMicroscopeTime + ", ");
             stringBuilder.Append("low_activity_time = " + _lowActivityTime + ", ");
@@ -713,6 +477,389 @@ namespace BciNoMovementDataSchema.BciNoMovementTask
     }
 
 
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class Point3d
+    {
+    
+        private double _x = 0D;
+    
+        private double _y = 0D;
+    
+        private double _z = 0D;
+    
+        public Point3d()
+        {
+        }
+    
+        protected Point3d(Point3d other)
+        {
+            _x = other._x;
+            _y = other._y;
+            _z = other._z;
+        }
+    
+        /// <summary>
+        /// X coordinate
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("x")]
+        [System.ComponentModel.DescriptionAttribute("X coordinate")]
+        public double X
+        {
+            get
+            {
+                return _x;
+            }
+            set
+            {
+                _x = value;
+            }
+        }
+    
+        /// <summary>
+        /// Y coordinate
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("y")]
+        [System.ComponentModel.DescriptionAttribute("Y coordinate")]
+        public double Y
+        {
+            get
+            {
+                return _y;
+            }
+            set
+            {
+                _y = value;
+            }
+        }
+    
+        /// <summary>
+        /// Z coordinate
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("z")]
+        [System.ComponentModel.DescriptionAttribute("Z coordinate")]
+        public double Z
+        {
+            get
+            {
+                return _z;
+            }
+            set
+            {
+                _z = value;
+            }
+        }
+    
+        public System.IObservable<Point3d> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Point3d(this)));
+        }
+    
+        public System.IObservable<Point3d> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new Point3d(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("x = " + _x + ", ");
+            stringBuilder.Append("y = " + _y + ", ");
+            stringBuilder.Append("z = " + _z);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class SignalProcessing
+    {
+    
+        private double _baselineThreshold = 0D;
+    
+        private double _gain = 1D;
+    
+        private double? _lowPassCutOff;
+    
+        private double? _highPassCutOff;
+    
+        public SignalProcessing()
+        {
+        }
+    
+        protected SignalProcessing(SignalProcessing other)
+        {
+            _baselineThreshold = other._baselineThreshold;
+            _gain = other._gain;
+            _lowPassCutOff = other._lowPassCutOff;
+            _highPassCutOff = other._highPassCutOff;
+        }
+    
+        /// <summary>
+        /// The threshold to be applied to the signal to define baseline
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("baseline_threshold")]
+        [System.ComponentModel.DescriptionAttribute("The threshold to be applied to the signal to define baseline")]
+        public double BaselineThreshold
+        {
+            get
+            {
+                return _baselineThreshold;
+            }
+            set
+            {
+                _baselineThreshold = value;
+            }
+        }
+    
+        /// <summary>
+        /// The gain to be applied to the signal
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("gain")]
+        [System.ComponentModel.DescriptionAttribute("The gain to be applied to the signal")]
+        public double Gain
+        {
+            get
+            {
+                return _gain;
+            }
+            set
+            {
+                _gain = value;
+            }
+        }
+    
+        /// <summary>
+        /// Low pass cut off frequency(Hz)
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("low_pass_cut_off")]
+        [System.ComponentModel.DescriptionAttribute("Low pass cut off frequency(Hz)")]
+        public double? LowPassCutOff
+        {
+            get
+            {
+                return _lowPassCutOff;
+            }
+            set
+            {
+                _lowPassCutOff = value;
+            }
+        }
+    
+        /// <summary>
+        /// High pass cut off frequency(Hz)
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("high_pass_cut_off")]
+        [System.ComponentModel.DescriptionAttribute("High pass cut off frequency(Hz)")]
+        public double? HighPassCutOff
+        {
+            get
+            {
+                return _highPassCutOff;
+            }
+            set
+            {
+                _highPassCutOff = value;
+            }
+        }
+    
+        public System.IObservable<SignalProcessing> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new SignalProcessing(this)));
+        }
+    
+        public System.IObservable<SignalProcessing> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new SignalProcessing(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("baseline_threshold = " + _baselineThreshold + ", ");
+            stringBuilder.Append("gain = " + _gain + ", ");
+            stringBuilder.Append("low_pass_cut_off = " + _lowPassCutOff + ", ");
+            stringBuilder.Append("high_pass_cut_off = " + _highPassCutOff);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Bonsai.Sgen", "0.3.0.0 (Newtonsoft.Json v13.0.0.0)")]
+    [Bonsai.CombinatorAttribute()]
+    [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Source)]
+    public partial class BciNoMovementTaskLogic
+    {
+    
+        private string _name = "bci-no-movement";
+    
+        private string _description = "";
+    
+        private BciNoMovementTaskParameters _taskParameters = new BciNoMovementTaskParameters();
+    
+        private string _version = "0.0.1";
+    
+        private string _stageName;
+    
+        public BciNoMovementTaskLogic()
+        {
+        }
+    
+        protected BciNoMovementTaskLogic(BciNoMovementTaskLogic other)
+        {
+            _name = other._name;
+            _description = other._description;
+            _taskParameters = other._taskParameters;
+            _version = other._version;
+            _stageName = other._stageName;
+        }
+    
+        /// <summary>
+        /// Task name
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("name")]
+        [System.ComponentModel.DescriptionAttribute("Task name")]
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                _name = value;
+            }
+        }
+    
+        /// <summary>
+        /// Description of the task.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("description")]
+        [System.ComponentModel.DescriptionAttribute("Description of the task.")]
+        public string Description
+        {
+            get
+            {
+                return _description;
+            }
+            set
+            {
+                _description = value;
+            }
+        }
+    
+        /// <summary>
+        /// Parameters of the task logic
+        /// </summary>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [Newtonsoft.Json.JsonPropertyAttribute("task_parameters", Required=Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DescriptionAttribute("Parameters of the task logic")]
+        public BciNoMovementTaskParameters TaskParameters
+        {
+            get
+            {
+                return _taskParameters;
+            }
+            set
+            {
+                _taskParameters = value;
+            }
+        }
+    
+        [Newtonsoft.Json.JsonPropertyAttribute("version")]
+        public string Version
+        {
+            get
+            {
+                return _version;
+            }
+            set
+            {
+                _version = value;
+            }
+        }
+    
+        /// <summary>
+        /// Optional stage name the `Task` object instance represents.
+        /// </summary>
+        [Newtonsoft.Json.JsonPropertyAttribute("stage_name")]
+        [System.ComponentModel.DescriptionAttribute("Optional stage name the `Task` object instance represents.")]
+        public string StageName
+        {
+            get
+            {
+                return _stageName;
+            }
+            set
+            {
+                _stageName = value;
+            }
+        }
+    
+        public System.IObservable<BciNoMovementTaskLogic> Process()
+        {
+            return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new BciNoMovementTaskLogic(this)));
+        }
+    
+        public System.IObservable<BciNoMovementTaskLogic> Process<TSource>(System.IObservable<TSource> source)
+        {
+            return System.Reactive.Linq.Observable.Select(source, _ => new BciNoMovementTaskLogic(this));
+        }
+    
+        protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
+        {
+            stringBuilder.Append("name = " + _name + ", ");
+            stringBuilder.Append("description = " + _description + ", ");
+            stringBuilder.Append("task_parameters = " + _taskParameters + ", ");
+            stringBuilder.Append("version = " + _version + ", ");
+            stringBuilder.Append("stage_name = " + _stageName);
+            return true;
+        }
+    
+        public override string ToString()
+        {
+            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            stringBuilder.Append(GetType().Name);
+            stringBuilder.Append(" { ");
+            if (PrintMembers(stringBuilder))
+            {
+                stringBuilder.Append(" ");
+            }
+            stringBuilder.Append("}");
+            return stringBuilder.ToString();
+        }
+    }
+
+
     /// <summary>
     /// Serializes a sequence of data model objects into JSON strings.
     /// </summary>
@@ -728,14 +875,19 @@ namespace BciNoMovementDataSchema.BciNoMovementTask
             return System.Reactive.Linq.Observable.Select(source, value => Newtonsoft.Json.JsonConvert.SerializeObject(value));
         }
 
-        public System.IObservable<string> Process(System.IObservable<Control> source)
+        public System.IObservable<string> Process(System.IObservable<BciNoMovementTaskParameters> source)
         {
-            return Process<Control>(source);
+            return Process<BciNoMovementTaskParameters>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<Point3d> source)
         {
             return Process<Point3d>(source);
+        }
+
+        public System.IObservable<string> Process(System.IObservable<SignalProcessing> source)
+        {
+            return Process<SignalProcessing>(source);
         }
 
         public System.IObservable<string> Process(System.IObservable<BciNoMovementTaskLogic> source)
@@ -752,8 +904,9 @@ namespace BciNoMovementDataSchema.BciNoMovementTask
     [System.ComponentModel.DescriptionAttribute("Deserializes a sequence of JSON strings into data model objects.")]
     [System.ComponentModel.DefaultPropertyAttribute("Type")]
     [Bonsai.WorkflowElementCategoryAttribute(Bonsai.ElementCategory.Transform)]
-    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Control>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BciNoMovementTaskParameters>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<Point3d>))]
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<SignalProcessing>))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Bonsai.Expressions.TypeMapping<BciNoMovementTaskLogic>))]
     public partial class DeserializeFromJson : Bonsai.Expressions.SingleArgumentExpressionBuilder
     {

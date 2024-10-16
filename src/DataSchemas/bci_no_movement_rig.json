@@ -8,22 +8,178 @@
         0
       ],
       "title": "Axis",
-      "type": "integer"
+      "type": "integer",
+      "x-enumNames": [
+        "X",
+        "Y",
+        "Z",
+        "None"
+      ]
+    },
+    "BaseModel": {
+      "properties": {},
+      "title": "BaseModel",
+      "type": "object"
+    },
+    "CameraController_SpinnakerCamera_": {
+      "properties": {
+        "device_type": {
+          "const": "CameraController",
+          "default": "CameraController",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "cameras": {
+          "additionalProperties": {
+            "$ref": "#/definitions/SpinnakerCamera"
+          },
+          "description": "Cameras to be instantiated",
+          "title": "Cameras",
+          "type": "object"
+        },
+        "frame_rate": {
+          "default": 30,
+          "description": "Frame rate of the trigger to all cameras",
+          "oneOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Frame Rate"
+        }
+      },
+      "required": [
+        "cameras"
+      ],
+      "title": "CameraController[SpinnakerCamera]",
+      "type": "object"
+    },
+    "CameraController_WebCamera_": {
+      "properties": {
+        "device_type": {
+          "const": "CameraController",
+          "default": "CameraController",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "cameras": {
+          "additionalProperties": {
+            "$ref": "#/definitions/WebCamera"
+          },
+          "description": "Cameras to be instantiated",
+          "title": "Cameras",
+          "type": "object"
+        },
+        "frame_rate": {
+          "default": 30,
+          "description": "Frame rate of the trigger to all cameras",
+          "oneOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Frame Rate"
+        }
+      },
+      "required": [
+        "cameras"
+      ],
+      "title": "CameraController[WebCamera]",
+      "type": "object"
     },
     "HarpBehavior": {
-      "additionalProperties": false,
       "properties": {
-        "who_am_i": {
-          "const": 1216,
-          "default": 1216,
-          "title": "Who Am I",
-          "type": "integer"
-        },
         "device_type": {
           "const": "behavior",
           "default": "behavior",
           "title": "Device Type",
           "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "who_am_i": {
+          "const": 1216,
+          "default": 1216,
+          "title": "Who Am I",
+          "type": "integer"
         },
         "serial_number": {
           "default": null,
@@ -42,17 +198,6 @@
           "description": "Device port name",
           "title": "Port Name",
           "type": "string"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {},
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Additional Settings"
         }
       },
       "required": [
@@ -61,20 +206,43 @@
       "title": "HarpBehavior",
       "type": "object"
     },
-    "HarpClockSynchronizer": {
-      "additionalProperties": false,
+    "HarpClockGenerator": {
       "properties": {
-        "who_am_i": {
-          "const": 1152,
-          "default": 1152,
-          "title": "Who Am I",
-          "type": "integer"
-        },
         "device_type": {
-          "const": "clocksynchronizer",
-          "default": "clocksynchronizer",
+          "const": "clockgenerator",
+          "default": "clockgenerator",
           "title": "Device Type",
           "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "who_am_i": {
+          "const": 1158,
+          "default": 1158,
+          "title": "Who Am I",
+          "type": "integer"
         },
         "serial_number": {
           "default": null,
@@ -93,40 +261,135 @@
           "description": "Device port name",
           "title": "Port Name",
           "type": "string"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {},
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Additional Settings"
         }
       },
       "required": [
         "port_name"
       ],
-      "title": "HarpClockSynchronizer",
+      "title": "HarpClockGenerator",
       "type": "object"
     },
-    "HarpLoadCells": {
-      "additionalProperties": false,
+    "LoadCellCalibrationInput": {
       "properties": {
-        "who_am_i": {
-          "const": 1232,
-          "default": 1232,
-          "title": "Who Am I",
+        "channel": {
+          "description": "Load cell channel number available",
+          "maximum": 7,
+          "minimum": 0,
+          "title": "Load cell channel number",
           "type": "integer"
         },
+        "offset_measurement": {
+          "default": [],
+          "items": {
+            "$ref": "#/definitions/MeasuredOffset"
+          },
+          "title": "Load cell offset calibration data",
+          "type": "array"
+        },
+        "weight_measurement": {
+          "default": [],
+          "items": {
+            "$ref": "#/definitions/MeasuredWeight"
+          },
+          "title": "Load cell weight calibration data",
+          "type": "array"
+        }
+      },
+      "required": [
+        "channel"
+      ],
+      "title": "LoadCellCalibrationInput",
+      "type": "object"
+    },
+    "LoadCellCalibrationOutput": {
+      "properties": {
+        "channel": {
+          "description": "Load cell channel number available",
+          "maximum": 7,
+          "minimum": 0,
+          "title": "Channel",
+          "type": "integer"
+        },
+        "offset": {
+          "default": null,
+          "oneOf": [
+            {
+              "description": "Load cell offset value [-255, 255]",
+              "maximum": 255,
+              "minimum": -255,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Load cell offset"
+        },
+        "baseline": {
+          "default": null,
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Load cell baseline"
+        },
+        "weight_lookup": {
+          "default": [],
+          "items": {
+            "$ref": "#/definitions/MeasuredWeight"
+          },
+          "title": "Load cell weight lookup calibration table",
+          "type": "array"
+        }
+      },
+      "required": [
+        "channel"
+      ],
+      "title": "LoadCellCalibrationOutput",
+      "type": "object"
+    },
+    "LoadCells": {
+      "properties": {
         "device_type": {
           "const": "loadcells",
           "default": "loadcells",
           "title": "Device Type",
           "type": "string"
         },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "oneOf": [
+            {
+              "$ref": "#/definitions/LoadCellsCalibration"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Calibration of the load cells"
+        },
+        "who_am_i": {
+          "const": 1232,
+          "default": 1232,
+          "title": "Who Am I",
+          "type": "integer"
+        },
         "serial_number": {
           "default": null,
           "description": "Device serial number",
@@ -144,27 +407,149 @@
           "description": "Device port name",
           "title": "Port Name",
           "type": "string"
-        },
-        "additional_settings": {
-          "default": null,
-          "description": "Additional settings",
-          "oneOf": [
-            {},
-            {
-              "type": "null"
-            }
-          ],
-          "title": "Additional Settings"
         }
       },
       "required": [
         "port_name"
       ],
-      "title": "HarpLoadCells",
+      "title": "LoadCells",
+      "type": "object"
+    },
+    "LoadCellsCalibration": {
+      "description": "Load cells calibration class",
+      "properties": {
+        "device_name": {
+          "default": "LoadCells",
+          "description": "Must match a device name in rig/instrument",
+          "title": "Device name",
+          "type": "string"
+        },
+        "input": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/LoadCellsCalibrationInput"
+            }
+          ],
+          "title": "Input of the calibration"
+        },
+        "output": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/LoadCellsCalibrationOutput"
+            }
+          ],
+          "title": "Output of the calibration."
+        },
+        "date": {
+          "default": null,
+          "oneOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Date"
+        },
+        "description": {
+          "const": "Calibration of the load cells system",
+          "default": "Calibration of the load cells system",
+          "title": "Description",
+          "type": "string"
+        },
+        "notes": {
+          "default": null,
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Notes"
+        }
+      },
+      "required": [
+        "input",
+        "output"
+      ],
+      "title": "LoadCellsCalibration",
+      "type": "object"
+    },
+    "LoadCellsCalibrationInput": {
+      "properties": {
+        "channels": {
+          "default": [],
+          "items": {
+            "$ref": "#/definitions/LoadCellCalibrationInput"
+          },
+          "title": "Load cells calibration data",
+          "type": "array"
+        }
+      },
+      "title": "LoadCellsCalibrationInput",
+      "type": "object"
+    },
+    "LoadCellsCalibrationOutput": {
+      "properties": {
+        "channels": {
+          "default": [],
+          "items": {
+            "$ref": "#/definitions/LoadCellCalibrationOutput"
+          },
+          "title": "Load cells calibration output",
+          "type": "array"
+        }
+      },
+      "title": "LoadCellsCalibrationOutput",
+      "type": "object"
+    },
+    "MeasuredOffset": {
+      "properties": {
+        "offset": {
+          "description": "The applied offset resistor value[-255, 255]",
+          "maximum": 255,
+          "minimum": -255,
+          "title": "Offset",
+          "type": "integer"
+        },
+        "baseline": {
+          "description": "The measured baseline value",
+          "title": "Baseline",
+          "type": "number"
+        }
+      },
+      "required": [
+        "offset",
+        "baseline"
+      ],
+      "title": "MeasuredOffset",
+      "type": "object"
+    },
+    "MeasuredWeight": {
+      "properties": {
+        "weight": {
+          "description": "The applied weight in grams",
+          "title": "Weight",
+          "type": "number"
+        },
+        "baseline": {
+          "description": "The measured baseline value",
+          "title": "Baseline",
+          "type": "number"
+        }
+      },
+      "required": [
+        "weight",
+        "baseline"
+      ],
+      "title": "MeasuredWeight",
       "type": "object"
     },
     "Networking": {
-      "additionalProperties": false,
       "properties": {
         "zmq_publisher": {
           "allOf": [
@@ -193,31 +578,10 @@
       "type": "object"
     },
     "Operation": {
-      "additionalProperties": false,
       "properties": {
-        "load_cell_offset": {
-          "default": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "description": "Bias offset of a specific loadcell channel.",
-          "items": {
-            "type": "integer"
-          },
-          "maxItems": 8,
-          "minItems": 8,
-          "title": "Load Cell Offset",
-          "type": "array"
-        },
         "load_cell_index": {
           "default": 0,
-          "description": "Index of the loadcell channel to use.",
+          "description": "Index of the load cell channel to use.",
           "maximum": 7,
           "minimum": 0,
           "title": "Load Cell Index",
@@ -227,9 +591,73 @@
       "title": "Operation",
       "type": "object"
     },
-    "SpinnakerCamera": {
-      "additionalProperties": false,
+    "Rect": {
       "properties": {
+        "x": {
+          "default": 0,
+          "description": "X coordinate of the top-left corner",
+          "minimum": 0,
+          "title": "X",
+          "type": "integer"
+        },
+        "y": {
+          "default": 0,
+          "description": "Y coordinate of the top-left corner",
+          "minimum": 0,
+          "title": "Y",
+          "type": "integer"
+        },
+        "width": {
+          "default": 0,
+          "description": "Width of the rectangle",
+          "minimum": 0,
+          "title": "Width",
+          "type": "integer"
+        },
+        "height": {
+          "default": 0,
+          "description": "Height of the rectangle",
+          "minimum": 0,
+          "title": "Height",
+          "type": "integer"
+        }
+      },
+      "title": "Rect",
+      "type": "object"
+    },
+    "SpinnakerCamera": {
+      "properties": {
+        "device_type": {
+          "const": "SpinnakerCamera",
+          "default": "SpinnakerCamera",
+          "description": "Device type",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "serial_number": {
           "description": "Camera serial number",
           "title": "Serial Number",
@@ -257,25 +685,66 @@
           "description": "Exposure time",
           "minimum": 100,
           "title": "Exposure",
-          "type": "integer",
-          "units": "us"
-        },
-        "frame_rate": {
-          "default": 30,
-          "description": "Frame rate",
-          "maximum": 350,
-          "minimum": 1,
-          "title": "Frame Rate",
-          "type": "integer",
-          "units": "Hz"
+          "type": "integer"
         },
         "gain": {
           "default": 0,
           "description": "Gain",
           "minimum": 0.0,
           "title": "Gain",
-          "type": "number",
-          "units": "dB"
+          "type": "number"
+        },
+        "gamma": {
+          "default": null,
+          "description": "Gamma. If None, will disable gamma correction.",
+          "oneOf": [
+            {
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Gamma"
+        },
+        "adc_bit_depth": {
+          "default": 0,
+          "description": "ADC bit depth. If None will be left as default.",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/SpinnakerCameraAdcBitDepth"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "region_of_interest": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/Rect"
+            }
+          ],
+          "default": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0
+          },
+          "description": "Region of interest"
+        },
+        "video_writer": {
+          "default": null,
+          "description": "Video writer. If not provided, no video will be saved.",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/VideoWriter"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -284,8 +753,163 @@
       "title": "SpinnakerCamera",
       "type": "object"
     },
+    "SpinnakerCameraAdcBitDepth": {
+      "enum": [
+        0,
+        1,
+        2
+      ],
+      "title": "SpinnakerCameraAdcBitDepth",
+      "type": "integer",
+      "x-enumNames": [
+        "Adc8bit",
+        "Adc10bit",
+        "Adc12bit"
+      ]
+    },
+    "VideoWriter": {
+      "discriminator": {
+        "mapping": {
+          "FFMPEG": "#/definitions/VideoWriterFfmpeg",
+          "OPENCV": "#/definitions/VideoWriterOpenCv"
+        },
+        "propertyName": "video_writer_type"
+      },
+      "oneOf": [
+        {
+          "$ref": "#/definitions/VideoWriterFfmpeg"
+        },
+        {
+          "$ref": "#/definitions/VideoWriterOpenCv"
+        }
+      ],
+      "title": "VideoWriter"
+    },
+    "VideoWriterFfmpeg": {
+      "properties": {
+        "video_writer_type": {
+          "const": "FFMPEG",
+          "default": "FFMPEG",
+          "title": "Video Writer Type",
+          "type": "string"
+        },
+        "frame_rate": {
+          "default": 30,
+          "description": "Encoding frame rate",
+          "minimum": 0,
+          "title": "Frame Rate",
+          "type": "integer"
+        },
+        "container_extension": {
+          "default": "mp4",
+          "description": "Container extension",
+          "title": "Container Extension",
+          "type": "string"
+        },
+        "output_arguments": {
+          "default": "-vf \"scale=out_color_matrix=bt709:out_range=full\" -c:v h264_nvenc -pix_fmt nv12 -color_range full -colorspace bt709 -color_trc linear -tune hq -preset p4 -rc vbr -cq 12 -b:v 0M -metadata author=\"Allen Institute for Neural Dynamics\" -maxrate 700M -bufsize 350M",
+          "description": "Output arguments",
+          "title": "Output Arguments",
+          "type": "string"
+        },
+        "input_arguments": {
+          "default": "-v verbose -colorspace rgb -color_primaries bt709 -color_trc linear",
+          "description": "Input arguments",
+          "title": "Input Arguments",
+          "type": "string"
+        }
+      },
+      "title": "VideoWriterFfmpeg",
+      "type": "object"
+    },
+    "VideoWriterOpenCv": {
+      "properties": {
+        "video_writer_type": {
+          "const": "OPENCV",
+          "default": "OPENCV",
+          "title": "Video Writer Type",
+          "type": "string"
+        },
+        "frame_rate": {
+          "default": 30,
+          "description": "Encoding frame rate",
+          "minimum": 0,
+          "title": "Frame Rate",
+          "type": "integer"
+        },
+        "container_extension": {
+          "default": "avi",
+          "description": "Container extension",
+          "title": "Container Extension",
+          "type": "string"
+        },
+        "four_cc": {
+          "default": "FMP4",
+          "description": "Four character code",
+          "title": "Four Cc",
+          "type": "string"
+        }
+      },
+      "title": "VideoWriterOpenCv",
+      "type": "object"
+    },
+    "WebCamera": {
+      "properties": {
+        "device_type": {
+          "const": "WebCamera",
+          "default": "WebCamera",
+          "description": "Device type",
+          "title": "Device Type",
+          "type": "string"
+        },
+        "additional_settings": {
+          "default": null,
+          "description": "Additional settings",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "calibration": {
+          "default": null,
+          "description": "Calibration",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/BaseModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "index": {
+          "default": 0,
+          "description": "Camera index",
+          "minimum": 0,
+          "title": "Index",
+          "type": "integer"
+        },
+        "video_writer": {
+          "default": null,
+          "description": "Video writer. If not provided, no video will be saved.",
+          "oneOf": [
+            {
+              "$ref": "#/definitions/VideoWriter"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "title": "WebCamera",
+      "type": "object"
+    },
     "ZaberAxis": {
-      "additionalProperties": false,
       "properties": {
         "device_index": {
           "description": "Device number.",
@@ -298,6 +922,60 @@
           "minimum": 0,
           "title": "Axis Index",
           "type": "integer"
+        },
+        "acceleration": {
+          "default": null,
+          "description": "Acceleration of the manipulator (mm/s2).",
+          "oneOf": [
+            {
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Acceleration"
+        },
+        "velocity": {
+          "default": null,
+          "description": "Maximum speed of the manipulator (mm/s).",
+          "oneOf": [
+            {
+              "minimum": 0.0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Velocity"
+        },
+        "lower_limit": {
+          "default": null,
+          "description": "Lower limit of the manipulator (mm).",
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Lower Limit"
+        },
+        "upper_limit": {
+          "default": null,
+          "description": "Upper limit of the manipulator (mm).",
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Upper Limit"
         }
       },
       "required": [
@@ -308,24 +986,39 @@
       "type": "object"
     },
     "ZaberGenericCommand": {
-      "additionalProperties": false,
       "properties": {
         "command": {
+          "description": "Command to send to the manipulator.",
           "title": "Command",
           "type": "string"
         },
         "axis": {
-          "default": 0,
+          "default": null,
           "description": "Motor to send the instruction to.",
-          "title": "Axis",
-          "type": "integer"
+          "oneOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Axis"
         },
         "device": {
           "default": null,
           "description": "Device number.",
-          "minimum": 0,
-          "title": "Device",
-          "type": "integer"
+          "oneOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Device"
         }
       },
       "required": [
@@ -335,10 +1028,8 @@
       "type": "object"
     },
     "ZaberManipulator": {
-      "additionalProperties": false,
       "properties": {
         "com_port": {
-          "default": "COM1",
           "description": "COM port of the manipulator.",
           "title": "Com Port",
           "type": "string"
@@ -360,20 +1051,6 @@
           ],
           "default": 1,
           "description": "Axis of the spout."
-        },
-        "velocity": {
-          "default": 10,
-          "description": "Maximum speed of the manipulator.",
-          "minimum": 0.0,
-          "title": "Velocity",
-          "type": "number"
-        },
-        "acceleration": {
-          "default": 1299.63,
-          "description": "Acceleration of the manipulator.",
-          "minimum": 0.0,
-          "title": "Acceleration",
-          "type": "number"
         },
         "x_axis": {
           "allOf": [
@@ -401,6 +1078,7 @@
         }
       },
       "required": [
+        "com_port",
         "x_axis",
         "y_axis",
         "z_axis"
@@ -409,15 +1087,16 @@
       "type": "object"
     },
     "ZmqConnection": {
-      "additionalProperties": false,
       "properties": {
         "connection_string": {
           "default": "@tcp://localhost:5556",
+          "description": "Connection string.",
           "title": "Connection String",
           "type": "string"
         },
         "topic": {
           "default": "",
+          "description": "Topic to subscribe to.",
           "title": "Topic",
           "type": "string"
         }
@@ -426,15 +1105,16 @@
       "type": "object"
     }
   },
-  "additionalProperties": false,
   "properties": {
-    "describedBy": {
-      "title": "Describedby",
+    "aind_behavior_services_pkg_version": {
+      "default": "0.8.1",
+      "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
+      "title": "aind_behavior_services package version",
       "type": "string"
     },
-    "schema_version": {
-      "description": "schema version",
-      "pattern": "^\\d+.\\d+.\\d+$",
+    "version": {
+      "const": "0.0.1",
+      "default": "0.0.1",
       "title": "Version",
       "type": "string"
     },
@@ -456,43 +1136,43 @@
       ],
       "description": "Harp behavior"
     },
-    "harp_load_cell": {
+    "harp_load_cells": {
       "allOf": [
         {
-          "$ref": "#/definitions/HarpLoadCells"
+          "$ref": "#/definitions/LoadCells"
         }
       ],
       "description": "Harp load cells"
     },
-    "harp_clock": {
+    "harp_clock_generator": {
       "allOf": [
         {
-          "$ref": "#/definitions/HarpClockSynchronizer"
+          "$ref": "#/definitions/HarpClockGenerator"
         }
       ],
-      "description": "Harp clock synchronizer"
+      "description": "Harp clock timestamp generator gen 3"
     },
-    "camera_0": {
+    "triggered_camera_controller": {
       "allOf": [
         {
-          "$ref": "#/definitions/SpinnakerCamera"
+          "$ref": "#/definitions/CameraController_SpinnakerCamera_"
         }
       ],
-      "description": "Required spinnaker camera"
+      "description": "Required camera controller to triggered cameras."
     },
-    "camera_1": {
+    "monitoring_camera_controller": {
       "default": null,
-      "description": "Optional spinnaker camera",
+      "description": "Optional camera controller for monitoring cameras.",
       "oneOf": [
         {
-          "$ref": "#/definitions/SpinnakerCamera"
+          "$ref": "#/definitions/CameraController_WebCamera_"
         },
         {
           "type": "null"
         }
       ]
     },
-    "zaber_manipulator": {
+    "manipulator": {
       "allOf": [
         {
           "$ref": "#/definitions/ZaberManipulator"
@@ -524,29 +1204,17 @@
         }
       ],
       "default": {
-        "load_cell_offset": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
         "load_cell_index": 0
       }
     }
   },
   "required": [
-    "describedBy",
-    "schema_version",
     "rig_name",
     "harp_behavior",
-    "harp_load_cell",
-    "harp_clock",
-    "camera_0",
-    "zaber_manipulator"
+    "harp_load_cells",
+    "harp_clock_generator",
+    "triggered_camera_controller",
+    "manipulator"
   ],
   "title": "BciNoMovementRig",
   "type": "object"
